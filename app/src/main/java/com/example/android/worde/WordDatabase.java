@@ -16,26 +16,38 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 @Database(entities = {Word.class}, version = 1)
 public abstract class WordDatabase extends RoomDatabase {
 
     public abstract WordDao wordDao();
+    private static final Executor executor = Executors.newSingleThreadExecutor();
 
-    private static WordDatabase INSTANCE;
+    private static volatile WordDatabase INSTANCE = null;
 
-    static WordDatabase getDatabase(final Context context) {
+    @NonNull
+    public static synchronized WordDatabase getInstance(final Context context) {
         if (INSTANCE == null) {
             synchronized (WordDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             WordDatabase.class, "word_database")
-
-                         //   .fallbackToDestructiveMigration()
+                            //.allowMainThreadQueries()
+                            //.fallbackToDestructiveMigration()
                             .addCallback(new RoomDatabase.Callback() {
                                 @Override
                                 public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                                    fillWithDemoData(context.getApplicationContext());
+                                   // super.onCreate(db);
+                                    //executor.execute();{
+                                     //   fillWithDemoData(context.getApplicationContext());
+                                        ;
+                                    //});
+                                   // fillWithDemoData(context.getApplicationContext());
+                                    executor.execute(() -> {
+                                        fillWithDemoData(context.getApplicationContext());
+                                    });
                                 }
                             })
                             .build();
@@ -47,7 +59,7 @@ public abstract class WordDatabase extends RoomDatabase {
 
     @WorkerThread
     private static void fillWithDemoData(Context context) {
-        WordDao dao = getDatabase(context).wordDao();
+        WordDao dao = getInstance(context).wordDao();
         JSONArray word = loadJsonArray(context);
         try {
             for (int i = 0; i < word.length(); i++) {

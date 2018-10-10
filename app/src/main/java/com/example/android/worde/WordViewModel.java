@@ -12,13 +12,19 @@ public class WordViewModel extends AndroidViewModel {
 
     private LiveData<List<Word>> mAllWords;
 
-    public WordViewModel (Application application) {
+    public WordViewModel(Application application) {
         super(application);
         mRepository = new WordRepository(application);
         mAllWords = mRepository.getAllWords();
     }
 
+    /*public WordViewModel(WordRepository repository) {
+        //super(repository);
+        mRepository = repository;
+    }*/
+
     LiveData<List<Word>> getAllWords() {
+       // mAllWords = mRepository.getAllWords();
         return mAllWords;
     }
 }

@@ -13,8 +13,8 @@ import java.util.List;
 public interface WordDao {
 
 
-    @Query("SELECT * from wordlist ORDER BY name ASC")
-    LiveData<List<Word>> getWordsInAlphabeticalOrder();
+    @Query("SELECT * from wordlist ORDER BY name")
+    LiveData<List<Word>> getAllWords();
 
     @Query("SELECT * from wordlist ORDER BY level")
     LiveData<List<Word>> getWordsByLevels();
@@ -24,6 +24,5 @@ public interface WordDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Word word);
-
 
 }
