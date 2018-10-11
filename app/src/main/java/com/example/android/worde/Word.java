@@ -8,13 +8,17 @@ import android.support.annotation.NonNull;
 import static com.example.android.worde.DataNames.COL_ARTIKEL;
 import static com.example.android.worde.DataNames.COL_EXAMPLE;
 import static com.example.android.worde.DataNames.COL_FAVOURITE;
+import static com.example.android.worde.DataNames.COL_ID;
 import static com.example.android.worde.DataNames.COL_LEVEL;
 import static com.example.android.worde.DataNames.COL_NAME;
 import static com.example.android.worde.DataNames.TABLE_NAME;
 
 @Entity(tableName = TABLE_NAME)
 public class Word {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @ColumnInfo(name = COL_ID)
+    private Integer mWordId;
     @NonNull
     @ColumnInfo(name = COL_LEVEL)
     private String mWordLevel;
@@ -30,7 +34,7 @@ public class Word {
     @ColumnInfo (name = COL_FAVOURITE)
     private Integer mWordFavourite;
 
-    public Word(@NonNull String wordLevel, String wordArtikel,@NonNull String wordName,@NonNull String wordExample,@NonNull Integer wordFavourite) {
+    public Word(@NonNull String wordLevel, String wordArtikel, @NonNull String wordName, @NonNull String wordExample, @NonNull Integer wordFavourite) {
         this.mWordLevel = wordLevel;
         this.mWordArtikel = wordArtikel;
         this.mWordName = wordName;
@@ -38,6 +42,13 @@ public class Word {
         this.mWordFavourite = wordFavourite;
     }
 
+    public Integer getWordId() {
+        return mWordId;
+    }
+
+    public void setWordId(Integer wordId) {
+        this.mWordId = wordId;
+    }
     @NonNull
     public String getWordLevel() {
         return mWordLevel;

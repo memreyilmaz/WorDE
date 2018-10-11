@@ -2,16 +2,58 @@
   "words": [
     {
       "level": "a1",
-      "artikel": "der",
-      "name": "apfel",
-      "example": "apfel ist sus",
-      "favourite": "1"
+      "artikel": "",
+      "name": "ab",
+      "example": "Ab morgen muss ich arbeiten.",
+      "favourite": "0"
     },
     {
       "level": "a2",
-      "artikel": "das",
-      "name": "auto",
-      "example": "auto ist landsam",
+      "artikel": "",
+      "name": "aber",
+      "example": "Ich bin oft im Büro, aber nur für wenige Stunden.",
+      "favourite": "0"
+    },
+    {
+      "level": "a1",
+      "artikel": "",
+      "name": "abfahren",
+      "example": "Wir fahren um zwölf Uhr ab.",
+      "favourite": "0"
+    },
+    {
+      "level": "a1",
+      "artikel": "die",
+      "name": "Abfahrt",
+      "example": "Vor der Abfahrt rufe ich an.",
+      "favourite": "0"
+    },
+    {
+      "level": "a1",
+      "artikel": "",
+      "name": "abgeben",
+      "example": "Ich muss meine Schlüssel abgeben.",
+      "favourite": "0"
+    },
+    {
+      "level": "a1",
+      "artikel": "",
+      "name": "abholen",
+      "example": "Wann kann ich den Schrank bei dir abholen? Wir müssen noch meinen Bruder abholen.",
+      "favourite": "1"
+    },
+    {
+      "level": "a1",
+      "artikel": "der",
+      "name": "Absender",
+      "example": "Da ist ein Brief für dich ohne Absender.",
+      "favourite": "0"
+    },
+    {
+      "level": "a1",
+      "artikel": "",
+      "name": "Achtung",
+      "example": "Achtung! Das dürfen Sie nicht tun.",
       "favourite": "0"
     }
   ]

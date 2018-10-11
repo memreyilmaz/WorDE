@@ -35,7 +35,7 @@ public abstract class WordDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             WordDatabase.class, "word_database")
                             //.allowMainThreadQueries()
-                            //.fallbackToDestructiveMigration()
+                            .fallbackToDestructiveMigration()
                             .addCallback(new RoomDatabase.Callback() {
                                 @Override
                                 public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -64,7 +64,8 @@ public abstract class WordDatabase extends RoomDatabase {
         try {
             for (int i = 0; i < word.length(); i++) {
                 JSONObject item = word.getJSONObject(i);
-                dao.insert(new Word(item.getString("level"),
+                dao.insert(new Word(
+                        item.getString("level"),
                         item.getString("artikel"),
                         item.getString("name"),
                         item.getString("example"),

@@ -10,6 +10,9 @@ public class WordRepository {
     private WordDao mWordDao;
     //private final ExecutorService mIoExecutor;
     private LiveData<List<Word>> mAllWords;
+    private LiveData<Word> mSelectedWord;
+    private int mWordId;
+
 
     /*public static WordRepository getInstance(Application application) {
         if (INSTANCE == null) {
@@ -38,6 +41,7 @@ public class WordRepository {
         WordDatabase db = WordDatabase.getInstance(application);
         mWordDao = db.wordDao();
         mAllWords = mWordDao.getAllWords();
+        mSelectedWord = mWordDao.getWordById(mWordId);
     }
 
     // Room executes all queries on a separate thread.
@@ -57,6 +61,10 @@ public class WordRepository {
             e.printStackTrace();
             return null;
         }*/
+    }
+
+    LiveData<Word> getWordById(){
+        return mSelectedWord;
     }
 
     // You must call this on a non-UI thread or your app will crash.

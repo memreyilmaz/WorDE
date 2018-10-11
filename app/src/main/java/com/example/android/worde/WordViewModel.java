@@ -11,11 +11,14 @@ public class WordViewModel extends AndroidViewModel {
     private WordRepository mRepository;
 
     private LiveData<List<Word>> mAllWords;
+    private LiveData<Word> mSelectedWord;
+    private int mWordId;
 
     public WordViewModel(Application application) {
         super(application);
         mRepository = new WordRepository(application);
         mAllWords = mRepository.getAllWords();
+        mSelectedWord = mRepository.getWordById(mWordId);
     }
 
     /*public WordViewModel(WordRepository repository) {
@@ -23,8 +26,11 @@ public class WordViewModel extends AndroidViewModel {
         mRepository = repository;
     }*/
 
-    LiveData<List<Word>> getAllWords() {
-       // mAllWords = mRepository.getAllWords();
+    public LiveData<List<Word>> getAllWords() {
         return mAllWords;
+    }
+
+    public LiveData<Word> getWordById() {
+        return mSelectedWord;
     }
 }

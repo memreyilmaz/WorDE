@@ -13,14 +13,19 @@ import java.util.List;
 public interface WordDao {
 
 
-    @Query("SELECT * from wordlist ORDER BY name")
+    @Query("SELECT * FROM wordlist ORDER BY name")
     LiveData<List<Word>> getAllWords();
 
-    @Query("SELECT * from wordlist ORDER BY level")
+    @Query("SELECT * FROM wordlist ORDER BY level")
     LiveData<List<Word>> getWordsByLevels();
 
-    @Query("SELECT * from wordlist ORDER BY favourite ASC")
+    @Query("SELECT * FROM wordlist ORDER BY favourite ASC")
     LiveData<List<Word>> getFavouritedWords();
+
+    //@Query(("SELECT * from wordlist ORDER BY"))
+
+    @Query("SELECT * FROM wordlist WHERE _id = :id")
+    LiveData<Word> getWordById(int id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Word word);

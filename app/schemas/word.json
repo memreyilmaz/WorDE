@@ -5,7 +5,7 @@
     "entities": [
       {
         "tableName": "word",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT,`level` TEXT NOT NULL, `artikel` TEXT, `name` TEXT NOT NULL, `example` TEXT NOT NULL, `favourite` INTEGER NOT NULL DEFAULT 0)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,`level` TEXT NOT NULL, `artikel` TEXT, `name` TEXT NOT NULL, `example` TEXT NOT NULL, `favourite` INTEGER NOT NULL DEFAULT 0)",
         "fields": [
           {
             "fieldPath": "mWordId",
@@ -48,7 +48,7 @@
           "columnNames": [
             "_id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []

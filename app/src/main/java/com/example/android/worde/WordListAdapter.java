@@ -13,6 +13,8 @@ import java.util.List;
 public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordViewHolder> {
         private List<Word> mWords;
         private final LayoutInflater mInflater;
+        private static ClickListener clickListener;
+
 
     public WordListAdapter(Context context) {
             mInflater = LayoutInflater.from(context);
@@ -43,6 +45,10 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
         notifyDataSetChanged();
     }
 
+    public Word getWordAtPosition(int position) {
+        return mWords.get(position);
+    }
+
     public class WordViewHolder extends RecyclerView.ViewHolder {
 
             private TextView mArtikel;
@@ -55,6 +61,12 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
                 mArtikel = itemView.findViewById(R.id.artikel_text_view);
                 mWordName = itemView.findViewById(R.id.word_text_view);
                 mExample = itemView.findViewById(R.id.example_text_view);
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        clickListener.onItemClick(view, getAdapterPosition());
+                    }
+                });
 
             }
 
@@ -70,6 +82,14 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
             }
         }
 
+
+    public void setOnItemClickListener(ClickListener clickListener) {
+        WordListAdapter.clickListener = clickListener;
     }
+
+    public interface ClickListener {
+        void onItemClick(View v, int position);
+    }
+}
 
 
