@@ -1,4 +1,4 @@
-package com.example.android.worde;
+package com.example.android.worde.ui.list;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.android.worde.R;
+import com.example.android.worde.database.Word;
 
 import java.util.List;
 

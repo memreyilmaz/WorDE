@@ -1,4 +1,4 @@
-package com.example.android.worde;
+package com.example.android.worde.database;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -16,13 +16,11 @@ public interface WordDao {
     @Query("SELECT * FROM wordlist ORDER BY name")
     LiveData<List<Word>> getAllWords();
 
-    @Query("SELECT * FROM wordlist ORDER BY level")
-    LiveData<List<Word>> getWordsByLevels();
+    @Query("SELECT * FROM wordlist WHERE level = :level")
+    LiveData<List<Word>> getWordsByLevels(String level);
 
     @Query("SELECT * FROM wordlist ORDER BY favourite ASC")
     LiveData<List<Word>> getFavouritedWords();
-
-    //@Query(("SELECT * from wordlist ORDER BY"))
 
     @Query("SELECT * FROM wordlist WHERE _id = :id")
     LiveData<Word> getWordById(int id);

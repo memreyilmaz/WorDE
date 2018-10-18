@@ -1,9 +1,7 @@
-package com.example.android.worde;
+package com.example.android.worde.ui.detail;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
+import com.example.android.worde.R;
+import com.example.android.worde.database.WordViewModel;
 
 import butterknife.ButterKnife;
 
@@ -35,13 +34,13 @@ public class WordDetailFragment extends Fragment {
 
         WordViewModel mViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
 
-        mViewModel.getWordById().observe(this, new Observer<List<Word>>() {
+/*        mViewModel.getWordById().observe(this, new Observer<List<Word>>() {
             @Override
             public void onChanged(@Nullable List<Word> words) {
                 // Update the cached copy of the words in the adapter.
                 mAdapter.setWordDetails(words);
             }
-        });
+        });*/
 
         return view;
     }

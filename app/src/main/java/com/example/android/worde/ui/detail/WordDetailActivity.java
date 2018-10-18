@@ -1,9 +1,9 @@
-package com.example.android.worde;
+package com.example.android.worde.ui.detail;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-import static com.example.android.worde.WordListActivity.EXTRA_DATA_ID;
+import com.example.android.worde.R;
 
 public class WordDetailActivity extends AppCompatActivity {
 
@@ -13,7 +13,7 @@ public class WordDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_word_detail);
 
         Bundle extras = getIntent().getExtras();
-        extras.getString(EXTRA_DATA_ID);
+        //extras.getString(EXTRA_DATA_ID);
         WordDetailFragment fragment = new WordDetailFragment();
 
         getSupportFragmentManager().beginTransaction()
