@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.android.popularmoviesstagetwo.MainActivity">
+
+    <item
+        android:id="@+id/action_bar_fav_icon"
+        android:icon="@drawable/ic_favorite"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_bar_share_icon"
+        android:icon="@drawable/ic_share"
+        app:showAsAction="always" />
+</menu>

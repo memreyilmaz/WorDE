@@ -10,13 +10,14 @@ import android.view.View;
 
 import com.example.android.worde.R;
 import com.example.android.worde.database.Word;
-import com.example.android.worde.ui.detail.WordDetailActivity;
 import com.example.android.worde.database.WordRepository;
+import com.example.android.worde.ui.detail.WordDetailActivity;
 
 import java.util.List;
 
 public class WordListActivity extends AppCompatActivity {
     public static final String SELECTED_LEVEL = "SELECTED_LEVEL";
+    int selectedWordId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,16 +45,15 @@ public class WordListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int position) {
                 Word word = mAdapter.getWordAtPosition(position);
-                launchUpdateWordActivity(word);
+                selectedWordId = word.getWordId();
+                launchUpdateWordActivity();
             }
         });
     }
 
-    public void launchUpdateWordActivity( Word word) {
+    public void launchUpdateWordActivity() {
         Intent intent = new Intent(this, WordDetailActivity.class);
-       // intent.putExtra(EXTRA_DATA_UPDATE_WORD, word.getWord());
-       // intent.putExtra(EXTRA_DATA_ID, word.getWordId());
-      //  startActivityForResult(intent, UPDATE_WORD_ACTIVITY_REQUEST_CODE);
+        intent.putExtra(WordDetailActivity.SELECTED_WORD, selectedWordId);
+        startActivity(intent);
     }
-
 }

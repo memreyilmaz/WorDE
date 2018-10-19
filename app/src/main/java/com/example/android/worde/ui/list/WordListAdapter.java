@@ -34,6 +34,7 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
         public void onBindViewHolder(@NonNull WordViewHolder holder, int position) {
             Word word = mWords.get(position);
             holder.bindTo(word);
+
         }
 
     @Override

@@ -43,19 +43,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         a2LevelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent a1levelIntent = new Intent(MainActivity.this, WordListActivity.class);
+                Intent a2levelIntent = new Intent(MainActivity.this, WordListActivity.class);
                 wordLevel = "a2";
-                a1levelIntent.putExtra(WordListActivity.SELECTED_LEVEL, wordLevel);
-                startActivity(a1levelIntent);
+                a2levelIntent.putExtra(WordListActivity.SELECTED_LEVEL, wordLevel);
+                startActivity(a2levelIntent);
             }
         });
         b1LevelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent a1levelIntent = new Intent(MainActivity.this, WordListActivity.class);
+                Intent b1levelIntent = new Intent(MainActivity.this, WordListActivity.class);
                 wordLevel = "b1";
-                a1levelIntent.putExtra(WordListActivity.SELECTED_LEVEL, wordLevel);
-                startActivity(a1levelIntent);
+                b1levelIntent.putExtra(WordListActivity.SELECTED_LEVEL, wordLevel);
+                startActivity(b1levelIntent);
             }
         });
 
