@@ -10,7 +10,6 @@ import com.example.android.worde.database.WordRepository;
 public class DetailViewModel extends ViewModel {
 
     private final LiveData<Word> mSelectedWord;
-
     private final int mId;
     private final WordRepository mRepository;
 
@@ -23,4 +22,5 @@ public class DetailViewModel extends ViewModel {
     public LiveData<Word> getWordById() {
         return mSelectedWord;
     }
+
 }

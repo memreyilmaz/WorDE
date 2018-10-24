@@ -3,7 +3,16 @@
     <string name="a1">A1</string>
     <string name="a2">A2</string>
     <string name="b1">B1</string>
-
+    <string name="user_favourites">Favourite Words</string>
+    <string name="other">Other</string>
+    <string name="app_info">Info</string>
+    <string name="share">Share Word</string>
+    <string name="favourite">Add To Favourites</string>
+    <string name="share_with">Share Using</string>
+    <string name="info_dialog">This app falan fistik 2018</string>
+    <string name="navigation_drawer_close">Navigation Drawer Closed</string>
+    <string name="navigation_drawer_open">Navigation Drawer Opened</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="added_to_favourites">Word Added To Your MyFavourites List</string>
+    <string name="removed_from_favourites">Word Removed From Your MyFavourites List</string>
 </resources>

@@ -22,7 +22,6 @@ public class WordDetailAdapter extends RecyclerView.Adapter<WordDetailAdapter.Wo
     public void onBindViewHolder(@NonNull WordDetailViewHolder holder, int position) {
         Word word = mWord;
         holder.bindTo(word);
-
     }
 
     @Override

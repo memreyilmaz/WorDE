@@ -24,4 +24,25 @@ public class WordRepository {
     public LiveData<List<Word>> getWordsByLevels(String level){
         return mWordDao.getWordsByLevels(level);
     }
+
+   /* public void setFavouriteStatus(int favourite, int id){
+       // new updateWordAsyncTask(mWordDao).execute(favourite,id);
+        mWordDao.addOrRemoveFavourite(favourite, id);
+    }*/
+
+   /* private static class updateWordAsyncTask extends AsyncTask<Void, Void, Void> {
+        private WordDao mAsyncTaskDao;
+        //private int favourite;
+
+        updateWordAsyncTask(WordDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mAsyncTaskDao.addOrRemoveFavourite(params[0]);
+
+            return null;
+        }
+    }*/
 }
