@@ -83,6 +83,7 @@ public class WordDetailActivity extends AppCompatActivity {
                   .append(mWordName).append("\n")
                   .append(mWordExample);
 
+
                 String wordToShare = shareStringBuilder.toString();
 
                 Intent shareIntent = new Intent();
