@@ -9,6 +9,7 @@
     <string name="share">Share Word</string>
     <string name="favourite">Add To Favourites</string>
     <string name="share_with">Share Using</string>
+    <string name="share_word_headline">Hello, I want to share this word with you;</string>
     <string name="info_dialog">This app falan fistik 2018</string>
     <string name="navigation_drawer_close">Navigation Drawer Closed</string>
     <string name="navigation_drawer_open">Navigation Drawer Opened</string>

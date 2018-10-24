@@ -19,6 +19,9 @@ public class WordDetailActivity extends AppCompatActivity {
     WordRepository mRepository;
     int mWordID;
     int mWordFavouriteStatus;
+    String mWordArtikel;
+    String mWordName;
+    String mWordExample;
 
     // FavouriteViewModel mFavViewModel;
 
@@ -49,6 +52,9 @@ public class WordDetailActivity extends AppCompatActivity {
                // mExample.setText(word.getWordExample());
                 mWordID = word.getWordId();
                 mWordFavouriteStatus = word.getWordFavourite();
+                mWordArtikel = word.getWordArtikel();
+                mWordName = word.getWordName();
+                mWordExample = word.getWordExample();
             }
         });
 
@@ -71,10 +77,19 @@ public class WordDetailActivity extends AppCompatActivity {
               //  addToFavourites();
                 return true;
             case R.id.action_bar_share_icon:
+                StringBuilder shareStringBuilder = new StringBuilder();
+                shareStringBuilder.append(getResources().getString(R.string.share_word_headline)).append("\n").append("\n")
+                  .append(mWordArtikel).append(" ")
+                  .append(mWordName).append("\n")
+                  .append(mWordExample);
+
+                String wordToShare = shareStringBuilder.toString();
+
                 Intent shareIntent = new Intent();
                 shareIntent.setAction(Intent.ACTION_SEND);
-                shareIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, wordToShare);
                 shareIntent.setType("text/plain");
+
                 startActivity(Intent.createChooser(shareIntent,getResources().getText(R.string.share_with)));
                 return true;
             default:
