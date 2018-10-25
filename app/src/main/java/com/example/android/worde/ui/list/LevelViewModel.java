@@ -2,16 +2,15 @@ package com.example.android.worde.ui.list;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
+import android.arch.paging.PagedList;
 
 import com.example.android.worde.database.Word;
 import com.example.android.worde.database.WordRepository;
 
-import java.util.List;
-
 
 public class LevelViewModel extends ViewModel {
 
-    private final LiveData<List<Word>> mSelectedLevelWords;
+    private final LiveData<PagedList<Word>> mSelectedLevelWords;
 
     private final String mLevel;
     private final WordRepository mRepository;
@@ -22,7 +21,7 @@ public class LevelViewModel extends ViewModel {
         mSelectedLevelWords = mRepository.getWordsByLevels(mLevel);
     }
 
-    public LiveData<List<Word>> getWordsByLevels() {
+    public LiveData<PagedList<Word>> getWordsByLevels() {
         return mSelectedLevelWords;
     }
 }

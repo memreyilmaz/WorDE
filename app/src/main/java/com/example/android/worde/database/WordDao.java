@@ -1,6 +1,7 @@
 package com.example.android.worde.database;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.paging.PagedList;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
@@ -17,7 +18,7 @@ public interface WordDao {
     LiveData<List<Word>> getAllWords();
 
     @Query("SELECT * FROM wordlist WHERE level = :level")
-    LiveData<List<Word>> getWordsByLevels(String level);
+    LiveData<PagedList<Word>> getWordsByLevels(String level);
 
     @Query("SELECT * FROM wordlist ORDER BY favourite ASC")
     LiveData<List<Word>> getFavouritedWords();

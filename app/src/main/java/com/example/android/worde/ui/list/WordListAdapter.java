@@ -1,7 +1,8 @@
 package com.example.android.worde.ui.list;
 
-import android.content.Context;
+import android.arch.paging.PagedListAdapter;
 import android.support.annotation.NonNull;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,26 +14,30 @@ import com.example.android.worde.database.Word;
 
 import java.util.List;
 
-public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordViewHolder> {
+public class WordListAdapter extends PagedListAdapter<Word,WordListAdapter.WordViewHolder> {
         private List<Word> mWords;
-        private final LayoutInflater mInflater;
+//        private final LayoutInflater mInflater;
         private static ClickListener clickListener;
 
 
-    public WordListAdapter(Context context) {
-            mInflater = LayoutInflater.from(context);
-        }
+  /*  public WordListAdapter(Context context) {
+        mInflater = LayoutInflater.from(context);
+        }*/
+
+    public WordListAdapter() {
+        super(DIFF_CALLBACK);
+    }
 
         @NonNull
         @Override
         public WordViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View itemView = mInflater.inflate(R.layout.recycler_view_item, parent, false);
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item, parent, false);
             return new WordViewHolder(itemView);
         }
-
-        @Override
+    @Override
         public void onBindViewHolder(@NonNull WordViewHolder holder, int position) {
-            Word word = mWords.get(position);
+            //Word word = mWords.get(position);
+            Word word = getItem(position);
             holder.bindTo(word);
 
         }
@@ -94,6 +99,20 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
     public interface ClickListener {
         void onItemClick(View v, int position);
     }
+
+    private static final DiffUtil.ItemCallback<Word> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<Word> () {
+                @Override
+                public boolean areItemsTheSame(@NonNull Word oldItem, @NonNull Word newItem) {
+                    return oldItem.getWordName().equals(newItem.getWordName());
+                }
+
+                @Override
+                public boolean areContentsTheSame(@NonNull Word oldItem,
+                                                  @NonNull Word newItem) {
+                    return oldItem == newItem;
+                }
+            };
 }
 
 
