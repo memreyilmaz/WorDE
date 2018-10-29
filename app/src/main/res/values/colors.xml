@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">@color/wordDarkBlue</color>
+    <color name="colorPrimaryDark">@color/wordDarkestBlue</color>
+    <color name="colorAccent">@color/wordOrange</color>
+
+    <color name="wordLightBlue">#F2F4F7</color>
+    <color name="wordBlue">#2074AD</color>
+    <color name="wordRed">#E2001A</color>
+    <color name="wordDarkBlue">#00285A</color>
+    <color name="wordDarkestBlue">#000030</color>
+    <color name="wordSkyblue">#86C7EF</color>
+    <color name="wordOrange">#EC6707</color>
+    <color name="wordYellow">#FBB911</color>
+    <color name="wordBlack">#000000</color>
+
 </resources>

@@ -7,9 +7,9 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -22,15 +22,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     CardView a2LevelButton;
     CardView b1LevelButton;
     String wordLevel;
+    private DrawerLayout mDrawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        //toolbar.setNavigationIcon(R.mipmap.ic_launcher);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_favorite);
+       // getSupportActionBar().setLogo(R.drawable.ic_launcher_background);
+        //getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.menu_drawer);
 
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.menu_drawer);
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close );
+        /*ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close );
         mDrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerToggle.syncState();
+        mDrawerToggle.syncState();*/
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         WordViewModel mViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
@@ -74,23 +83,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.nav_level_a1) {
+        switch (item.getItemId()) {
+            case R.id.nav_level_a1:
             onClick(a1LevelButton);
-        } else if (id == R.id.nav_level_a2) {
+            break;
+            case R.id.nav_level_a2:
             onClick(a2LevelButton);
-        } else if (id == R.id.nav_level_b1) {
+            break;
+            case R.id.nav_level_b1:
             onClick(b1LevelButton);
-        } else if (id == R.id.nav_user_favourites) {
-
-        } else if (id == R.id.nav_app_info){
+            break;
+            case R.id.nav_user_favourites:
+            break;
+            case R.id.nav_app_info:
             showInfoDialog();
+            break;
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.menu_drawer);
-        drawer.closeDrawer(GravityCompat.START);
+        mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 }

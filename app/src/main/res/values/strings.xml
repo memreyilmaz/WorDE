@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WorDe</string>
+    <string name="app_name">WorDE</string>
     <string name="a1">A1</string>
     <string name="a2">A2</string>
     <string name="b1">B1</string>
@@ -10,10 +10,14 @@
     <string name="favourite">Add To Favourites</string>
     <string name="share_with">Share Using</string>
     <string name="share_word_headline">Hello, I want to share this word with you;</string>
-    <string name="info_dialog">This app falan fistik 2018</string>
+    <string name="info_dialog">This app is only developed for educational purposes 2018</string>
     <string name="navigation_drawer_close">Navigation Drawer Closed</string>
     <string name="navigation_drawer_open">Navigation Drawer Opened</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="added_to_favourites">Word Added To Your MyFavourites List</string>
     <string name="removed_from_favourites">Word Removed From Your MyFavourites List</string>
+    <string name="word_artikel">artikel</string>
+    <string name="word">word</string>
+    <string name="word_example">sample_sentence</string>
+
 </resources>

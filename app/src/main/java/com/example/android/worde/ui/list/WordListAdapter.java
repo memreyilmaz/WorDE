@@ -15,30 +15,27 @@ import com.example.android.worde.database.Word;
 import java.util.List;
 
 public class WordListAdapter extends PagedListAdapter<Word,WordListAdapter.WordViewHolder> {
-        private List<Word> mWords;
-//        private final LayoutInflater mInflater;
-        private static ClickListener clickListener;
-
-
-  /*  public WordListAdapter(Context context) {
-        mInflater = LayoutInflater.from(context);
-        }*/
+       private List<Word> mWords;
+       private static ClickListener clickListener;
 
     public WordListAdapter() {
         super(DIFF_CALLBACK);
     }
 
-        @NonNull
-        @Override
+    @NonNull
+    @Override
         public WordViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item, parent, false);
             return new WordViewHolder(itemView);
         }
     @Override
         public void onBindViewHolder(@NonNull WordViewHolder holder, int position) {
-            //Word word = mWords.get(position);
-            Word word = getItem(position);
+           Word word = mWords.get(position);
+           // Word word = getItem(position);
+            //holder.bindTo(word);
+        if(word != null) {
             holder.bindTo(word);
+        }
 
         }
 

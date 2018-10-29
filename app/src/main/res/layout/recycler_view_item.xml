@@ -9,15 +9,15 @@
         android:id="@+id/artikel_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="asdasd"/>
+        tools:text="@string/word_artikel"/>
     <TextView
         android:id="@+id/word_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="asdghfghfasd"/>
+        tools:text="@string/word"/>
     <TextView
         android:id="@+id/example_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="asdfghfghfghasd"/>
+        tools:text="@string/word_example"/>
 </LinearLayout>
