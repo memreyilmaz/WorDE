@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">WorDE</string>
 
-    <string name="a1">A1</string>
-    <string name="a2">A2</string>
-    <string name="b1">B1</string>
-    <string name="user_favourites">Favourite Words</string>
+    <string name="a1">Niveau A1</string>
+    <string name="a2">Niveau A2</string>
+    <string name="b1">Niveau B1</string>
+    <string name="user_favourites">Lieblingswörter</string>
     <string name="other">Other</string>
     <string name="app_info">Info</string>
     <string name="share">Share Word</string>
@@ -14,11 +14,11 @@
     <string name="info_dialog">This app is only developed for educational purposes 2018</string>
     <string name="navigation_drawer_close">Navigation Drawer Closed</string>
     <string name="navigation_drawer_open">Navigation Drawer Opened</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="added_to_favourites">Word Added To Your MyFavourites List</string>
-    <string name="removed_from_favourites">Word Removed From Your MyFavourites List</string>
+    <string name="added_to_favourites">Word Added To Your Favourite Words List</string>
+    <string name="removed_from_favourites">Word Removed From Your Favourite Words List</string>
     <string name="word_artikel">artikel</string>
     <string name="word">word</string>
     <string name="word_example">sample_sentence</string>
-
+    <string name="brandenburg_gate_license_note">Thomas Wolf, <a href="http://www.foto-tw.de"> www.foto-tw.com </a>, <a href = "https://commons.wikimedia.org/wiki/ File: Brandenburger_Tor_abends.jpg "> Brandenburg Gate Evening </a>, edit by M.Emre YILMAZ, <a href =" https://creativecommons.org/licenses/by-sa/3.0/legalcode " rel =" license " > CC BY-SA 3.0 </a></string>
+    <string name="walk_of_ideas_license_note">By Lienhard Schulz (Printing4 Walk of Ideas Berlin) [<a href="http://www.gnu.org/copyleft/fdl.html">GFDL</a> or <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0 </a>], <a href="https://commons.wikimedia.org/wiki/File:Antologie_Tedesche.png">via Wikimedia Commons</a></string>
 </resources>

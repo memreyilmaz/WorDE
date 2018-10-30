@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     CardView a1LevelButton;
     CardView a2LevelButton;
     CardView b1LevelButton;
+    CardView favouriteWordsButton;
     String wordLevel;
     private DrawerLayout mDrawerLayout;
 
@@ -41,15 +42,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerToggle.syncState();*/
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
         WordViewModel mViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
         a1LevelButton = (CardView) findViewById(R.id.level_a1_cardview);
         a2LevelButton = (CardView) findViewById(R.id.level_a2_cardview);
         b1LevelButton = (CardView) findViewById(R.id.level_b1_cardview);
+        favouriteWordsButton = (CardView) findViewById(R.id.favourite_words_cardview);
 
         a1LevelButton.setOnClickListener(this::onClick);
         a2LevelButton.setOnClickListener(this::onClick);
         b1LevelButton.setOnClickListener(this::onClick);
+        favouriteWordsButton.setOnClickListener(this::onClick);
    }
 
 
@@ -79,6 +83,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 b1levelIntent.putExtra(WordListActivity.SELECTED_LEVEL, wordLevel);
                 startActivity(b1levelIntent);
                 break;
+            case R.id.favourite_words_cardview:
+                //Intent b1levelIntent = new Intent(MainActivity.this, WordListActivity.class);
+                //wordLevel = "b1";
+                //b1levelIntent.putExtra(WordListActivity.SELECTED_LEVEL, wordLevel);
+                //startActivity(b1levelIntent);
+                break;
+
             default:
                 break;
         }
@@ -106,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             onClick(b1LevelButton);
             break;
             case R.id.nav_user_favourites:
+            onClick(favouriteWordsButton);
             break;
             case R.id.nav_app_info:
             showInfoDialog();
