@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = findViewById(R.id.toolbar);
         //toolbar.setNavigationIcon(R.mipmap.ic_launcher);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_favorite);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.wordelogosmalltransparent);
        // getSupportActionBar().setLogo(R.drawable.ic_launcher_background);
         //getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

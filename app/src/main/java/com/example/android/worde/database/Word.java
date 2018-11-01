@@ -32,9 +32,9 @@ public class Word {
     private String mWordExample;
     @NonNull
     @ColumnInfo (name = COL_FAVOURITE)
-    private Integer mWordFavourite;
+    private boolean mWordFavourite;
 
-    public Word(@NonNull String wordLevel, String wordArtikel, @NonNull String wordName, @NonNull String wordExample, @NonNull Integer wordFavourite) {
+    public Word(@NonNull String wordLevel, String wordArtikel, @NonNull String wordName, @NonNull String wordExample, @NonNull boolean wordFavourite) {
         this.mWordLevel = wordLevel;
         this.mWordArtikel = wordArtikel;
         this.mWordName = wordName;
@@ -65,7 +65,7 @@ public class Word {
         return mWordExample;
     }
     @NonNull
-    public Integer getWordFavourite() {
+    public boolean getWordFavourite() {
         return mWordFavourite;
     }
 }

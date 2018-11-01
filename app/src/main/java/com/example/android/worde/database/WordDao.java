@@ -15,14 +15,21 @@ import java.util.List;
 public interface WordDao {
 
 
-    @Query("SELECT * FROM wordlist ORDER BY name")
+    @Query("SELECT * FROM wordlist ORDER BY _id ASC")
     LiveData<List<Word>> getAllWords();
+
+    //@Query("SELECT * FROM wordlist LIMIT 1")
+    //Word[] getRandomWordForWidget();
 
     @Query("SELECT * FROM wordlist WHERE level = :level")
     DataSource.Factory<Integer,Word> getWordsByLevels(String level);
 
-    @Query("SELECT * FROM wordlist ORDER BY favourite ASC")
+    @Query("SELECT * FROM wordlist WHERE favourite = 1 ORDER BY _id ASC")
     LiveData<List<Word>> getFavouritedWords();
+
+    /*sample get favourites func
+    @Query("SELECT * FROM match WHERE liked = 1 ORDER BY match DESC LIMIT :limit")
+    fun getMatches(limit: Int = 6, liked: Boolean = true): Flowable<List<Match>>*/
 
     @Query("SELECT * FROM wordlist WHERE _id = :id")
     LiveData<Word> getWordById(int id);

@@ -18,7 +18,7 @@ public class WordDetailActivity extends AppCompatActivity {
     int selectedWord;
     WordRepository mRepository;
     int mWordID;
-    int mWordFavouriteStatus;
+    boolean mWordFavouriteStatus;
     String mWordArtikel;
     String mWordName;
     String mWordExample;
@@ -82,7 +82,6 @@ public class WordDetailActivity extends AppCompatActivity {
                   .append(mWordArtikel).append(" ")
                   .append(mWordName).append("\n")
                   .append(mWordExample);
-
 
                 String wordToShare = shareStringBuilder.toString();
 
