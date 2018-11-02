@@ -3,12 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="@dimen/card_view_padding"
         android:text="@string/info_dialog" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/card_view_padding"
+        android:text="@string/ampelmann_license_note" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -23,4 +31,5 @@
         android:layout_gravity="center"
         android:padding="@dimen/card_view_padding"
         android:text="@string/walk_of_ideas_license_note" />
+
 </LinearLayout>

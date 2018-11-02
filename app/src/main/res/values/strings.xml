@@ -4,6 +4,9 @@
     <string name="a1">Niveau A1</string>
     <string name="a2">Niveau A2</string>
     <string name="b1">Niveau B1</string>
+    <string name="landscape_a1">Niveau \n\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0A1</string>
+    <string name="landscape_a2">Niveau \n\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0A2</string>
+    <string name="landscape_b1">Niveau \n\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0B1</string>
     <string name="user_favourites">Lieblingswörter</string>
     <string name="other">Other</string>
     <string name="app_info">Info</string>
@@ -21,7 +24,7 @@
     <string name="word_example">sample_sentence</string>
     <string name="brandenburg_gate_license_note">Thomas Wolf, <a href="http://www.foto-tw.de"> www.foto-tw.com </a>, <a href="https://commons.wikimedia.org/wiki/ File: Brandenburger_Tor_abends.jpg "> Brandenburg Gate Evening </a>, edit by M.Emre YILMAZ, <a href=" https://creativecommons.org/licenses/by-sa/3.0/legalcode " rel=" license "> CC BY-SA 3.0 </a></string>
     <string name="walk_of_ideas_license_note">"Walk of Ideas - German Authors" by [<a href="https://www.flickr.com/photos/venana/">venana</a>], used under [<a href="https://creativecommons.org/licenses/by/2.0/">CC BY</a>] edited from original</string>
-
+    <string name="ampelmann_license_note">By Ampelmann.svg: German Democratic Republic / Karl Peglau (original design); Matthew Gates (SVG version)derivative work: MichaelFrey (Ampelmann.svg) [Public domain], <a href="https://commons.wikimedia.org/wiki/File:Ampelmann_Gr%C3%BCn.svg">via Wikimedia Commons</a></string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="widget_headline">Word Of The Day</string>
     <string name="add_widget">Add widget</string>
