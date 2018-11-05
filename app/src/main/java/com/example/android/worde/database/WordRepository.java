@@ -2,8 +2,6 @@ package com.example.android.worde.database;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
-import android.arch.paging.LivePagedListBuilder;
-import android.arch.paging.PagedList;
 
 import java.util.List;
 
@@ -23,10 +21,10 @@ public class WordRepository {
     public LiveData<Word> getWordById(int id){
         return mWordDao.getWordById(id);
     }
-    public LiveData<PagedList<Word>> getWordsByLevels(String level){
+    public LiveData<List<Word>> getWordsByLevels(String level){
 
-        //return mWordDao.getWordsByLevels(level);
-        return new LivePagedListBuilder<>(mWordDao.getWordsByLevels(level), /* page size */ 10).build();
+        return mWordDao.getWordsByLevels(level);
+        //return new LivePagedListBuilder<>(mWordDao.getWordsByLevels(level), /* page size */ 10).build();
     }
 
    /* public void setFavouriteStatus(int favourite, int id){

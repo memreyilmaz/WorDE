@@ -1,7 +1,6 @@
 package com.example.android.worde.database;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.paging.DataSource;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
@@ -22,7 +21,7 @@ public interface WordDao {
     //Word[] getRandomWordForWidget();
 
     @Query("SELECT * FROM wordlist WHERE level = :level")
-    DataSource.Factory<Integer,Word> getWordsByLevels(String level);
+    LiveData<List<Word>> getWordsByLevels(String level);
 
     @Query("SELECT * FROM wordlist WHERE favourite = 1 ORDER BY _id ASC")
     LiveData<List<Word>> getFavouritedWords();

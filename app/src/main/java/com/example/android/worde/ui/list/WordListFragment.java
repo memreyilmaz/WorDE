@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import com.example.android.worde.R;
+import com.futuremind.recyclerviewfastscroll.FastScroller;
 
 public class WordListFragment extends Fragment {
     RecyclerView wordListRecyclerView;
@@ -28,9 +28,13 @@ public class WordListFragment extends Fragment {
         LinearLayoutManager wordListLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
         wordListRecyclerView = view.findViewById(R.id.word_list_recyclerview);
+        FastScroller fastScroller = (FastScroller) view.findViewById(R.id.fastscroll);
+
         wordListRecyclerView.setLayoutManager(wordListLayoutManager);
         wordListRecyclerView.setHasFixedSize(true);
         wordListRecyclerView.setAdapter(mAdapter);
+
+        fastScroller.setRecyclerView(wordListRecyclerView);
 
         return view;
     }

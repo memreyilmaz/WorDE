@@ -1,8 +1,6 @@
 package com.example.android.worde.ui.list;
 
-import android.arch.paging.PagedListAdapter;
 import android.support.annotation.NonNull;
-import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +9,15 @@ import android.widget.TextView;
 
 import com.example.android.worde.R;
 import com.example.android.worde.database.Word;
+import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
 
 import java.util.List;
 
-public class WordListAdapter extends PagedListAdapter<Word,WordListAdapter.WordViewHolder> {
+public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordViewHolder> implements SectionTitleProvider {
        private List<Word> mWords;
        private static ClickListener clickListener;
 
     public WordListAdapter() {
-        super(DIFF_CALLBACK);
     }
 
     @NonNull
@@ -97,7 +95,15 @@ public class WordListAdapter extends PagedListAdapter<Word,WordListAdapter.WordV
         void onItemClick(View v, int position);
     }
 
-    private static final DiffUtil.ItemCallback<Word> DIFF_CALLBACK =
+    private String getWordPosition(int position) {
+        return String.valueOf(mWords.get(position));
+    }
+    @Override
+    public String getSectionTitle(int position) {
+        return getWordPosition(position).substring(0, 1);
+    }
+
+    /*private static final DiffUtil.ItemCallback<Word> DIFF_CALLBACK =
             new DiffUtil.ItemCallback<Word> () {
                 @Override
                 public boolean areItemsTheSame(@NonNull Word oldItem, @NonNull Word newItem) {
@@ -109,7 +115,7 @@ public class WordListAdapter extends PagedListAdapter<Word,WordListAdapter.WordV
                                                   @NonNull Word newItem) {
                     return oldItem == newItem;
                 }
-            };
+            };*/
 }
 
 

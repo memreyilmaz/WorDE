@@ -28,4 +28,9 @@
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
+    <style name="StyledScrollerTextAppearance">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+
 </resources>

@@ -1,9 +1,13 @@
 package com.example.android.worde;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.RemoteViews;
+
+import com.example.android.worde.ui.detail.WordDetailActivity;
 
 /**
  * Implementation of App Widget functionality.
@@ -14,11 +18,21 @@ public class WordOfTheDayWidget extends AppWidgetProvider {
                                 int appWidgetId) {
 
         CharSequence widgetText = context.getString(R.string.appwidget_text);
+
+        // Create an Intent to launch MainActivity when clicked
+        Intent intent = new Intent(context, WordDetailActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.word_of_the_day_widget);
+        // Widgets allow click handlers to only launch pending intents
+        views.setOnClickPendingIntent(R.id.appwidget_word_text,pendingIntent);
+        // Instruct the widget manager to update the widget
+        appWidgetManager.updateAppWidget(appWidgetId, views);
+        // Construct the RemoteViews object
+        /*RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.word_of_the_day_widget);
         views.setTextViewText(R.id.appwidget_text, widgetText);
         views.setTextViewText(R.id.appwidget_artikel_text, widgetText);
-        views.setTextViewText(R.id.appwidget_word_text, widgetText);
+        views.setTextViewText(R.id.appwidget_word_text, widgetText);*/
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
