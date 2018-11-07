@@ -46,15 +46,16 @@ public class WordDetailActivity extends AppCompatActivity {
         mViewModel.getWordById().observe(this, new Observer<Word>() {
             @Override
             public void onChanged(@Nullable Word word) {
-                mAdapter.setWord(word);
               ///  mArtikel.setText(word.getWordArtikel());
               //  mWordName.setText(word.getWordName());
                // mExample.setText(word.getWordExample());
-                mWordID = word.getWordId();
-                mWordFavouriteStatus = word.getWordFavourite();
-                mWordArtikel = word.getWordArtikel();
-                mWordName = word.getWordName();
-                mWordExample = word.getWordExample();
+            //    mWordID = word.getWordId();
+            //    mWordFavouriteStatus = word.getWordFavourite();
+            //    mWordArtikel = word.getWordArtikel();
+            //    mWordName = word.getWordName();
+            //    mWordExample = word.getWordExample();
+                mAdapter.setWord(word);
+
             }
         });
 

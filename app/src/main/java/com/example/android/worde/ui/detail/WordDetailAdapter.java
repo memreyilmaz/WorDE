@@ -12,6 +12,9 @@ import com.example.android.worde.database.Word;
 
 public class WordDetailAdapter extends RecyclerView.Adapter<WordDetailAdapter.WordDetailViewHolder> {
     private Word mWord;
+
+    public WordDetailAdapter() {
+    }
     @NonNull
     @Override
     public WordDetailViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -20,8 +23,8 @@ public class WordDetailAdapter extends RecyclerView.Adapter<WordDetailAdapter.Wo
 
     @Override
     public void onBindViewHolder(@NonNull WordDetailViewHolder holder, int position) {
-        Word word = mWord;
-        holder.bindTo(word);
+       // Word word = mWord;
+        holder.bindTo(mWord);
     }
 
     @Override
