@@ -41,11 +41,9 @@ public class Word {
         this.mWordExample = wordExample;
         this.mWordFavourite = wordFavourite;
     }
-
     public Integer getWordId() {
         return mWordId;
     }
-
     public void setWordId(Integer wordId) {
         this.mWordId = wordId;
     }

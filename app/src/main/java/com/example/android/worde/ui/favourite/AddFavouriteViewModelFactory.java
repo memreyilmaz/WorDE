@@ -16,9 +16,7 @@ public class AddFavouriteViewModelFactory  extends ViewModelProvider.NewInstance
         this.mRepository = repository;
         this.mFavourite = favourite;
         this.mId = id;
-
     }
-
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
         //noinspection unchecked

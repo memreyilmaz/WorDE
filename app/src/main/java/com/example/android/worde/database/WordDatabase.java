@@ -23,7 +23,6 @@ public abstract class WordDatabase extends RoomDatabase {
 
             }
         };
-
     @NonNull
     public static synchronized WordDatabase getInstance(final Context context) {
         if (INSTANCE == null) {
@@ -32,7 +31,7 @@ public abstract class WordDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                              WordDatabase.class, "word_database")
                              .addMigrations(MIGRATION_1_2)
-                            .allowMainThreadQueries()
+                            .allowMainThreadQueries() //TODO remove after moving add to favourites func to asynctask
                              .openHelperFactory(new AssetSQLiteOpenHelperFactory())
                              .build();
                 }

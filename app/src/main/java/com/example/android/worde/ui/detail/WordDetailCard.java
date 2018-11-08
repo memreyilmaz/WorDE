@@ -14,14 +14,11 @@ public class WordDetailCard extends CardView {
         super(context);
         initialize(context);
     }
-
     public WordDetailCard(Context context, AttributeSet attrs) {
         super(context, attrs);
         initialize(context);
     }
-
     public void initialize(Context context){
         LayoutInflater.from(context).inflate(R.layout.word_detail_card_view, this);
-
     }
 }

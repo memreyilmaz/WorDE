@@ -18,9 +18,7 @@ public class DetailViewModel extends ViewModel {
         mId = id;
         mSelectedWord = mRepository.getWordById(mId);
     }
-
     public LiveData<Word> getWordById() {
         return mSelectedWord;
     }
-
 }

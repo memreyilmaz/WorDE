@@ -19,7 +19,6 @@ import com.example.android.worde.ui.list.WordListFragment;
 import java.util.List;
 
 public class FavouritesActivity extends AppCompatActivity {
-    //public static final String SELECTED_LEVEL = "SELECTED_LEVEL";
     int selectedWordId;
     LoadFavouritesViewModel mViewModel;
     WordListAdapter mAdapter;
@@ -28,7 +27,6 @@ public class FavouritesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_word_list);
-        //String selectedLevel = getIntent().getStringExtra(SELECTED_LEVEL);
         mRepository = new WordRepository(this.getApplication());
 
         WordListFragment fragment = new WordListFragment();
@@ -44,32 +42,25 @@ public class FavouritesActivity extends AppCompatActivity {
                 mAdapter.setWords(words);
             }
         });
-
-
-
         mAdapter.setOnItemClickListener(new WordListAdapter.ClickListener()  {
-
             @Override
             public void onItemClick(View v, int position) {
                 Word word = mAdapter.getWordAtPosition(position);
                 selectedWordId = word.getWordId();
                 launchUpdateWordActivity();
             }
-
             @Override
             public void onFavouriteClick(View v, int position) {
-                addToFavourites(position);
+                removeFromFavourites(position);
             }
         });
     }
-
     public void launchUpdateWordActivity() {
         Intent intent = new Intent(this, WordDetailActivity.class);
         intent.putExtra(WordDetailActivity.SELECTED_WORD, selectedWordId);
         startActivity(intent);
     }
-
-    public void addToFavourites(int position){
+    public void removeFromFavourites(int position){
         Word word = mAdapter.getWordAtPosition(position);
         int mWordID = word.getWordId();
         boolean mWordFavouriteStatus = word.getWordFavourite();
@@ -77,14 +68,7 @@ public class FavouritesActivity extends AppCompatActivity {
         AddFavouriteViewModelFactory factory = new AddFavouriteViewModelFactory(mRepository,mWordFavourite, mWordID);
         AddFavouriteViewModel mFavViewModel = ViewModelProviders.of(this,factory).get(AddFavouriteViewModel.class);
 
-
-        if (!mWordFavouriteStatus) {
-            mFavViewModel.setFavouriteStatus(1, mWordID);
-            Toast.makeText(this, R.string.added_to_favourites, Toast.LENGTH_LONG).show();
-        } else {
-            mFavViewModel.setFavouriteStatus(0, mWordID);
-            Toast.makeText(this, R.string.removed_from_favourites, Toast.LENGTH_LONG).show();
-
-        }
+        mFavViewModel.setFavouriteStatus(0, mWordID);
+        Toast.makeText(this, R.string.removed_from_favourites, Toast.LENGTH_LONG).show();
     }
 }

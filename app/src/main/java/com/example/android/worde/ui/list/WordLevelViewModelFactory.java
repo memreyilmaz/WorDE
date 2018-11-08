@@ -15,7 +15,6 @@ public class WordLevelViewModelFactory  extends ViewModelProvider.NewInstanceFac
         this.mRepository = repository;
         this.mLevel = level;
     }
-
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
         //noinspection unchecked

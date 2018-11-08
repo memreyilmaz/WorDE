@@ -1,6 +1,5 @@
 package com.example.android.worde.ui;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -14,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.android.worde.R;
-import com.example.android.worde.database.WordViewModel;
 import com.example.android.worde.ui.favourite.FavouritesActivity;
 import com.example.android.worde.ui.list.WordListActivity;
 
@@ -37,32 +35,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
        // getSupportActionBar().setLogo(R.drawable.ic_launcher_background);
         //getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.menu_drawer);
+        mDrawerLayout = findViewById(R.id.menu_drawer);
 
         /*ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close );
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerToggle.syncState();*/
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
-        WordViewModel mViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
-        a1LevelButton = (CardView) findViewById(R.id.level_a1_cardview);
-        a2LevelButton = (CardView) findViewById(R.id.level_a2_cardview);
-        b1LevelButton = (CardView) findViewById(R.id.level_b1_cardview);
-        favouriteWordsButton = (CardView) findViewById(R.id.favourite_words_cardview);
+        a1LevelButton = findViewById(R.id.level_a1_cardview);
+        a2LevelButton = findViewById(R.id.level_a2_cardview);
+        b1LevelButton = findViewById(R.id.level_b1_cardview);
+        favouriteWordsButton = findViewById(R.id.favourite_words_cardview);
 
         a1LevelButton.setOnClickListener(this::onClick);
         a2LevelButton.setOnClickListener(this::onClick);
         b1LevelButton.setOnClickListener(this::onClick);
         favouriteWordsButton.setOnClickListener(this::onClick);
    }
-
-
     public void showInfoDialog() {
         DialogFragment infoFragment = new InfoDialogFragment();
         infoFragment.show(getSupportFragmentManager(), "info");
     }
-
         @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -86,16 +80,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.favourite_words_cardview:
                 Intent favouriteIntent = new Intent(MainActivity.this, FavouritesActivity.class);
-                //wordLevel = "b1";
-                //b1levelIntent.putExtra(WordListActivity.SELECTED_LEVEL, wordLevel);
                 startActivity(favouriteIntent);
                 break;
-
             default:
                 break;
         }
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

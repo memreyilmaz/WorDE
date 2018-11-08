@@ -16,7 +16,6 @@ public class DetailViewModelFactory  extends ViewModelProvider.NewInstanceFactor
         this.mRepository = repository;
         this.mId = id;
     }
-
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
         //noinspection unchecked

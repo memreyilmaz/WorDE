@@ -21,13 +21,13 @@ public class WordListActivity extends AppCompatActivity {
     public static final String SELECTED_LEVEL = "SELECTED_LEVEL";
     int selectedWordId;
     WordListAdapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_word_list);
         String selectedLevel = getIntent().getStringExtra(SELECTED_LEVEL);
         WordRepository mRepository = new WordRepository(this.getApplication());
-
         WordListFragment fragment = new WordListFragment();
         mAdapter = new WordListAdapter();
         fragment.setWordListAdapter(mAdapter);
@@ -44,32 +44,27 @@ public class WordListActivity extends AppCompatActivity {
             }
         });
         mAdapter.setOnItemClickListener(new WordListAdapter.ClickListener()  {
-
             @Override
             public void onItemClick(View v, int position) {
                 Word word = mAdapter.getWordAtPosition(position);
                 selectedWordId = word.getWordId();
                 launchUpdateWordActivity();
             }
-
             @Override
             public void onFavouriteClick(View v, int position) {
                 addToFavourites(position);
             }
         });
     }
-
     public void launchUpdateWordActivity() {
         Intent intent = new Intent(this, WordDetailActivity.class);
         intent.putExtra(WordDetailActivity.SELECTED_WORD, selectedWordId);
         startActivity(intent);
     }
-
     public void addToFavourites(int position){
         AddFavouriteViewModel mFavViewModel = ViewModelProviders.of(this).get(AddFavouriteViewModel.class);
         Word word = mAdapter.getWordAtPosition(position);
         int mWordID = word.getWordId();
-
         boolean mWordFavouriteStatus = word.getWordFavourite();
 
         if (!mWordFavouriteStatus) {
@@ -78,7 +73,6 @@ public class WordListActivity extends AppCompatActivity {
         } else {
             mFavViewModel.setFavouriteStatus(0, mWordID);
             Toast.makeText(this, R.string.removed_from_favourites, Toast.LENGTH_LONG).show();
-
         }
     }
 }

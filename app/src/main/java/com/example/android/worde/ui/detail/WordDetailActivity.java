@@ -53,22 +53,10 @@ public class WordDetailActivity extends AppCompatActivity {
                // mExample.setText(word.getWordExample());
             //    mWordID = word.getWordId();
                 mWordFavouriteStatus = word.getWordFavourite();
-            //    mWordArtikel = word.getWordArtikel();
-            //    mWordName = word.getWordName();
-            //    mWordExample = word.getWordExample();
-
                 mAdapter.setWord(word);
-
             }
         });
-
-
-        /*
-        Bundle bundle=new Bundle();
-        bundle.putInt("name", selectedWord);
-        fragment.setArguments(bundle);*/
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_detail_actions, menu);
@@ -108,8 +96,6 @@ public class WordDetailActivity extends AppCompatActivity {
         int mWordFavourite = mWordFavouriteStatus ? 1 : 0;
         AddFavouriteViewModelFactory factory = new AddFavouriteViewModelFactory(mRepository,mWordFavourite, mWordID);
         AddFavouriteViewModel mFavViewModel = ViewModelProviders.of(this,factory).get(AddFavouriteViewModel.class);
-
-
         if (!mWordFavouriteStatus) {
             mFavViewModel.setFavouriteStatus(1, mWordID);
             Toast.makeText(this, R.string.added_to_favourites, Toast.LENGTH_LONG).show();
@@ -117,24 +103,7 @@ public class WordDetailActivity extends AppCompatActivity {
             mFavViewModel.setFavouriteStatus(0, mWordID);
             Toast.makeText(this, R.string.removed_from_favourites, Toast.LENGTH_LONG).show();
         }*/
+
+
     }
-        //noinspection unchecked
-        /*mViewModel.setFavouriteStatus().observe(this, new Observer<Word>() {
-            @Override
-            public void onChanged(@Nullable Word word) {
-                int favourite = word.getWordFavourite();
-                int wordId = word.getWordId();
-                int isFavourite = 1;
-                int notFavourite = 0;
-                if (favourite == 0){
-                    //noinspection unchecked
-                    mViewModel.setFavouriteStatus().setValue(wordId,isFavourite);
-                 //   Toast.makeText(this, R.string.added_to_favourites, Toast.LENGTH_LONG).show();
-                } else
-                    //noinspection unchecked
-                    mViewModel.setFavouriteStatus().setValue(wordId,notFavourite);
-                   // Toast.makeText(this, R.string.removed_from_favourites, Toast.LENGTH_LONG).show();
-            }
-        });*/
-    //}
 }

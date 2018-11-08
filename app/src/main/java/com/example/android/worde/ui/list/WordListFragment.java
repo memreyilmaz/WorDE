@@ -18,8 +18,6 @@ public class WordListFragment extends Fragment {
 
     public WordListFragment() {
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -33,7 +31,6 @@ public class WordListFragment extends Fragment {
         wordListRecyclerView.setLayoutManager(wordListLayoutManager);
         wordListRecyclerView.setHasFixedSize(true);
         wordListRecyclerView.setAdapter(mAdapter);
-
         fastScroller.setRecyclerView(wordListRecyclerView);
 
         return view;

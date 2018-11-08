@@ -18,7 +18,6 @@ public class WordDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_word_detail, container, false);
-       // wordDetailCardView = view.findViewById(R.id.word_detail_cardview);
         LinearLayoutManager wordDetailLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
         wordDetailCardView = view.findViewById(R.id.word_detail_recyclerview);
@@ -26,27 +25,8 @@ public class WordDetailFragment extends Fragment {
         wordDetailCardView.setHasFixedSize(true);
         wordDetailCardView.setAdapter(mAdapter);
 
-        //TextView mArtikel = view.findViewById(R.id.word_detail_artikel_text_view);
-        //TextView mWordName = view.findViewById(R.id.word_detail_word_text_view);
-        //TextView mExample = view.findViewById(R.id.word_detail_example_text_view);
-//        int selectedWord=getArguments().getInt("name");
-        //WordRepository mRepository = new WordRepository(getActivity().getApplication());
-
-      /*  DetailViewModelFactory factory = new DetailViewModelFactory(mRepository, selectedWord);
-        DetailViewModel mViewModel = ViewModelProviders.of(this, factory).get(DetailViewModel.class);
-
-        mViewModel.getWordById().observe(this, new Observer<Word>() {
-            @Override
-            public void onChanged(@Nullable Word word) {
-
-                mArtikel.setText(word.getWordArtikel());
-                mWordName.setText(word.getWordName());
-                mExample.setText(word.getWordExample());
-            }
-        });*/
         return view;
     }
-
     public void setWordDetailAdapter(WordDetailAdapter adapter){
         mAdapter = adapter;
     }
