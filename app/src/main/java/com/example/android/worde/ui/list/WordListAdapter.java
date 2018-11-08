@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.worde.R;
@@ -58,6 +59,7 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
             private TextView mArtikel;
             private TextView mWordName;
             private TextView mExample;
+            private ImageView mAddFavourite;
             private Word mWord;
 
             WordViewHolder(View itemView) {
@@ -65,6 +67,14 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
                 mArtikel = itemView.findViewById(R.id.artikel_text_view);
                 mWordName = itemView.findViewById(R.id.word_text_view);
                 mExample = itemView.findViewById(R.id.example_text_view);
+                mAddFavourite = itemView.findViewById(R.id.add_to_favourites_image_view);
+                mAddFavourite.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        clickListener.onFavouriteClick(view, getAdapterPosition());
+                    }
+                });
+
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -93,6 +103,7 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
 
     public interface ClickListener {
         void onItemClick(View v, int position);
+        void onFavouriteClick(View v, int position);
     }
 
     private String getWordPosition(int position) {

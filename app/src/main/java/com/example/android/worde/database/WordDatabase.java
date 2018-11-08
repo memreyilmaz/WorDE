@@ -32,6 +32,7 @@ public abstract class WordDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                              WordDatabase.class, "word_database")
                              .addMigrations(MIGRATION_1_2)
+                            .allowMainThreadQueries()
                              .openHelperFactory(new AssetSQLiteOpenHelperFactory())
                              .build();
                 }

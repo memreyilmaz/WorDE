@@ -26,6 +26,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.android.worde.ui.list.WordListActivity" />
         </activity>
+        <activity android:name=".ui.favourite.FavouritesActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.worde.ui.MainActivity" />
+        </activity>
 
         <receiver android:name=".WordOfTheDayWidget">
             <intent-filter>

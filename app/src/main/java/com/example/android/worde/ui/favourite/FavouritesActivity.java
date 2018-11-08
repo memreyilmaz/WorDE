@@ -1,4 +1,4 @@
-package com.example.android.worde.ui.list;
+package com.example.android.worde.ui.favourite;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -13,20 +13,23 @@ import com.example.android.worde.R;
 import com.example.android.worde.database.Word;
 import com.example.android.worde.database.WordRepository;
 import com.example.android.worde.ui.detail.WordDetailActivity;
-import com.example.android.worde.ui.favourite.AddFavouriteViewModel;
+import com.example.android.worde.ui.list.WordListAdapter;
+import com.example.android.worde.ui.list.WordListFragment;
 
 import java.util.List;
 
-public class WordListActivity extends AppCompatActivity {
-    public static final String SELECTED_LEVEL = "SELECTED_LEVEL";
+public class FavouritesActivity extends AppCompatActivity {
+    //public static final String SELECTED_LEVEL = "SELECTED_LEVEL";
     int selectedWordId;
+    LoadFavouritesViewModel mViewModel;
     WordListAdapter mAdapter;
+    WordRepository mRepository;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_word_list);
-        String selectedLevel = getIntent().getStringExtra(SELECTED_LEVEL);
-        WordRepository mRepository = new WordRepository(this.getApplication());
+        //String selectedLevel = getIntent().getStringExtra(SELECTED_LEVEL);
+        mRepository = new WordRepository(this.getApplication());
 
         WordListFragment fragment = new WordListFragment();
         mAdapter = new WordListAdapter();
@@ -34,15 +37,16 @@ public class WordListActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.word_list_container, fragment).commit();
 
-        WordLevelViewModelFactory factory = new WordLevelViewModelFactory(mRepository, selectedLevel);
-        LevelViewModel mViewModel = ViewModelProviders.of(this, factory).get(LevelViewModel.class);
-
-        mViewModel.getWordsByLevels().observe(this, new Observer<List<Word>>() {
+        mViewModel = ViewModelProviders.of(this).get(LoadFavouritesViewModel.class);
+        mViewModel.getFavouriteWords().observe(this, new Observer<List<Word>>() {
             @Override
             public void onChanged(@Nullable List<Word> words) {
                 mAdapter.setWords(words);
             }
         });
+
+
+
         mAdapter.setOnItemClickListener(new WordListAdapter.ClickListener()  {
 
             @Override
@@ -66,11 +70,13 @@ public class WordListActivity extends AppCompatActivity {
     }
 
     public void addToFavourites(int position){
-        AddFavouriteViewModel mFavViewModel = ViewModelProviders.of(this).get(AddFavouriteViewModel.class);
         Word word = mAdapter.getWordAtPosition(position);
         int mWordID = word.getWordId();
-
         boolean mWordFavouriteStatus = word.getWordFavourite();
+        int mWordFavourite = mWordFavouriteStatus ? 1 : 0;
+        AddFavouriteViewModelFactory factory = new AddFavouriteViewModelFactory(mRepository,mWordFavourite, mWordID);
+        AddFavouriteViewModel mFavViewModel = ViewModelProviders.of(this,factory).get(AddFavouriteViewModel.class);
+
 
         if (!mWordFavouriteStatus) {
             mFavViewModel.setFavouriteStatus(1, mWordID);

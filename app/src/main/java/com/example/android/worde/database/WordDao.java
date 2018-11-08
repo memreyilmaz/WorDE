@@ -24,9 +24,10 @@ public interface WordDao {
     LiveData<List<Word>> getWordsByLevels(String level);
 
     @Query("SELECT * FROM wordlist WHERE favourite = 1 ORDER BY _id ASC")
-    LiveData<List<Word>> getFavouritedWords();
+    LiveData<List<Word>> getFavouriteWords();
 
     /*sample get favourites func
+
     @Query("SELECT * FROM match WHERE liked = 1 ORDER BY match DESC LIMIT :limit")
     fun getMatches(limit: Int = 6, liked: Boolean = true): Flowable<List<Match>>*/
 
@@ -37,6 +38,6 @@ public interface WordDao {
     void insert(Word word);
 
     @Query("UPDATE wordlist SET favourite = :favourite WHERE _id = :id")
-    public void addOrRemoveFavourite(int favourite, int id);
+    void addOrRemoveFavourite(int favourite, int id);
 
 }

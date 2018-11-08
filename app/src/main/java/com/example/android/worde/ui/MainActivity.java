@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.example.android.worde.R;
 import com.example.android.worde.database.WordViewModel;
+import com.example.android.worde.ui.favourite.FavouritesActivity;
 import com.example.android.worde.ui.list.WordListActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
@@ -84,10 +85,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(b1levelIntent);
                 break;
             case R.id.favourite_words_cardview:
-                //Intent b1levelIntent = new Intent(MainActivity.this, WordListActivity.class);
+                Intent favouriteIntent = new Intent(MainActivity.this, FavouritesActivity.class);
                 //wordLevel = "b1";
                 //b1levelIntent.putExtra(WordListActivity.SELECTED_LEVEL, wordLevel);
-                //startActivity(b1levelIntent);
+                startActivity(favouriteIntent);
                 break;
 
             default:

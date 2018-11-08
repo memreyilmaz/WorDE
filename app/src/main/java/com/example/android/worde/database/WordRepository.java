@@ -22,15 +22,18 @@ public class WordRepository {
         return mWordDao.getWordById(id);
     }
     public LiveData<List<Word>> getWordsByLevels(String level){
-
         return mWordDao.getWordsByLevels(level);
         //return new LivePagedListBuilder<>(mWordDao.getWordsByLevels(level), /* page size */ 10).build();
     }
 
-   /* public void setFavouriteStatus(int favourite, int id){
+    public LiveData<List<Word>> getFavouriteWords(){
+        return mWordDao.getFavouriteWords();
+    }
+
+    public void setFavouriteStatus(int favourite, int id){
        // new updateWordAsyncTask(mWordDao).execute(favourite,id);
         mWordDao.addOrRemoveFavourite(favourite, id);
-    }*/
+    }
 
    /* private static class updateWordAsyncTask extends AsyncTask<Void, Void, Void> {
         private WordDao mAsyncTaskDao;

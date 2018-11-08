@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.example.android.worde.R;
 import com.example.android.worde.database.Word;
 import com.example.android.worde.database.WordRepository;
+import com.example.android.worde.ui.favourite.AddFavouriteViewModel;
 
 public class WordDetailActivity extends AppCompatActivity {
     public static final String SELECTED_WORD = "SELECTED_WORD";
@@ -22,8 +23,9 @@ public class WordDetailActivity extends AppCompatActivity {
     String mWordArtikel;
     String mWordName;
     String mWordExample;
+    WordDetailAdapter mAdapter;
 
-    // FavouriteViewModel mFavViewModel;
+    AddFavouriteViewModel mFavViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,7 @@ public class WordDetailActivity extends AppCompatActivity {
         selectedWord = getIntent().getIntExtra(SELECTED_WORD, 0);
 
         WordDetailFragment fragment = new WordDetailFragment();
-        WordDetailAdapter mAdapter = new WordDetailAdapter();
+        mAdapter = new WordDetailAdapter();
         fragment.setWordDetailAdapter(mAdapter);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.word_detail_container, fragment).commit();
@@ -50,10 +52,11 @@ public class WordDetailActivity extends AppCompatActivity {
               //  mWordName.setText(word.getWordName());
                // mExample.setText(word.getWordExample());
             //    mWordID = word.getWordId();
-            //    mWordFavouriteStatus = word.getWordFavourite();
+                mWordFavouriteStatus = word.getWordFavourite();
             //    mWordArtikel = word.getWordArtikel();
             //    mWordName = word.getWordName();
             //    mWordExample = word.getWordExample();
+
                 mAdapter.setWord(word);
 
             }
@@ -75,7 +78,7 @@ public class WordDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_bar_fav_icon:
-              //  addToFavourites();
+                //addToFavourites(position);
                 return true;
             case R.id.action_bar_share_icon:
                 StringBuilder shareStringBuilder = new StringBuilder();
@@ -98,18 +101,23 @@ public class WordDetailActivity extends AppCompatActivity {
         }
     }
 
-   /* public void addToFavourites(){
-        mFavViewModel = ViewModelProviders.of(this).get(FavouriteViewModel.class);
-        //mFavViewModel.setFavouriteStatus;
+    public void addToFavourites(int position){
+        /*Word word = mAdapter.getWordAtPosition(position);
+        int mWordID = word.getWordId();
+        boolean mWordFavouriteStatus = word.getWordFavourite();
+        int mWordFavourite = mWordFavouriteStatus ? 1 : 0;
+        AddFavouriteViewModelFactory factory = new AddFavouriteViewModelFactory(mRepository,mWordFavourite, mWordID);
+        AddFavouriteViewModel mFavViewModel = ViewModelProviders.of(this,factory).get(AddFavouriteViewModel.class);
 
-        if (mWordFavouriteStatus == 0){
-            mFavViewModel.setFavouriteStatus(1,mWordID);
-           Toast.makeText(this, R.string.added_to_favourites, Toast.LENGTH_LONG).show();
-        }else {
-            mFavViewModel.setFavouriteStatus(0,mWordID);
+
+        if (!mWordFavouriteStatus) {
+            mFavViewModel.setFavouriteStatus(1, mWordID);
+            Toast.makeText(this, R.string.added_to_favourites, Toast.LENGTH_LONG).show();
+        } else {
+            mFavViewModel.setFavouriteStatus(0, mWordID);
             Toast.makeText(this, R.string.removed_from_favourites, Toast.LENGTH_LONG).show();
-
         }*/
+    }
         //noinspection unchecked
         /*mViewModel.setFavouriteStatus().observe(this, new Observer<Word>() {
             @Override
