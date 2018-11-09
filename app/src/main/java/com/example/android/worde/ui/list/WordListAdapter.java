@@ -17,6 +17,7 @@ import java.util.List;
 public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordViewHolder> implements SectionTitleProvider {
        private List<Word> mWords;
        private static ClickListener clickListener;
+    private ImageView mAddFavourite;
 
     public WordListAdapter() {
     }
@@ -30,6 +31,7 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
         public void onBindViewHolder(@NonNull WordViewHolder holder, int position) {
         Word word = mWords.get(position);
         if(word != null) {
+
             holder.bindTo(word);
         }
     }
@@ -51,7 +53,6 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
             private TextView mArtikel;
             private TextView mWordName;
             private TextView mExample;
-            private ImageView mAddFavourite;
             private Word mWord;
 
             WordViewHolder(View itemView) {
@@ -82,6 +83,11 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
                 mArtikel.setText(word.getWordArtikel());
                 mWordName.setText(word.getWordName());
                 mExample.setText(word.getWordExample());
+                if (!word.getWordFavourite()){
+                    mAddFavourite.setImageResource(R.drawable.ic_favorite_border_red);
+                }else{
+                    mAddFavourite.setImageResource(R.drawable.ic_favorite_red);
+                }
             }
     }
     public void setOnItemClickListener(ClickListener clickListener) {

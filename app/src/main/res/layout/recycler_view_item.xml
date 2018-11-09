@@ -20,6 +20,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:paddingStart="16dp"
+        android:layout_marginEnd="80dp"
         android:paddingTop="4dp"
         android:paddingEnd="16dp"
         android:paddingBottom="4dp">
@@ -44,12 +45,12 @@
     </LinearLayout>
     <ImageView
         android:id="@+id/add_to_favourites_image_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="end|center_vertical"
         android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:clickable="true"
         android:contentDescription="@string/favourite"
-        android:focusable="true"
-        android:src="@drawable/ic_favorite_black" />
+        android:focusable="true"/>
 </android.support.v7.widget.CardView>
