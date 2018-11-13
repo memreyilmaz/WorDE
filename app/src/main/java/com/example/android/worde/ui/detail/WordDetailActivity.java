@@ -1,18 +1,24 @@
 package com.example.android.worde.ui.detail;
 
+import android.app.SearchManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.android.worde.R;
 import com.example.android.worde.database.Word;
 import com.example.android.worde.database.WordRepository;
 import com.example.android.worde.ui.favourite.AddFavouriteViewModel;
+import com.example.android.worde.ui.favourite.AddFavouriteViewModelFactory;
 
 public class WordDetailActivity extends AppCompatActivity {
     public static final String SELECTED_WORD = "SELECTED_WORD";
@@ -24,23 +30,24 @@ public class WordDetailActivity extends AppCompatActivity {
     String mWordName;
     String mWordExample;
     WordDetailAdapter mAdapter;
-
+    Word mCurrentWord;
     AddFavouriteViewModel mFavViewModel;
+    ImageView mFavouriteImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_word_detail);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setHomeButtonEnabled(true);
 
+        Toolbar toolbar = findViewById(R.id.detail_activity_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         selectedWord = getIntent().getIntExtra(SELECTED_WORD, 0);
 
-        WordDetailFragment fragment = new WordDetailFragment();
-        mAdapter = new WordDetailAdapter();
-        fragment.setWordDetailAdapter(mAdapter);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.word_detail_container, fragment).commit();
         mRepository = new WordRepository(this.getApplication());
         DetailViewModelFactory factory = new DetailViewModelFactory(mRepository, selectedWord);
         DetailViewModel mViewModel = ViewModelProviders.of(this, factory).get(DetailViewModel.class);
@@ -48,14 +55,27 @@ public class WordDetailActivity extends AppCompatActivity {
         mViewModel.getWordById().observe(this, new Observer<Word>() {
             @Override
             public void onChanged(@Nullable Word word) {
-              ///  mArtikel.setText(word.getWordArtikel());
-              //  mWordName.setText(word.getWordName());
-               // mExample.setText(word.getWordExample());
-            //    mWordID = word.getWordId();
-                mWordFavouriteStatus = word.getWordFavourite();
+
+                WordDetailFragment fragment = new WordDetailFragment();
+                mAdapter = new WordDetailAdapter(word);
+                fragment.setWordDetailAdapter(mAdapter);
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.word_detail_container, fragment).commit();
                 mAdapter.setWord(word);
+                getWordDetails();
+
+                mAdapter.setOnItemClickListener(new WordDetailAdapter.ClickListener()  {
+                    @Override
+                    public void onFavouriteClick(View v) {
+                       addToFavourites();
+                    }
+                });
+
             }
         });
+
+
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -65,8 +85,16 @@ public class WordDetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_bar_fav_icon:
-                //addToFavourites(position);
+            case R.id.action_bar_search_icon:
+                String wordToSearch;
+                if (mWordName.contains("\n")){
+                    wordToSearch = mWordName.substring(0, mWordName.indexOf("\n"));
+                }else {
+                    wordToSearch = mWordName;
+                }
+                Intent searchIntent = new Intent(Intent.ACTION_WEB_SEARCH);
+                searchIntent.putExtra(SearchManager.QUERY, wordToSearch);
+                startActivity(searchIntent);
                 return true;
             case R.id.action_bar_share_icon:
                 StringBuilder shareStringBuilder = new StringBuilder();
@@ -89,21 +117,30 @@ public class WordDetailActivity extends AppCompatActivity {
         }
     }
 
-    public void addToFavourites(int position){
-        /*Word word = mAdapter.getWordAtPosition(position);
-        int mWordID = word.getWordId();
-        boolean mWordFavouriteStatus = word.getWordFavourite();
+    public void addToFavourites(){
+        mFavouriteImageView = findViewById(R.id.add_to_favourites_image_view_card_view);
         int mWordFavourite = mWordFavouriteStatus ? 1 : 0;
         AddFavouriteViewModelFactory factory = new AddFavouriteViewModelFactory(mRepository,mWordFavourite, mWordID);
-        AddFavouriteViewModel mFavViewModel = ViewModelProviders.of(this,factory).get(AddFavouriteViewModel.class);
+        mFavViewModel = ViewModelProviders.of(this,factory).get(AddFavouriteViewModel.class);
         if (!mWordFavouriteStatus) {
             mFavViewModel.setFavouriteStatus(1, mWordID);
+            mFavouriteImageView = findViewById(R.id.add_to_favourites_image_view_card_view);
+            mFavouriteImageView.setImageResource(R.drawable.ic_favorite_red);
             Toast.makeText(this, R.string.added_to_favourites, Toast.LENGTH_LONG).show();
         } else {
             mFavViewModel.setFavouriteStatus(0, mWordID);
+            mFavouriteImageView.setImageResource(R.drawable.ic_favorite_border_red);
             Toast.makeText(this, R.string.removed_from_favourites, Toast.LENGTH_LONG).show();
-        }*/
+        }
+    }
 
+    public void getWordDetails(){
+        mCurrentWord = mAdapter.getWord();
 
+        mWordID = mCurrentWord.getWordId();
+        mWordArtikel = mCurrentWord.getWordArtikel();
+        mWordName = mCurrentWord.getWordName();
+        mWordExample = mCurrentWord.getWordExample();
+        mWordFavouriteStatus = mCurrentWord.getWordFavourite();
     }
 }

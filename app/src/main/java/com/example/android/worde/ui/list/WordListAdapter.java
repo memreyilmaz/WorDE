@@ -21,6 +21,8 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
 
     public WordListAdapter() {
     }
+
+
     @NonNull
     @Override
         public WordViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -21,7 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.list.WordListActivity" />
-        <activity android:name=".ui.detail.WordDetailActivity">
+        <activity android:name=".ui.detail.WordDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.android.worde.ui.list.WordListActivity" />

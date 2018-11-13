@@ -18,12 +18,14 @@ public class WordDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_word_detail, container, false);
-        LinearLayoutManager wordDetailLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager wordDetailLayoutManager = new LinearLayoutManager(getContext());
 
         wordDetailCardView = view.findViewById(R.id.word_detail_recyclerview);
         wordDetailCardView.setLayoutManager(wordDetailLayoutManager);
-        wordDetailCardView.setHasFixedSize(true);
+       // wordDetailCardView.setHasFixedSize(false);
         wordDetailCardView.setAdapter(mAdapter);
+        //SnapHelper snapHelper = new LinearSnapHelper();
+        //snapHelper.attachToRecyclerView(wordDetailCardView);
 
         return view;
     }

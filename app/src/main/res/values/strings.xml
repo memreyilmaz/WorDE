@@ -10,8 +10,10 @@
     <string name="user_favourites">Lieblingswörter</string>
     <string name="other">Other</string>
     <string name="app_info">Info</string>
+    <string name="night_mode">Night Mode</string>
     <string name="share">Share Word</string>
     <string name="favourite">Add To Favourites</string>
+    <string name="search">Search Word with Google</string>
     <string name="share_with">Share Using</string>
     <string name="share_word_headline">Hello, I want to share this word with you;</string>
     <string name="info_dialog">This app is only developed for educational purposes 2018</string>

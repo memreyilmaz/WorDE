@@ -26,8 +26,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         //toolbar.setNavigationIcon(R.mipmap.ic_launcher);
         setSupportActionBar(toolbar);
@@ -109,6 +111,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             break;
             case R.id.nav_user_favourites:
             onClick(favouriteWordsButton);
+            break;
+            case R.id.nav_night_mode:
+            //TODO IMPLEMENT NIGHT MODE METHOD
             break;
             case R.id.nav_app_info:
             showInfoDialog();

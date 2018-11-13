@@ -24,10 +24,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:contentDescription="@string/a1"
+            android:scaleType="fitXY"
             android:src="@drawable/ampelmann"
             android:visibility="visible" />
 
@@ -56,9 +57,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:scaleType="fitXY"
             android:contentDescription="@string/a2"
             android:src="@drawable/brandenburgertor" />
 
@@ -87,9 +89,10 @@
         app:layout_constraintTop_toBottomOf="@id/level_a1_cardview">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:scaleType="fitXY"
             android:contentDescription="@string/b1"
             android:src="@drawable/walkofideas" />
 
@@ -119,9 +122,10 @@
         app:layout_constraintTop_toBottomOf="@id/level_a2_cardview">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:scaleType="fitXY"
             android:contentDescription="@string/user_favourites"
             android:src="@drawable/lebkuchenherz" />
 
