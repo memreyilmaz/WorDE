@@ -5,29 +5,43 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.example.android.worde.ui.DrawerActivity;
 import com.example.android.worde.R;
 import com.example.android.worde.database.Word;
 import com.example.android.worde.database.WordRepository;
 import com.example.android.worde.ui.detail.WordDetailActivity;
 import com.example.android.worde.ui.favourite.AddFavouriteViewModel;
+import com.example.android.worde.ui.favourite.AddFavouriteViewModelFactory;
 
 import java.util.List;
 
-public class WordListActivity extends AppCompatActivity {
+public class WordListActivity extends DrawerActivity {
     public static final String SELECTED_LEVEL = "SELECTED_LEVEL";
     int selectedWordId;
     WordListAdapter mAdapter;
+    AddFavouriteViewModel mFavViewModel;
+    boolean mWordFavouriteStatus;
+    WordRepository mRepository;
+    int mWordID;
+    FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_word_list);
+        frameLayout = findViewById(R.id.content_frame);
+        getLayoutInflater().inflate(R.layout.activity_word_list, frameLayout);
+
+        Toolbar toolbar = findViewById(R.id.list_activity_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.wordelogosmalltransparent);
+
         String selectedLevel = getIntent().getStringExtra(SELECTED_LEVEL);
-        WordRepository mRepository = new WordRepository(this.getApplication());
+        mRepository = new WordRepository(this.getApplication());
         WordListFragment fragment = new WordListFragment();
         mAdapter = new WordListAdapter();
         fragment.setWordListAdapter(mAdapter);
@@ -61,12 +75,13 @@ public class WordListActivity extends AppCompatActivity {
         intent.putExtra(WordDetailActivity.SELECTED_WORD, selectedWordId);
         startActivity(intent);
     }
-    public void addToFavourites(int position){
-        AddFavouriteViewModel mFavViewModel = ViewModelProviders.of(this).get(AddFavouriteViewModel.class);
-        Word word = mAdapter.getWordAtPosition(position);
-        int mWordID = word.getWordId();
-        boolean mWordFavouriteStatus = word.getWordFavourite();
 
+    public void addToFavourites(int position){
+        Word word = mAdapter.getWordAtPosition(position);
+        mWordID = word.getWordId();
+        int mWordFavourite = mWordFavouriteStatus ? 1 : 0;
+        AddFavouriteViewModelFactory factory = new AddFavouriteViewModelFactory(mRepository,mWordFavourite, mWordID);
+        mFavViewModel = ViewModelProviders.of(this,factory).get(AddFavouriteViewModel.class);
         if (!mWordFavouriteStatus) {
             mFavViewModel.setFavouriteStatus(1, mWordID);
             Toast.makeText(this, R.string.added_to_favourites, Toast.LENGTH_LONG).show();

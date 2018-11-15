@@ -2,6 +2,7 @@ package com.example.android.worde.ui.detail;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -20,7 +21,8 @@ public class WordDetailAdapter extends RecyclerView.Adapter<WordDetailAdapter.Wo
     @NonNull
     @Override
     public WordDetailViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new WordDetailViewHolder(new WordDetailCard(parent.getContext()));
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.word_detail_card_view, parent, false);
+        return new WordDetailViewHolder(itemView);
     }
     @Override
     public void onBindViewHolder(@NonNull WordDetailViewHolder holder, int position) {

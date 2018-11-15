@@ -5,10 +5,12 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.example.android.worde.ui.DrawerActivity;
 import com.example.android.worde.R;
 import com.example.android.worde.database.Word;
 import com.example.android.worde.database.WordRepository;
@@ -18,15 +20,22 @@ import com.example.android.worde.ui.list.WordListFragment;
 
 import java.util.List;
 
-public class FavouritesActivity extends AppCompatActivity {
+public class FavouritesActivity extends DrawerActivity {
     int selectedWordId;
     LoadFavouritesViewModel mViewModel;
     WordListAdapter mAdapter;
     WordRepository mRepository;
+    FrameLayout frameLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_word_list);
+        frameLayout = findViewById(R.id.content_frame);
+        getLayoutInflater().inflate(R.layout.activity_word_list, frameLayout);
+
+        Toolbar toolbar = findViewById(R.id.list_activity_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.wordelogosmalltransparent);
+
         mRepository = new WordRepository(this.getApplication());
 
         WordListFragment fragment = new WordListFragment();
@@ -55,6 +64,7 @@ public class FavouritesActivity extends AppCompatActivity {
             }
         });
     }
+
     public void launchUpdateWordActivity() {
         Intent intent = new Intent(this, WordDetailActivity.class);
         intent.putExtra(WordDetailActivity.SELECTED_WORD, selectedWordId);
@@ -69,6 +79,6 @@ public class FavouritesActivity extends AppCompatActivity {
         AddFavouriteViewModel mFavViewModel = ViewModelProviders.of(this,factory).get(AddFavouriteViewModel.class);
 
         mFavViewModel.setFavouriteStatus(0, mWordID);
-        Toast.makeText(this, R.string.removed_from_favourites, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.removed_from_favourites, Toast.LENGTH_SHORT).show();
     }
 }

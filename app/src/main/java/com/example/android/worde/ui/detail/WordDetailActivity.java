@@ -6,21 +6,22 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.android.worde.ui.DrawerActivity;
 import com.example.android.worde.R;
 import com.example.android.worde.database.Word;
 import com.example.android.worde.database.WordRepository;
 import com.example.android.worde.ui.favourite.AddFavouriteViewModel;
 import com.example.android.worde.ui.favourite.AddFavouriteViewModelFactory;
 
-public class WordDetailActivity extends AppCompatActivity {
+public class WordDetailActivity extends DrawerActivity {
     public static final String SELECTED_WORD = "SELECTED_WORD";
     int selectedWord;
     WordRepository mRepository;
@@ -33,12 +34,14 @@ public class WordDetailActivity extends AppCompatActivity {
     Word mCurrentWord;
     AddFavouriteViewModel mFavViewModel;
     ImageView mFavouriteImageView;
+    FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_word_detail);
+        frameLayout = findViewById(R.id.content_frame);
+        getLayoutInflater().inflate(R.layout.activity_word_detail, frameLayout);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -73,9 +76,6 @@ public class WordDetailActivity extends AppCompatActivity {
 
             }
         });
-
-
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,8 +87,10 @@ public class WordDetailActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_bar_search_icon:
                 String wordToSearch;
-                if (mWordName.contains("\n")){
+                if (mWordName.contains("\n")) {
                     wordToSearch = mWordName.substring(0, mWordName.indexOf("\n"));
+                }else if (mWordName.contains("/")){
+                    wordToSearch = mWordName.substring(0, mWordName.indexOf("/"));
                 }else {
                     wordToSearch = mWordName;
                 }

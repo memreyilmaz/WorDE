@@ -54,19 +54,18 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
 
             private TextView mArtikel;
             private TextView mWordName;
-            private TextView mExample;
             private Word mWord;
 
             WordViewHolder(View itemView) {
                 super(itemView);
                 mArtikel = itemView.findViewById(R.id.artikel_text_view);
                 mWordName = itemView.findViewById(R.id.word_text_view);
-                mExample = itemView.findViewById(R.id.example_text_view);
                 mAddFavourite = itemView.findViewById(R.id.add_to_favourites_image_view);
                 mAddFavourite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         clickListener.onFavouriteClick(view, getAdapterPosition());
+                        notifyDataSetChanged();
                     }
                 });
                 itemView.setOnClickListener(new View.OnClickListener() {
@@ -82,9 +81,13 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
             }
             void bindTo(Word word) {
                 mWord = word;
-                mArtikel.setText(word.getWordArtikel());
+                if (word.getWordArtikel() == null){
+                   // mArtikel.setVisibility(View.GONE);
+                   // mWordName.setGravity(Gravity.CENTER_VERTICAL);
+                }else {
+                    mArtikel.setText(word.getWordArtikel());
+                }
                 mWordName.setText(word.getWordName());
-                mExample.setText(word.getWordExample());
                 if (!word.getWordFavourite()){
                     mAddFavourite.setImageResource(R.drawable.ic_favorite_border_red);
                 }else{
