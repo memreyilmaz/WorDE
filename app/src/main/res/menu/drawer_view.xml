@@ -24,14 +24,14 @@
                 android:icon="@drawable/ic_favorite_black"
                 android:title="@string/user_favourites" />
             <item
-                android:id="@+id/nav_night_mode"
-                android:icon="@drawable/ic_brightness_3"
-                android:title="@string/night_mode" />
-            <item
                 android:id="@+id/nav_app_info"
                 android:icon="@drawable/ic_info_outline"
                 android:title="@string/app_info" />
-
+            <item
+                android:id="@+id/nav_night_mode"
+                android:icon="@drawable/ic_brightness_3"
+                android:title="@string/night_mode"
+                app:actionLayout="@layout/layout_switch"/>
         </menu>
     </item>
 </menu>

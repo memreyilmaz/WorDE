@@ -20,6 +20,7 @@
     <string name="navigation_drawer_close">Navigation Drawer Closed</string>
     <string name="navigation_drawer_open">Navigation Drawer Opened</string>
     <string name="added_to_favourites">Word Added To Your Favourite Words List</string>
+    <string name="added_to_favourites_again">Word Added To Your Favourite Words List Back</string>
     <string name="removed_from_favourites">Word Removed From Your Favourite Words List</string>
     <string name="word_artikel">artikel</string>
     <string name="word">word</string>

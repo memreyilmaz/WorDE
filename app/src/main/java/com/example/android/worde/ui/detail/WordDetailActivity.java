@@ -6,18 +6,19 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.example.android.worde.ui.DrawerActivity;
 import com.example.android.worde.R;
 import com.example.android.worde.database.Word;
 import com.example.android.worde.database.WordRepository;
+import com.example.android.worde.ui.DrawerActivity;
 import com.example.android.worde.ui.favourite.AddFavouriteViewModel;
 import com.example.android.worde.ui.favourite.AddFavouriteViewModelFactory;
 
@@ -35,6 +36,7 @@ public class WordDetailActivity extends DrawerActivity {
     AddFavouriteViewModel mFavViewModel;
     ImageView mFavouriteImageView;
     FrameLayout frameLayout;
+    View snackBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class WordDetailActivity extends DrawerActivity {
         Toolbar toolbar = findViewById(R.id.detail_activity_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        snackBar = findViewById(R.id.word_detail_container);
 
         selectedWord = getIntent().getIntExtra(SELECTED_WORD, 0);
 
@@ -128,11 +131,15 @@ public class WordDetailActivity extends DrawerActivity {
             mFavViewModel.setFavouriteStatus(1, mWordID);
             mFavouriteImageView = findViewById(R.id.add_to_favourites_image_view_card_view);
             mFavouriteImageView.setImageResource(R.drawable.ic_favorite_red);
-            Toast.makeText(this, R.string.added_to_favourites, Toast.LENGTH_LONG).show();
+            Snackbar.make(snackBar, R.string.added_to_favourites, Snackbar.LENGTH_LONG)
+                    .setActionTextColor(ContextCompat.getColor(getApplicationContext()
+                            ,R.color.wordRed)).show();
         } else {
             mFavViewModel.setFavouriteStatus(0, mWordID);
             mFavouriteImageView.setImageResource(R.drawable.ic_favorite_border_red);
-            Toast.makeText(this, R.string.removed_from_favourites, Toast.LENGTH_LONG).show();
+            Snackbar.make(snackBar, R.string.removed_from_favourites, Snackbar.LENGTH_LONG)
+                    .setActionTextColor(ContextCompat.getColor(getApplicationContext()
+                            ,R.color.wordRed)).show();
         }
     }
 

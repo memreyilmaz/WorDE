@@ -10,10 +10,10 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.example.android.worde.ui.DrawerActivity;
 import com.example.android.worde.R;
 import com.example.android.worde.database.Word;
 import com.example.android.worde.database.WordRepository;
+import com.example.android.worde.ui.DrawerActivity;
 import com.example.android.worde.ui.detail.WordDetailActivity;
 import com.example.android.worde.ui.favourite.AddFavouriteViewModel;
 import com.example.android.worde.ui.favourite.AddFavouriteViewModelFactory;
@@ -23,6 +23,8 @@ import java.util.List;
 public class WordListActivity extends DrawerActivity {
     public static final String SELECTED_LEVEL = "SELECTED_LEVEL";
     int selectedWordId;
+    String titleLevel;
+    String selectedLevel;
     WordListAdapter mAdapter;
     AddFavouriteViewModel mFavViewModel;
     boolean mWordFavouriteStatus;
@@ -39,8 +41,9 @@ public class WordListActivity extends DrawerActivity {
         Toolbar toolbar = findViewById(R.id.list_activity_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.wordelogosmalltransparent);
+        selectedLevel = getIntent().getStringExtra(SELECTED_LEVEL);
+        setTitle(assignTitleLevel());
 
-        String selectedLevel = getIntent().getStringExtra(SELECTED_LEVEL);
         mRepository = new WordRepository(this.getApplication());
         WordListFragment fragment = new WordListFragment();
         mAdapter = new WordListAdapter();
@@ -75,7 +78,6 @@ public class WordListActivity extends DrawerActivity {
         intent.putExtra(WordDetailActivity.SELECTED_WORD, selectedWordId);
         startActivity(intent);
     }
-
     public void addToFavourites(int position){
         Word word = mAdapter.getWordAtPosition(position);
         mWordID = word.getWordId();
@@ -89,5 +91,19 @@ public class WordListActivity extends DrawerActivity {
             mFavViewModel.setFavouriteStatus(0, mWordID);
             Toast.makeText(this, R.string.removed_from_favourites, Toast.LENGTH_LONG).show();
         }
+    }
+    public String assignTitleLevel(){
+        switch (selectedLevel){
+            case "a1":
+            titleLevel = getString(R.string.a1);
+            break;
+            case "a2":
+            titleLevel = getString(R.string.a2);
+            break;
+            case "b1":
+            titleLevel = getString(R.string.b1);
+            break;
+            }
+        return titleLevel;
     }
 }
