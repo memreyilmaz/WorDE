@@ -1,8 +1,6 @@
 package com.example.android.worde.ui;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
@@ -13,25 +11,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.SwitchCompat;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 
 import com.example.android.worde.MenuClick;
+import com.example.android.worde.NightModePreferences;
 import com.example.android.worde.R;
 import com.example.android.worde.ui.favourite.FavouritesActivity;
 
 public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
-    String wordLevel;
     MenuClick menuClick;
     FrameLayout frameLayout;
+    SwitchCompat drawerNightModeSwitch;
+    NightModePreferences nightModePreference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (AppCompatDelegate.getDefaultNightMode()
-                ==AppCompatDelegate.MODE_NIGHT_YES) {
-            setTheme(R.style.nighttheme);
-        }else setTheme(R.style.AppTheme);
+        nightModePreference = new NightModePreferences(getApplicationContext());
+        if (nightModePreference.loadNightModeState()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
         menuClick = new MenuClick(getApplicationContext());
@@ -47,29 +50,38 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mDrawerLayout = findViewById(R.id.menu_drawer);
 
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         //mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerToggle.syncState();
         NavigationView navigationView = findViewById(R.id.nav_view_base);
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getHeaderView(0).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity (new Intent(getApplicationContext(), MainActivity.class));
+            }
+        });
 
-        SwitchCompat drawerSwitch = (SwitchCompat) navigationView.getMenu().findItem(R.id.nav_night_mode).getActionView();
-        drawerSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            SharedPref sharedPref = new SharedPref(getApplicationContext());
+        drawerNightModeSwitch = (SwitchCompat) navigationView.getMenu()
+                .findItem(R.id.nav_night_mode).getActionView();
+
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+            drawerNightModeSwitch.setChecked(true);
+
+        drawerNightModeSwitch.setOnCheckedChangeListener
+                (new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    // do stuff
-
-                    sharedPref.setNightModeState(true);
+                    nightModePreference.setNightModeState(true);
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    mDrawerLayout.closeDrawer(GravityCompat.START);
+                    applyDayNightMode();
                 } else {
-                    // do other stuff
-                    sharedPref.setNightModeState(false);
+                    nightModePreference.setNightModeState(false);
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    mDrawerLayout.closeDrawer(GravityCompat.START);
+                    applyDayNightMode();
                 }
             }
         });
@@ -77,6 +89,15 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     public void showInfoDialog() {
         DialogFragment infoFragment = new InfoDialogFragment();
         infoFragment.show(getSupportFragmentManager(), "info");
+    }
+
+    public void applyDayNightMode(){
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        Intent intent = getIntent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        startActivity(intent);
+        overridePendingTransition(0, 0);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -100,8 +121,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 menuClick.launchWordListActivity("b1");
                 break;
             case R.id.nav_user_favourites:
-                Intent favouriteIntent = new Intent(this, FavouritesActivity.class);
-                this.startActivity(favouriteIntent);
+                startActivity (new Intent(this, FavouritesActivity.class));
                 break;
             case R.id.nav_night_mode:
                 return false;
@@ -111,24 +131,5 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    public class SharedPref {
-        SharedPreferences mSharedPreferences ;
-
-        public SharedPref(Context context) {
-            mSharedPreferences = context.getSharedPreferences("filename",Context.MODE_PRIVATE);
-        }
-        // this method will save the nightMode State : True or False
-        public void setNightModeState(Boolean nightModeState) {
-            SharedPreferences.Editor editor = mSharedPreferences.edit();
-            editor.putBoolean("NightMode",nightModeState);
-            editor.apply();
-        }
-        // this method will load the Night Mode State
-        public Boolean loadNightModeState (){
-            Boolean nightModeState = mSharedPreferences.getBoolean("NightMode",false);
-            return  nightModeState;
-        }
     }
 }

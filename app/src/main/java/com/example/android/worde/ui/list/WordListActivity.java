@@ -5,10 +5,10 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.example.android.worde.R;
 import com.example.android.worde.database.Word;
@@ -31,13 +31,14 @@ public class WordListActivity extends DrawerActivity {
     WordRepository mRepository;
     int mWordID;
     FrameLayout frameLayout;
+    View snackBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         frameLayout = findViewById(R.id.content_frame);
         getLayoutInflater().inflate(R.layout.activity_word_list, frameLayout);
-
+        snackBar = findViewById(R.id.app_bar_main);
         Toolbar toolbar = findViewById(R.id.list_activity_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.wordelogosmalltransparent);
@@ -65,7 +66,7 @@ public class WordListActivity extends DrawerActivity {
             public void onItemClick(View v, int position) {
                 Word word = mAdapter.getWordAtPosition(position);
                 selectedWordId = word.getWordId();
-                launchUpdateWordActivity();
+                launchWordDetailActivity();
             }
             @Override
             public void onFavouriteClick(View v, int position) {
@@ -73,10 +74,9 @@ public class WordListActivity extends DrawerActivity {
             }
         });
     }
-    public void launchUpdateWordActivity() {
-        Intent intent = new Intent(this, WordDetailActivity.class);
-        intent.putExtra(WordDetailActivity.SELECTED_WORD, selectedWordId);
-        startActivity(intent);
+    public void launchWordDetailActivity() {
+        startActivity (new Intent(this, WordDetailActivity.class)
+                .putExtra(WordDetailActivity.SELECTED_WORD, selectedWordId));
     }
     public void addToFavourites(int position){
         Word word = mAdapter.getWordAtPosition(position);
@@ -86,10 +86,10 @@ public class WordListActivity extends DrawerActivity {
         mFavViewModel = ViewModelProviders.of(this,factory).get(AddFavouriteViewModel.class);
         if (!mWordFavouriteStatus) {
             mFavViewModel.setFavouriteStatus(1, mWordID);
-            Toast.makeText(this, R.string.added_to_favourites, Toast.LENGTH_LONG).show();
+            Snackbar.make(snackBar, R.string.added_to_favourites, Snackbar.LENGTH_LONG).show();
         } else {
             mFavViewModel.setFavouriteStatus(0, mWordID);
-            Toast.makeText(this, R.string.removed_from_favourites, Toast.LENGTH_LONG).show();
+            Snackbar.make(snackBar, R.string.removed_from_favourites, Snackbar.LENGTH_LONG).show();
         }
     }
     public String assignTitleLevel(){

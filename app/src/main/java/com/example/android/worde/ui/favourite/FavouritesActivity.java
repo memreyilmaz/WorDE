@@ -58,7 +58,7 @@ public class FavouritesActivity extends DrawerActivity {
             public void onItemClick(View v, int position) {
                 Word word = mAdapter.getWordAtPosition(position);
                 selectedWordId = word.getWordId();
-                launchUpdateWordActivity();
+                launchWordDetailActivity();
             }
             @Override
             public void onFavouriteClick(View v, int position) {
@@ -66,11 +66,9 @@ public class FavouritesActivity extends DrawerActivity {
             }
         });
     }
-
-    public void launchUpdateWordActivity() {
-        Intent intent = new Intent(this, WordDetailActivity.class);
-        intent.putExtra(WordDetailActivity.SELECTED_WORD, selectedWordId);
-        startActivity(intent);
+    public void launchWordDetailActivity() {
+        startActivity (new Intent(this, WordDetailActivity.class)
+                .putExtra(WordDetailActivity.SELECTED_WORD, selectedWordId));
     }
     public void removeFromFavourites(int position){
         Word word = mAdapter.getWordAtPosition(position);
