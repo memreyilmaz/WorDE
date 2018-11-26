@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AppTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -10,13 +9,12 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/level_a1_cardview"
-        style="@style/CardViewStyle"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        style="@style/MainActivityPortraitCardStyle"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        app:cardBackgroundColor="@color/cardBackgroundColor"
         app:layout_constraintBottom_toTopOf="@id/level_b1_cardview"
         app:layout_constraintEnd_toStartOf="@id/level_a2_cardview"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,31 +24,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:contentDescription="@string/a1"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/a1"
             android:scaleType="fitXY"
             android:src="@drawable/ampelmann"
             android:visibility="visible" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/GeneralTextViewStyle"
             android:layout_gravity="end"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="@string/a1"
-            android:textSize="24sp" />
+            android:textSize="@dimen/word_text_size" />
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
         android:id="@+id/level_a2_cardview"
-        style="@style/CardViewStyle"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        style="@style/MainActivityPortraitCardStyle"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
+        app:cardBackgroundColor="@color/cardBackgroundColor"
         app:layout_constraintBottom_toTopOf="@id/favourite_words_cardview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/level_a1_cardview"
@@ -60,30 +56,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
             android:contentDescription="@string/a2"
+            android:scaleType="fitCenter"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
             android:src="@drawable/brandenburgertor" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/GeneralTextViewStyle"
             android:layout_gravity="end"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="@string/a2"
-            android:textSize="24sp" />
+            android:textSize="@dimen/word_text_size" />
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
         android:id="@+id/level_b1_cardview"
-        style="@style/CardViewStyle"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        style="@style/MainActivityPortraitCardStyle"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="@color/cardBackgroundColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/favourite_words_cardview"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,31 +88,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:scaleType="fitXY"
             android:adjustViewBounds="true"
             android:contentDescription="@string/b1"
+            android:scaleType="fitXY"
             android:src="@drawable/walkofideas" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/GeneralTextViewStyle"
             android:layout_gravity="end"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="@string/b1"
-            android:textSize="24sp" />
+            android:textSize="@dimen/word_text_size" />
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
         android:id="@+id/favourite_words_cardview"
-        style="@style/CardViewStyle"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-
+        style="@style/MainActivityPortraitCardStyle"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="@color/cardBackgroundColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/level_b1_cardview"
@@ -127,19 +119,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:scaleType="fitXY"
             android:adjustViewBounds="true"
             android:contentDescription="@string/user_favourites"
+            android:scaleType="fitXY"
             android:src="@drawable/lebkuchenherz" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/GeneralTextViewStyle"
             android:layout_gravity="end"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="@string/user_favourites"
-            android:textSize="24sp" />
+            android:textSize="@dimen/word_text_size" />
     </android.support.v7.widget.CardView>
 
 </android.support.constraint.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.example.android.worde.ui.list;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +22,6 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
 
     public WordListAdapter() {
     }
-
-
     @NonNull
     @Override
         public WordViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -65,6 +64,7 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
                     @Override
                     public void onClick(View view) {
                         clickListener.onFavouriteClick(view, getAdapterPosition());
+                        //TODO IMPLELEMENT CHANGE HEART ICON
                         notifyDataSetChanged();
                     }
                 });
@@ -81,17 +81,17 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
             }
             void bindTo(Word word) {
                 mWord = word;
-                if (word.getWordArtikel() == null){
-                   // mArtikel.setVisibility(View.GONE);
-                   // mWordName.setGravity(Gravity.CENTER_VERTICAL);
+                mWordName.setText(word.getWordName());
+                if (word.getWordArtikel().equals("")){
+                    mArtikel.setVisibility(View.GONE);
+                    mWordName.setGravity(Gravity.CENTER_VERTICAL);
                 }else {
                     mArtikel.setText(word.getWordArtikel());
                 }
-                mWordName.setText(word.getWordName());
                 if (!word.getWordFavourite()){
-                    mAddFavourite.setImageResource(R.drawable.ic_favorite_border_red);
+                    mAddFavourite.setImageResource(R.drawable.ic_favorite_border);
                 }else{
-                    mAddFavourite.setImageResource(R.drawable.ic_favorite_red);
+                    mAddFavourite.setImageResource(R.drawable.ic_favorite);
                 }
             }
     }

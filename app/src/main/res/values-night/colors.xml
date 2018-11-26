@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/wordDarkBlue</color>
-    <color name="colorPrimaryDark">@color/wordDarkestBlue</color>
-    <color name="colorAccent">@color/wordOrange</color>
+    <color name="colorPrimary">@color/nightPrimary</color>
+    <color name="colorPrimaryDark">@color/nightPrimaryDark</color>
+    <color name="colorAccent">@color/wordBlue</color>
 
     <color name="wordLightBlue">#F2F4F7</color>
     <color name="wordBlue">#2074AD</color>
@@ -12,10 +12,12 @@
     <color name="wordSkyblue">#86C7EF</color>
     <color name="wordOrange">#EC6707</color>
     <color name="wordYellow">#FBB911</color>
-    <color name="wordBlack">@android:color/black</color>
-    <color name="wordtextcolor">@color/wordDarkestBlue</color>
-    <color name="cardBackgroundColor">@color/wordLightBlue</color>
-    <color name="nightPrimaryDark">#10171D</color>
+    <color name="wordBlack">#000000</color>
+    <color name="wordtextcolor">@android:color/white</color>
+
+    <color name="cardBackgroundColor">@color/nightBackground</color>
     <color name="nightPrimary">#1C2939</color>
-    <color name="nightBackground">#10171D</color>
+    <color name="nightPrimaryDark">#10171D</color>
+    <color name="nightBackground">#16202A</color>
+
 </resources>

@@ -6,8 +6,9 @@ import android.content.SharedPreferences;
 public class NightModePreferences {
     private SharedPreferences mSharedPreferences ;
     private static final String NIGHT_MODE = "NIGHT_MODE";
+    private static final String DAY_NIGHT = "DAY_NIGHT_PREFS";
     public NightModePreferences(Context context) {
-        this.mSharedPreferences = context.getSharedPreferences("filename",Context.MODE_PRIVATE);
+        this.mSharedPreferences = context.getSharedPreferences(DAY_NIGHT,Context.MODE_PRIVATE);
     }
     public void setNightModeState(Boolean nightModeState) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();

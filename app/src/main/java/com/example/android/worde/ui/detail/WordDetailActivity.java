@@ -25,9 +25,12 @@ import com.example.android.worde.ui.favourite.AddFavouriteViewModelFactory;
 public class WordDetailActivity extends DrawerActivity {
     public static final String SELECTED_WORD = "SELECTED_WORD";
     int selectedWord;
+    int previousWord;
+    int nextWord;
     WordRepository mRepository;
     int mWordID;
     boolean mWordFavouriteStatus;
+    String mWordLevel;
     String mWordArtikel;
     String mWordName;
     String mWordExample;
@@ -37,6 +40,7 @@ public class WordDetailActivity extends DrawerActivity {
     ImageView mFavouriteImageView;
     FrameLayout frameLayout;
     View snackBar;
+    DetailViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,28 +59,42 @@ public class WordDetailActivity extends DrawerActivity {
         selectedWord = getIntent().getIntExtra(SELECTED_WORD, 0);
 
         mRepository = new WordRepository(this.getApplication());
-        DetailViewModelFactory factory = new DetailViewModelFactory(mRepository, selectedWord);
-        DetailViewModel mViewModel = ViewModelProviders.of(this, factory).get(DetailViewModel.class);
 
+        loadSelectedWord();
+    }
+
+    public void loadSelectedWord(){
+        DetailViewModelFactory factory = new DetailViewModelFactory(mRepository, selectedWord);
+        mViewModel = ViewModelProviders.of(this, factory).get(DetailViewModel.class);
         mViewModel.getWordById().observe(this, new Observer<Word>() {
             @Override
             public void onChanged(@Nullable Word word) {
 
                 WordDetailFragment fragment = new WordDetailFragment();
-                mAdapter = new WordDetailAdapter(word);
+                mAdapter = new WordDetailAdapter(getApplicationContext(),word);
                 fragment.setWordDetailAdapter(mAdapter);
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.word_detail_container, fragment).commit();
                 mAdapter.setWord(word);
                 getWordDetails();
-
+                setTitle(mWordLevel.toUpperCase());
                 mAdapter.setOnItemClickListener(new WordDetailAdapter.ClickListener()  {
                     @Override
                     public void onFavouriteClick(View v) {
-                       addToFavourites();
+                        addToFavourites();
                     }
                 });
 
+                mAdapter.setOnItemSwipeListener(new WordDetailAdapter.SwipeListener() {
+                    @Override
+                    public void onLeftSwipe(View view) {
+                        loadNextWord();
+                    }
+                    @Override
+                    public void onRightSwipe(View view) {
+                        loadPreviousWord();
+                    }
+                });
             }
         });
     }
@@ -130,13 +148,13 @@ public class WordDetailActivity extends DrawerActivity {
         if (!mWordFavouriteStatus) {
             mFavViewModel.setFavouriteStatus(1, mWordID);
             mFavouriteImageView = findViewById(R.id.add_to_favourites_image_view_card_view);
-            mFavouriteImageView.setImageResource(R.drawable.ic_favorite_red);
+            mFavouriteImageView.setImageResource(R.drawable.ic_favorite);
             Snackbar.make(snackBar, R.string.added_to_favourites, Snackbar.LENGTH_LONG)
                     .setActionTextColor(ContextCompat.getColor(getApplicationContext()
                             ,R.color.wordRed)).show();
         } else {
             mFavViewModel.setFavouriteStatus(0, mWordID);
-            mFavouriteImageView.setImageResource(R.drawable.ic_favorite_border_red);
+            mFavouriteImageView.setImageResource(R.drawable.ic_favorite_border);
             Snackbar.make(snackBar, R.string.removed_from_favourites, Snackbar.LENGTH_LONG)
                     .setActionTextColor(ContextCompat.getColor(getApplicationContext()
                             ,R.color.wordRed)).show();
@@ -147,9 +165,29 @@ public class WordDetailActivity extends DrawerActivity {
         mCurrentWord = mAdapter.getWord();
 
         mWordID = mCurrentWord.getWordId();
+        mWordLevel = mCurrentWord.getWordLevel();
         mWordArtikel = mCurrentWord.getWordArtikel();
         mWordName = mCurrentWord.getWordName();
         mWordExample = mCurrentWord.getWordExample();
         mWordFavouriteStatus = mCurrentWord.getWordFavourite();
+    }
+
+    public void loadNextWord(){
+        //TODO find last id no.
+        if (mWordID == 500000000){
+            selectedWord = mWordID;
+        }else {
+            selectedWord = (mWordID + 1);
+        }
+        loadSelectedWord();
+    }
+
+    public void loadPreviousWord(){
+        if (mWordID == 1){
+            selectedWord = mWordID;
+        }else {
+            selectedWord = (mWordID - 1);
+        }
+        loadSelectedWord();
     }
 }

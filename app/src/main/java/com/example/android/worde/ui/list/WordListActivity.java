@@ -52,7 +52,7 @@ public class WordListActivity extends DrawerActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.word_list_container, fragment).commit();
 
-        WordLevelViewModelFactory factory = new WordLevelViewModelFactory(mRepository, selectedLevel);
+       WordLevelViewModelFactory factory = new WordLevelViewModelFactory(mRepository, selectedLevel);
         LevelViewModel mViewModel = ViewModelProviders.of(this, factory).get(LevelViewModel.class);
 
         mViewModel.getWordsByLevels().observe(this, new Observer<List<Word>>() {

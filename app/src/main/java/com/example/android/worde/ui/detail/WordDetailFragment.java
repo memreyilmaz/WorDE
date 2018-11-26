@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.worde.R;
+import com.example.android.worde.ui.OnSwipeTouchListener;
 
 public class WordDetailFragment extends Fragment {
     RecyclerView wordDetailCardView;
@@ -26,10 +27,32 @@ public class WordDetailFragment extends Fragment {
         wordDetailCardView.setAdapter(mAdapter);
         //SnapHelper snapHelper = new LinearSnapHelper();
         //snapHelper.attachToRecyclerView(wordDetailCardView);
+        //wordDetailCardView.setOnTouchListener(new OnSwipeTouchListener(getActivity()));
+        view.setOnTouchListener(new OnSwipeTouchListener(getActivity()));
+        view.setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
 
+            @Override
+            public void onSwipeRight() {
+                super.onSwipeTop();
+                //folder_gridview.setVisibility(View.INVISIBLE);
+
+                // do something
+            }
+
+            @Override
+            public void onSwipeLeft() {
+                super.onSwipeTop();
+                //folder_gridview.setVisibility(View.INVISIBLE);
+
+                // do something
+            }
+
+        });
         return view;
     }
     public void setWordDetailAdapter(WordDetailAdapter adapter){
         mAdapter = adapter;
     }
+
+
 }
