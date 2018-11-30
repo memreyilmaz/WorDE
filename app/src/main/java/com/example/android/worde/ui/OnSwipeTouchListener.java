@@ -72,7 +72,7 @@ public class OnSwipeTouchListener implements OnTouchListener {
     public void onSwipeBottom() {
     }
 
-    public interface OnSwipeTdouchListener {
+    public interface OnSwipeToudchListener {
         void onSwipeRight();
         void onSwipeLeft();
     }

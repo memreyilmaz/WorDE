@@ -23,15 +23,15 @@ public interface WordDao {
     //@Query("SELECT * FROM wordlist LIMIT 1")
     //Word[] getRandomWordForWidget();
 
-    //Query for selected level words to show in WordListActivity
+    //Query for selected level words to show in WordListFragment
     @Query("SELECT * FROM wordlist WHERE level = :level")
     LiveData<List<Word>> getWordsByLevels(String level);
 
-    //Query for selected level words to show in FavouritesActivity
+    //Query for favourite words to show in WordListFragment
     @Query("SELECT * FROM wordlist WHERE favourite = 1 ORDER BY _id ASC")
     LiveData<List<Word>> getFavouriteWords();
 
-    //Query for selected word to show in WordDetailActivity
+    //Query for selected word to show in WordDetailFragment
     @Query("SELECT * FROM wordlist WHERE _id = :id")
     LiveData<Word> getWordById(int id);
 

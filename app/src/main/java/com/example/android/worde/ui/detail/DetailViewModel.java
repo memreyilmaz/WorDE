@@ -9,7 +9,7 @@ import com.example.android.worde.database.WordRepository;
 
 public class DetailViewModel extends ViewModel {
 
-    private final LiveData<Word> mSelectedWord;
+    private LiveData<Word> mSelectedWord;
     private final int mId;
     private final WordRepository mRepository;
 

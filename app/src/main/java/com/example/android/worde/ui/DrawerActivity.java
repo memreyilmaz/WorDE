@@ -18,7 +18,6 @@ import android.widget.FrameLayout;
 import com.example.android.worde.MenuClick;
 import com.example.android.worde.NightModePreferences;
 import com.example.android.worde.R;
-import com.example.android.worde.ui.favourite.FavouritesActivity;
 
 public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -121,7 +120,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 menuClick.launchWordListActivity("b1");
                 break;
             case R.id.nav_user_favourites:
-                startActivity (new Intent(this, FavouritesActivity.class));
+                menuClick.launchWordListActivity("fav");
                 break;
             case R.id.nav_night_mode:
                 return false;

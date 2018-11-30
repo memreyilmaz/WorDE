@@ -15,12 +15,14 @@ import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
 
 import java.util.List;
 
+
 public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordViewHolder> implements SectionTitleProvider {
        private List<Word> mWords;
        private static ClickListener clickListener;
     private ImageView mAddFavourite;
 
     public WordListAdapter() {
+        //mWords = words;
     }
     @NonNull
     @Override
@@ -32,7 +34,6 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
         public void onBindViewHolder(@NonNull WordViewHolder holder, int position) {
         Word word = mWords.get(position);
         if(word != null) {
-
             holder.bindTo(word);
         }
     }

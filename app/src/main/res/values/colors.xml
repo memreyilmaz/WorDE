@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="colorPrimary">@color/wordDarkBlue</color>
     <color name="colorPrimaryDark">@color/wordDarkestBlue</color>
     <color name="colorAccent">@color/wordOrange</color>
 
+    <color name="snackbarActionTextColor">@color/wordRed</color>
+
     <color name="wordLightBlue">#F2F4F7</color>
     <color name="wordBlue">#2074AD</color>
     <color name="wordRed">#E2001A</color>
+
     <color name="wordDarkBlue">#00285A</color>
     <color name="wordDarkestBlue">#000030</color>
     <color name="wordSkyblue">#86C7EF</color>

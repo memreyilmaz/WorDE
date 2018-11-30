@@ -24,21 +24,6 @@
         <activity android:name=".ui.list.WordListActivity"
                   android:theme="@style/AppTheme"/>
 
-        <activity
-            android:name=".ui.detail.WordDetailActivity"
-            android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.worde.ui.list.WordListActivity" />
-        </activity>
-        <activity android:name=".ui.favourite.FavouritesActivity"
-            android:theme="@style/AppTheme">
-
-        <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.worde.ui.MainActivity" />
-        </activity>
-
         <receiver android:name=".WordOfTheDayWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

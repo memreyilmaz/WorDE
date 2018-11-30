@@ -18,27 +18,29 @@ public class WordDetailAdapter extends RecyclerView.Adapter<WordDetailAdapter.Wo
     private static ClickListener clickListener;
     private static SwipeListener swipeListener;
     Context mContext;
-    public WordDetailAdapter(Context context, Word word) {
-        mContext = context;
+    public WordDetailAdapter(Word word) {
+       // mContext = context;
         mWord = word; }
 
     @NonNull
     @Override
     public WordDetailViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.word_detail_card_view, parent, false);
-        /*itemView.setOnTouchListener(new OnSwipeTouchListener(mContext)) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.word_detail_card_view, parent, false);
+       /* itemView.setOnTouchListener(new OnSwipeTouchListener(mContext) {
 
             @Override
             public void onSwipeRight() {
                 super.onSwipeRight();
                 Toast.makeText(mContext, "Right", Toast.LENGTH_SHORT).show();
-                swipeListener.onRightSwipe(itemView);
+
             }
+
             @Override
             public void onSwipeLeft() {
                 super.onSwipeLeft();
-                Toast.makeText(mContext, "Left", Toast.LENGTH_SHORT).show();
-                swipeListener.onLeftSwipe(itemView);
+                Toast.makeText(mContext, "Right", Toast.LENGTH_SHORT).show();
+
             }
         });*/
 
@@ -81,15 +83,17 @@ public class WordDetailAdapter extends RecyclerView.Adapter<WordDetailAdapter.Wo
                 public void onSwipeRight() {
                   //  Toast.makeText(mContext, "Right", Toast.LENGTH_SHORT).show();
                     swipeListener.onRightSwipe(itemView);
+                  //  notifyDataSetChanged();
                 }
 
                 @Override
                 public void onSwipeLeft() {
-                  //  Toast.makeText(mContext, "Left", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mContext, "Left", Toast.LENGTH_SHORT).show();
                     swipeListener.onLeftSwipe(itemView);
+                  //  notifyDataSetChanged();
                 }
-            });
-            itemView.setOnTouchListener(new OnSwipeTouchListener(mContext));*/
+            });*/
+           // itemView.setOnTouchListener(new OnSwipeTouchListener(mContext));
         }
 
 

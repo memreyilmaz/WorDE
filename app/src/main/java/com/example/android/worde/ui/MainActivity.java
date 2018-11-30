@@ -53,7 +53,7 @@ public class MainActivity extends DrawerActivity implements View.OnClickListener
                 menuClick.launchWordListActivity("b1");
                 break;
             case R.id.favourite_words_cardview:
-              menuClick.launchFavouriteWordsActivity(favouriteWordsButton);
+                menuClick.launchWordListActivity("fav");
                 break;
             default:
                 break;

@@ -1,109 +1,124 @@
 package com.example.android.worde.ui.list;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.example.android.worde.OnFragmentInteractionListener;
 import com.example.android.worde.R;
-import com.example.android.worde.database.Word;
-import com.example.android.worde.database.WordRepository;
 import com.example.android.worde.ui.DrawerActivity;
-import com.example.android.worde.ui.detail.WordDetailActivity;
-import com.example.android.worde.ui.favourite.AddFavouriteViewModel;
-import com.example.android.worde.ui.favourite.AddFavouriteViewModelFactory;
+import com.example.android.worde.ui.detail.WordDetailFragment;
 
-import java.util.List;
-
-public class WordListActivity extends DrawerActivity {
+public class WordListActivity extends DrawerActivity implements OnFragmentInteractionListener {
     public static final String SELECTED_LEVEL = "SELECTED_LEVEL";
-    int selectedWordId;
-    String titleLevel;
-    String selectedLevel;
-    WordListAdapter mAdapter;
-    AddFavouriteViewModel mFavViewModel;
-    boolean mWordFavouriteStatus;
-    WordRepository mRepository;
-    int mWordID;
     FrameLayout frameLayout;
     View snackBar;
+    boolean mTabletLayout;
+    WordListFragment wordListFragment;
+    WordDetailFragment wordDetailFragment;
+    String selectedLevel;
+    String titleLevel;
+    Bundle selectedLevelBundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         frameLayout = findViewById(R.id.content_frame);
         getLayoutInflater().inflate(R.layout.activity_word_list, frameLayout);
+        selectedLevel = getIntent().getStringExtra(SELECTED_LEVEL);
+        setTitle(assignTitle());
+
         snackBar = findViewById(R.id.app_bar_main);
+        if (findViewById(R.id.word_list_container_land) != null) {
+            mTabletLayout = true;
+            setWordListFragment();
+            setWordDetailFragment();
+        } else {
+            mTabletLayout = false;
+            setWordListFragment();
+        }
+
         Toolbar toolbar = findViewById(R.id.list_activity_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.wordelogosmalltransparent);
-        selectedLevel = getIntent().getStringExtra(SELECTED_LEVEL);
-        setTitle(assignTitleLevel());
 
-        mRepository = new WordRepository(this.getApplication());
-        WordListFragment fragment = new WordListFragment();
-        mAdapter = new WordListAdapter();
-        fragment.setWordListAdapter(mAdapter);
+        /*WordListFragment fragment = new WordListFragment();
+        fragment.setArguments(getIntent().getBundleExtra(MenuClick.SELECTED_LEVEL_BUNDLE));
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.word_list_container, fragment).commit();
-
-       WordLevelViewModelFactory factory = new WordLevelViewModelFactory(mRepository, selectedLevel);
-        LevelViewModel mViewModel = ViewModelProviders.of(this, factory).get(LevelViewModel.class);
-
-        mViewModel.getWordsByLevels().observe(this, new Observer<List<Word>>() {
-            @Override
-            public void onChanged(@Nullable List<Word> words) {
-                mAdapter.setWords(words);
-            }
-        });
-        mAdapter.setOnItemClickListener(new WordListAdapter.ClickListener()  {
-            @Override
-            public void onItemClick(View v, int position) {
-                Word word = mAdapter.getWordAtPosition(position);
-                selectedWordId = word.getWordId();
-                launchWordDetailActivity();
-            }
-            @Override
-            public void onFavouriteClick(View v, int position) {
-                addToFavourites(position);
-            }
-        });
-    }
-    public void launchWordDetailActivity() {
-        startActivity (new Intent(this, WordDetailActivity.class)
-                .putExtra(WordDetailActivity.SELECTED_WORD, selectedWordId));
-    }
-    public void addToFavourites(int position){
-        Word word = mAdapter.getWordAtPosition(position);
-        mWordID = word.getWordId();
-        int mWordFavourite = mWordFavouriteStatus ? 1 : 0;
-        AddFavouriteViewModelFactory factory = new AddFavouriteViewModelFactory(mRepository,mWordFavourite, mWordID);
-        mFavViewModel = ViewModelProviders.of(this,factory).get(AddFavouriteViewModel.class);
-        if (!mWordFavouriteStatus) {
-            mFavViewModel.setFavouriteStatus(1, mWordID);
-            Snackbar.make(snackBar, R.string.added_to_favourites, Snackbar.LENGTH_LONG).show();
-        } else {
-            mFavViewModel.setFavouriteStatus(0, mWordID);
-            Snackbar.make(snackBar, R.string.removed_from_favourites, Snackbar.LENGTH_LONG).show();
+                .add(R.id.word_list_container, fragment).commit();*/
         }
+    public void setWordListFragment(){
+        wordListFragment = new WordListFragment();
+        selectedLevelBundle = new Bundle();
+        selectedLevelBundle.putString("key", selectedLevel);
+        wordListFragment.setArguments(selectedLevelBundle);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.word_list_container, wordListFragment).commit();
     }
-    public String assignTitleLevel(){
+    public void setWordDetailFragment(){
+        wordDetailFragment = new WordDetailFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.word_detail_container, wordDetailFragment )
+                .commit();
+    }
+    @Override
+    public void changeFragment(int selectedWordId) {
+        wordDetailFragment= new WordDetailFragment();
+        Bundle args = new Bundle();
+        args.putInt(wordDetailFragment.SELECTED_WORD, selectedWordId);
+        wordDetailFragment.setArguments(args);
+        if (!mTabletLayout) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.word_list_container, wordDetailFragment )
+                    .commit();
+        }else {
+           getSupportFragmentManager().beginTransaction().detach(wordDetailFragment).attach(wordDetailFragment).commit();
+        }
+
+        /*   if (string.equals(WordListFragment.TAG)) {
+
+                WordDetailFragment wordDetailFragment= new WordDetailFragment();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+              //  wordDetailFragment.setArguments());
+                //.putExtra(WordDetailActivity.SELECTED_WORD, selectedWordId));
+
+                fragmentTransaction.replace(R.id.mainFrame, wordDetailFragment);
+                fragmentTransaction.commit();
+            }
+            else if (string.equals("2")) {
+                WordListFragment wordListFragment = new WordListFragment();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.mainFrame, wordListFragment);
+                fragmentTransaction.commit();
+            }*/
+    }
+    /*@Override
+    public void passData(int selectedWordId) {
+        WordDetailFragment wordDetailFragment= new WordDetailFragment();
+
+        Bundle args = new Bundle();
+        args.putInt(wordDetailFragment.SELECTED_WORD, selectedWordId);
+        wordDetailFragment.setArguments(args);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.word_list_container, wordDetailFragment )
+                .commit();
+    }*/
+    public String assignTitle(){
         switch (selectedLevel){
             case "a1":
-            titleLevel = getString(R.string.a1);
-            break;
+                titleLevel = getString(R.string.a1);
+                break;
             case "a2":
-            titleLevel = getString(R.string.a2);
-            break;
+                titleLevel = getString(R.string.a2);
+                break;
             case "b1":
-            titleLevel = getString(R.string.b1);
-            break;
-            }
+                titleLevel = getString(R.string.b1);
+                break;
+            case "fav":
+                titleLevel = getString(R.string.user_favourites);
+                break;
+        }
         return titleLevel;
     }
 }
