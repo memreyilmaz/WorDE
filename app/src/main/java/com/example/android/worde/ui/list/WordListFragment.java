@@ -58,7 +58,7 @@ public class WordListFragment extends Fragment {
         mRepository = new WordRepository(getActivity().getApplication());
         WordLevelViewModelFactory factory = new WordLevelViewModelFactory(mRepository, selectedLevel);
         mLevelViewModel = ViewModelProviders.of(this, factory).get(LevelViewModel.class);
-
+        setRetainInstance(true);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

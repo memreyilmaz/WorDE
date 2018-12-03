@@ -1,7 +1,9 @@
 package com.example.android.worde.ui.list;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -24,42 +26,56 @@ public class WordListActivity extends DrawerActivity implements OnFragmentIntera
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         frameLayout = findViewById(R.id.content_frame);
         getLayoutInflater().inflate(R.layout.activity_word_list, frameLayout);
         selectedLevel = getIntent().getStringExtra(SELECTED_LEVEL);
         setTitle(assignTitle());
 
         snackBar = findViewById(R.id.app_bar_main);
-        if (findViewById(R.id.word_list_container_land) != null) {
-            mTabletLayout = true;
-            setWordListFragment();
-            setWordDetailFragment();
+        //TODO TEST IN TABLET !!!! NOT TESTED ON TABLET YET
+        if (savedInstanceState == null) {
+            if (findViewById(R.id.word_list_container_land) != null) {
+                mTabletLayout = true;
+                setWordListFragment();
+                setWordDetailFragment();
+            } else {
+                mTabletLayout = false;
+                setWordListFragment();
+            }
         } else {
-            mTabletLayout = false;
-            setWordListFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            if (fragmentManager.findFragmentByTag("wordlistfragment") != null){
+                wordListFragment = (WordListFragment) fragmentManager.findFragmentByTag("wordlistfragment");
+                if (mTabletLayout) {
+                    wordDetailFragment = (WordDetailFragment) fragmentManager.findFragmentByTag("worddetailfragment");
+                }
+            }else if (fragmentManager.findFragmentByTag("worddetailfragment") != null){//todo null gosteriyor her kosulda neden?
+                wordDetailFragment = (WordDetailFragment) fragmentManager.findFragmentByTag("worddetailfragment");
+            }
         }
-
         Toolbar toolbar = findViewById(R.id.list_activity_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.wordelogosmalltransparent);
-
-        /*WordListFragment fragment = new WordListFragment();
-        fragment.setArguments(getIntent().getBundleExtra(MenuClick.SELECTED_LEVEL_BUNDLE));
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.word_list_container, fragment).commit();*/
+        if(getSupportActionBar() != null){
+            //getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            if (mTabletLayout) {
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.wordelogosmalltransparent);
+            }
         }
+    }
     public void setWordListFragment(){
         wordListFragment = new WordListFragment();
         selectedLevelBundle = new Bundle();
         selectedLevelBundle.putString("key", selectedLevel);
         wordListFragment.setArguments(selectedLevelBundle);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.word_list_container, wordListFragment).commit();
+                .add(R.id.word_list_container, wordListFragment, "wordlistfragment").commit();
     }
     public void setWordDetailFragment(){
         wordDetailFragment = new WordDetailFragment();
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.word_detail_container, wordDetailFragment )
+                .add(R.id.word_detail_container, wordDetailFragment, "worddetailfragment" )
                 .commit();
     }
     @Override
@@ -70,7 +86,8 @@ public class WordListActivity extends DrawerActivity implements OnFragmentIntera
         wordDetailFragment.setArguments(args);
         if (!mTabletLayout) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.word_list_container, wordDetailFragment )
+                    .replace(R.id.word_list_container, wordDetailFragment,"worddetailfragment")
+                    .addToBackStack(null)
                     .commit();
         }else {
            getSupportFragmentManager().beginTransaction().detach(wordDetailFragment).attach(wordDetailFragment).commit();
@@ -120,5 +137,26 @@ public class WordListActivity extends DrawerActivity implements OnFragmentIntera
                 break;
         }
         return titleLevel;
+    }
+    @Override
+    public void onBackPressed() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+                super.onBackPressed();
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (!mTabletLayout) {
+            switch (item.getItemId()) {
+                case android.R.id.home:
+                   onBackPressed();
+                   return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
