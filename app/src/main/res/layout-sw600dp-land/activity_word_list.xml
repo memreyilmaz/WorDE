@@ -2,9 +2,9 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/word_list_activity_land"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/word_list_container_land"
     tools:context=".ui.list.WordListActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -21,20 +21,27 @@
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
-        android:baselineAligned="false"
+        android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="match_parent">
-    <FrameLayout
-        android:id="@+id/word_list_container"
-        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"/>
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
-    <FrameLayout
-        android:id="@+id/word_detail_container"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"/>
+        <FrameLayout
+            android:id="@+id/list_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/darker_gray" />
+
+        <FrameLayout
+            android:id="@+id/detail_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3" />
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

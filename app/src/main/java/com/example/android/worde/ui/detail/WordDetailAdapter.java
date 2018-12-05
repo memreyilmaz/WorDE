@@ -95,8 +95,6 @@ public class WordDetailAdapter extends RecyclerView.Adapter<WordDetailAdapter.Wo
             });*/
            // itemView.setOnTouchListener(new OnSwipeTouchListener(mContext));
         }
-
-
         public Word getWord() {
             return mWord;
         }
@@ -125,11 +123,9 @@ public class WordDetailAdapter extends RecyclerView.Adapter<WordDetailAdapter.Wo
     public interface ClickListener {
         void onFavouriteClick(View v);
     }
-
     public void setOnItemSwipeListener(WordDetailAdapter.SwipeListener swipeListener){
         WordDetailAdapter.swipeListener = swipeListener;
     }
-
     public interface SwipeListener{
         void onLeftSwipe(View view);
         void onRightSwipe(View view);

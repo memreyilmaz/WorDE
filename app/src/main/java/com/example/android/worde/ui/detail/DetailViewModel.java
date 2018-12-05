@@ -12,13 +12,14 @@ import com.example.android.worde.database.WordRepository;
 public class DetailViewModel extends ViewModel {
     private final WordRepository mRepository;
     public LiveData<Word> mSelectedWord;
-    private MutableLiveData<Integer> wordidlivedata;
+    private MutableLiveData<Integer> currentWordIdLiveData;
 
     public DetailViewModel(WordRepository repository) {
-        wordidlivedata = new MutableLiveData<Integer>();
+
+        currentWordIdLiveData = new MutableLiveData<Integer>();
         mRepository = repository;
 
-        mSelectedWord=Transformations.switchMap(wordidlivedata, new Function<Integer, LiveData<Word>>() {
+        mSelectedWord=Transformations.switchMap(currentWordIdLiveData, new Function<Integer, LiveData<Word>>() {
             @Override
             public LiveData<Word> apply(Integer mId) {
                 return mRepository.getWordById(mId);
@@ -26,6 +27,6 @@ public class DetailViewModel extends ViewModel {
         });
     }
     public void setCurrentWordId(int wordId){
-        wordidlivedata.postValue(wordId);
+        currentWordIdLiveData.postValue(wordId);
     }
 }

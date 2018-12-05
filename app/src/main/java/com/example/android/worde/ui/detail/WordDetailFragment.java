@@ -18,7 +18,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -34,12 +33,10 @@ import com.example.android.worde.ui.favourite.AddFavouriteViewModelFactory;
 import static com.example.android.worde.Config.SELECTED_WORD;
 
 public class WordDetailFragment extends Fragment {
-    //private static final String TAG = WordDetailFragment.class.getSimpleName();
+
     RecyclerView wordDetailCardView;
     WordDetailAdapter mAdapter;
     int selectedWord;
-    int previousWord;
-    int nextWord;
     WordRepository mRepository;
     int mWordID;
     boolean mWordFavouriteStatus;
@@ -50,7 +47,6 @@ public class WordDetailFragment extends Fragment {
     Word mCurrentWord;
     AddFavouriteViewModel mFavViewModel;
     ImageView mFavouriteImageView;
-    FrameLayout frameLayout;
     View snackBarView;
     DetailViewModel mViewModel;
     private OnFragmentInteractionListener mListener;
@@ -104,6 +100,13 @@ public class WordDetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    public void setWordForTablet(int wordidfromlistfragment){
+        selectedWord = wordidfromlistfragment;
+        mViewModel.setCurrentWordId(selectedWord);
+        loadSelectedWord();
+
     }
     public void loadSelectedWord(){
         mViewModel.mSelectedWord.observe(this, new Observer<Word>() {

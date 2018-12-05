@@ -145,23 +145,12 @@ public class WordListFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-    /*@Override
-    public void onAttach(Context context){
-        super.onAttach(context);
-        try {
-            mCallback = (DataPassListener) context;
-        }
-        catch (ClassCastException e)
-        {
-            throw new ClassCastException(context.toString()+ " must implement OnImageClickListener");
-        }
-    }*/
     public void setAdapterClickListener(){
         mAdapter.setOnItemClickListener(new WordListAdapter.ClickListener()  {
             @Override
             public void onItemClick(View v, int position) {
                 Word word = mAdapter.getWordAtPosition(position);
-                int  selectedWordId = word.getWordId();
+                int selectedWordId = word.getWordId();
                 mListener.changeFragment(selectedWordId);
             }
             @Override
