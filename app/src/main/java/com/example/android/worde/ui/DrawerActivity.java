@@ -19,7 +19,14 @@ import com.example.android.worde.MenuClick;
 import com.example.android.worde.NightModePreferences;
 import com.example.android.worde.R;
 
-public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import static com.example.android.worde.Config.A1;
+import static com.example.android.worde.Config.A2;
+import static com.example.android.worde.Config.B1;
+import static com.example.android.worde.Config.FAV;
+import static com.example.android.worde.Config.INFO;
+
+public class DrawerActivity extends AppCompatActivity implements NavigationView
+        .OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
     MenuClick menuClick;
@@ -38,20 +45,11 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         setContentView(R.layout.activity_drawer);
         menuClick = new MenuClick(getApplicationContext());
 
-        //Toolbar toolbar = findViewById(R.id.toolbar2);
-        //toolbar.setNavigationIcon(R.mipmap.ic_launcher);
-        //setSupportActionBar(toolbar);
         frameLayout= findViewById(R.id.content_frame);
-
-       //getSupportActionBar().setHomeAsUpIndicator(R.drawable.wordelogosmalltransparent);
-        // getSupportActionBar().setLogo(R.drawable.ic_launcher_background);
-        //getSupportActionBar().setDisplayUseLogoEnabled(true);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mDrawerLayout = findViewById(R.id.menu_drawer);
 
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        //mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerToggle.syncState();
         NavigationView navigationView = findViewById(R.id.nav_view_base);
         navigationView.setItemIconTintList(null);
@@ -87,7 +85,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     }
     public void showInfoDialog() {
         DialogFragment infoFragment = new InfoDialogFragment();
-        infoFragment.show(getSupportFragmentManager(), "info");
+        infoFragment.show(getSupportFragmentManager(), INFO);
     }
 
     public void applyDayNightMode(){
@@ -111,16 +109,16 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_level_a1:
-                menuClick.launchWordListActivity("a1");
+                menuClick.launchWordListActivity(A1);
                 break;
             case R.id.nav_level_a2:
-                menuClick.launchWordListActivity("a2");
+                menuClick.launchWordListActivity(A2);
                 break;
             case R.id.nav_level_b1:
-                menuClick.launchWordListActivity("b1");
+                menuClick.launchWordListActivity(B1);
                 break;
             case R.id.nav_user_favourites:
-                menuClick.launchWordListActivity("fav");
+                menuClick.launchWordListActivity(FAV);
                 break;
             case R.id.nav_night_mode:
                 return false;

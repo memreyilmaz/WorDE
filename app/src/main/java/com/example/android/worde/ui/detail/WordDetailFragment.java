@@ -27,14 +27,16 @@ import com.example.android.worde.R;
 import com.example.android.worde.SnackbarShaper;
 import com.example.android.worde.database.Word;
 import com.example.android.worde.database.WordRepository;
+import com.example.android.worde.ui.OnSwipeTouchListener;
 import com.example.android.worde.ui.favourite.AddFavouriteViewModel;
 import com.example.android.worde.ui.favourite.AddFavouriteViewModelFactory;
+
+import static com.example.android.worde.Config.SELECTED_WORD;
 
 public class WordDetailFragment extends Fragment {
     //private static final String TAG = WordDetailFragment.class.getSimpleName();
     RecyclerView wordDetailCardView;
     WordDetailAdapter mAdapter;
-    public static final String SELECTED_WORD = "SELECTED_WORD";
     int selectedWord;
     int previousWord;
     int nextWord;
@@ -59,15 +61,17 @@ public class WordDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-            selectedWord = args.getInt(WordDetailFragment.SELECTED_WORD);
+            selectedWord = args.getInt(SELECTED_WORD);
         } else {
             selectedWord = 1;
             }
         //selectedWord = getActivity().getIntent().getIntExtra(SELECTED_WORD, 0);
         mRepository = new WordRepository(getActivity().getApplication());
-        DetailViewModelFactory factory = new DetailViewModelFactory(mRepository, selectedWord);
+        DetailViewModelFactory factory = new DetailViewModelFactory(mRepository);
         mViewModel = ViewModelProviders.of(this, factory).get(DetailViewModel.class);
+        mViewModel.setCurrentWordId(selectedWord);
       //  getActivity().setTitle(mWordLevel.toUpperCase());  TODO
+
         setRetainInstance(true);
     }
     @SuppressLint("ClickableViewAccessibility")
@@ -84,22 +88,16 @@ public class WordDetailFragment extends Fragment {
         wordDetailCardView.setLayoutManager(wordDetailLayoutManager);
         //wordDetailCardView.setHasFixedSize(false);
         //wordDetailCardView.setAdapter(mAdapter);
-        /*wordDetailCardView.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
+        wordDetailCardView.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             @Override
             public void onSwipeLeft() {
-
-                selectedWord = (mWordID - 1);
-                loadSelectedWord();
-               Toast.makeText(getContext(), "Right", Toast.LENGTH_SHORT).show();
-
+                loadNextWord();
             }
             @Override
             public void onSwipeRight() {
-                selectedWord = (mWordID + 1);
-                loadSelectedWord();
-                Toast.makeText(getContext(), "Right", Toast.LENGTH_SHORT).show();
+                loadPreviousWord();
             }
-        });*/
+        });
         return view;
     }
     @Override
@@ -108,7 +106,7 @@ public class WordDetailFragment extends Fragment {
         setHasOptionsMenu(true);
     }
     public void loadSelectedWord(){
-        mViewModel.getWordById().observe(this, new Observer<Word>() {
+        mViewModel.mSelectedWord.observe(this, new Observer<Word>() {
             @Override
             public void onChanged(@Nullable Word word) {
                 mAdapter = new WordDetailAdapter(word);
@@ -134,22 +132,24 @@ public class WordDetailFragment extends Fragment {
         mWordExample = mCurrentWord.getWordExample();
         mWordFavouriteStatus = mCurrentWord.getWordFavourite();
     }
-
     public void addToFavourites(){
         mFavouriteImageView = getView().findViewById(R.id.add_to_favourites_image_view_card_view);
         int mWordFavourite = mWordFavouriteStatus ? 1 : 0;
-        AddFavouriteViewModelFactory factory = new AddFavouriteViewModelFactory(mRepository,mWordFavourite, mWordID);
+        AddFavouriteViewModelFactory factory = new AddFavouriteViewModelFactory(mRepository,
+                mWordFavourite, mWordID);
         mFavViewModel = ViewModelProviders.of(this,factory).get(AddFavouriteViewModel.class);
         if (!mWordFavouriteStatus) {
             mFavViewModel.setFavouriteStatus(1, mWordID);
             mFavouriteImageView = getView().findViewById(R.id.add_to_favourites_image_view_card_view);
             mFavouriteImageView.setImageResource(R.drawable.ic_favorite);
-            snackbar = Snackbar.make(snackBarView, R.string.added_to_favourites, Snackbar.LENGTH_LONG);
+            snackbar = Snackbar.make(snackBarView, R.string.added_to_favourites,
+                    Snackbar.LENGTH_LONG);
             SnackbarShaper.configSnackbar(getContext(),snackbar); snackbar.show();
         } else {
             mFavViewModel.setFavouriteStatus(0, mWordID);
             mFavouriteImageView.setImageResource(R.drawable.ic_favorite_border);
-            snackbar = Snackbar.make(snackBarView, R.string.removed_from_favourites,Snackbar.LENGTH_LONG);
+            snackbar = Snackbar.make(snackBarView, R.string.removed_from_favourites,
+                    Snackbar.LENGTH_LONG);
             SnackbarShaper.configSnackbar(getContext(),snackbar); snackbar.show();
             snackbar.show();
         }
@@ -161,19 +161,20 @@ public class WordDetailFragment extends Fragment {
         }else {
             selectedWord = (mWordID + 1);
         }
+        mViewModel.setCurrentWordId(selectedWord);
+        loadSelectedWord();
         Toast.makeText(getContext(), "Right", Toast.LENGTH_SHORT).show();
-
     }
-
     public void loadPreviousWord(){
         if (mWordID == 1){
             selectedWord = mWordID;
         }else {
             selectedWord = (mWordID - 1);
         }
+        mViewModel.setCurrentWordId(selectedWord);
+        loadSelectedWord();
         Toast.makeText(getContext(), "Right", Toast.LENGTH_SHORT).show();
     }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.activity_detail_actions, menu);

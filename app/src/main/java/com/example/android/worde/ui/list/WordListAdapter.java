@@ -16,7 +16,9 @@ import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
 import java.util.List;
 
 
-public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordViewHolder> implements SectionTitleProvider {
+public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordViewHolder>
+        implements SectionTitleProvider {
+
        private List<Word> mWords;
        private static ClickListener clickListener;
     private ImageView mAddFavourite;
@@ -27,7 +29,8 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
     @NonNull
     @Override
         public WordViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item, parent, false);
+            View itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.recycler_view_item, parent, false);
             return new WordViewHolder(itemView);
     }
     @Override

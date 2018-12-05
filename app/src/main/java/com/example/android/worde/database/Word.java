@@ -5,13 +5,13 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-import static com.example.android.worde.DataNames.COL_ARTIKEL;
-import static com.example.android.worde.DataNames.COL_EXAMPLE;
-import static com.example.android.worde.DataNames.COL_FAVOURITE;
-import static com.example.android.worde.DataNames.COL_ID;
-import static com.example.android.worde.DataNames.COL_LEVEL;
-import static com.example.android.worde.DataNames.COL_NAME;
-import static com.example.android.worde.DataNames.TABLE_NAME;
+import static com.example.android.worde.Config.COL_ARTIKEL;
+import static com.example.android.worde.Config.COL_EXAMPLE;
+import static com.example.android.worde.Config.COL_FAVOURITE;
+import static com.example.android.worde.Config.COL_ID;
+import static com.example.android.worde.Config.COL_LEVEL;
+import static com.example.android.worde.Config.COL_NAME;
+import static com.example.android.worde.Config.TABLE_NAME;
 
 @Entity(tableName = TABLE_NAME)
 public class Word {

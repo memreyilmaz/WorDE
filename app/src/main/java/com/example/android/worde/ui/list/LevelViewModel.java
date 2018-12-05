@@ -22,7 +22,6 @@ public class LevelViewModel extends ViewModel {
         mSelectedLevelWords = mRepository.getWordsByLevels(mLevel);
     }
     public LiveData<List<Word>> getWordsByLevels() {
-    /*public LiveData<PagedList<Word>> getWordsByLevels() {*/
         return mSelectedLevelWords;
     }
 }

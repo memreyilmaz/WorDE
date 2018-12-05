@@ -15,7 +15,8 @@ public class SnackbarShaper {
         ViewCompat.setElevation(snackbar.getView(), 6f);
     }
     private static void addMargins(Snackbar snackbar) {
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) snackbar.getView().getLayoutParams();
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) snackbar.getView()
+                .getLayoutParams();
         params.setMargins(16, 16, 16, 16);
         snackbar.getView().setLayoutParams(params);
     }
@@ -23,6 +24,7 @@ public class SnackbarShaper {
         snackbar.getView().setBackground(context.getDrawable(R.drawable.config_snackbar));
     }
     private static void setSnackbarTextColor(Context context, Snackbar snackbar) {
-        snackbar.setActionTextColor(ContextCompat.getColor(context,R.color.snackbarActionTextColor));
+        snackbar.setActionTextColor(ContextCompat.getColor(context,
+                R.color.snackbarActionTextColor));
     }
 }

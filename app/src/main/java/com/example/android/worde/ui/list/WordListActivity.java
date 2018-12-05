@@ -12,8 +12,17 @@ import com.example.android.worde.R;
 import com.example.android.worde.ui.DrawerActivity;
 import com.example.android.worde.ui.detail.WordDetailFragment;
 
+import static com.example.android.worde.Config.A1;
+import static com.example.android.worde.Config.A2;
+import static com.example.android.worde.Config.B1;
+import static com.example.android.worde.Config.FAV;
+import static com.example.android.worde.Config.FRAGMENT_DETAIL;
+import static com.example.android.worde.Config.FRAGMENT_LIST;
+import static com.example.android.worde.Config.SELECTED_LEVEL;
+import static com.example.android.worde.Config.SELECTED_WORD;
+
 public class WordListActivity extends DrawerActivity implements OnFragmentInteractionListener {
-    public static final String SELECTED_LEVEL = "SELECTED_LEVEL";
+   // public static final String SELECTED_LEVEL = "SELECTED_LEVEL";
     FrameLayout frameLayout;
     View snackBar;
     boolean mTabletLayout;
@@ -45,13 +54,14 @@ public class WordListActivity extends DrawerActivity implements OnFragmentIntera
             }
         } else {
             FragmentManager fragmentManager = getSupportFragmentManager();
-            if (fragmentManager.findFragmentByTag("wordlistfragment") != null){
-                wordListFragment = (WordListFragment) fragmentManager.findFragmentByTag("wordlistfragment");
+            if (fragmentManager.findFragmentByTag(FRAGMENT_LIST) != null){
+                wordListFragment = (WordListFragment) fragmentManager.findFragmentByTag(FRAGMENT_LIST);
                 if (mTabletLayout) {
-                    wordDetailFragment = (WordDetailFragment) fragmentManager.findFragmentByTag("worddetailfragment");
+                    wordDetailFragment = (WordDetailFragment) fragmentManager.findFragmentByTag(FRAGMENT_DETAIL);
                 }
-            }else if (fragmentManager.findFragmentByTag("worddetailfragment") != null){//todo null gosteriyor her kosulda neden?
-                wordDetailFragment = (WordDetailFragment) fragmentManager.findFragmentByTag("worddetailfragment");
+            }else if (fragmentManager.findFragmentByTag(FRAGMENT_DETAIL) != null){//todo null gosteriyor her kosulda neden?
+                //TODO DUZELDIKTEN SONRA NIGHT MODE ICIN DE KONTROL EDILMELI
+                wordDetailFragment = (WordDetailFragment) fragmentManager.findFragmentByTag(FRAGMENT_DETAIL);
             }
         }
         Toolbar toolbar = findViewById(R.id.list_activity_toolbar);
@@ -70,27 +80,28 @@ public class WordListActivity extends DrawerActivity implements OnFragmentIntera
         selectedLevelBundle.putString("key", selectedLevel);
         wordListFragment.setArguments(selectedLevelBundle);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.word_list_container, wordListFragment, "wordlistfragment").commit();
+                .add(R.id.word_list_container, wordListFragment, FRAGMENT_LIST).commit();
     }
     public void setWordDetailFragment(){
         wordDetailFragment = new WordDetailFragment();
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.word_detail_container, wordDetailFragment, "worddetailfragment" )
+                .add(R.id.word_detail_container, wordDetailFragment, FRAGMENT_DETAIL )
                 .commit();
     }
     @Override
     public void changeFragment(int selectedWordId) {
         wordDetailFragment= new WordDetailFragment();
         Bundle args = new Bundle();
-        args.putInt(wordDetailFragment.SELECTED_WORD, selectedWordId);
+        args.putInt(SELECTED_WORD, selectedWordId);
         wordDetailFragment.setArguments(args);
         if (!mTabletLayout) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.word_list_container, wordDetailFragment,"worddetailfragment")
+                    .replace(R.id.word_list_container, wordDetailFragment,FRAGMENT_DETAIL)
                     .addToBackStack(null)
                     .commit();
         }else {
-           getSupportFragmentManager().beginTransaction().detach(wordDetailFragment).attach(wordDetailFragment).commit();
+           getSupportFragmentManager().beginTransaction().detach(wordDetailFragment)
+                   .attach(wordDetailFragment).commit();
         }
 
         /*   if (string.equals(WordListFragment.TAG)) {
@@ -123,16 +134,16 @@ public class WordListActivity extends DrawerActivity implements OnFragmentIntera
     }*/
     public String assignTitle(){
         switch (selectedLevel){
-            case "a1":
+            case A1:
                 titleLevel = getString(R.string.a1);
                 break;
-            case "a2":
+            case A2:
                 titleLevel = getString(R.string.a2);
                 break;
-            case "b1":
+            case B1:
                 titleLevel = getString(R.string.b1);
                 break;
-            case "fav":
+            case FAV:
                 titleLevel = getString(R.string.user_favourites);
                 break;
         }

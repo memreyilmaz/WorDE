@@ -26,12 +26,16 @@ import com.futuremind.recyclerviewfastscroll.FastScroller;
 
 import java.util.List;
 
+import static com.example.android.worde.Config.ADDED;
+import static com.example.android.worde.Config.ADDED_BACK;
+import static com.example.android.worde.Config.FAV;
+import static com.example.android.worde.Config.REMOVED;
+
 public class WordListFragment extends Fragment {
     // getActivity().getClass().getSimpleName(); //TODO
     RecyclerView wordListRecyclerView;
     WordListAdapter mAdapter;
     private static final String TAG = WordListFragment.class.getSimpleName();
-    public static final String SELECTED_LEVEL = "SELECTED_LEVEL";
     //int selectedWordId;
     String selectedLevel;
     AddFavouriteViewModel mFavViewModel;
@@ -66,12 +70,13 @@ public class WordListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_word_list, container, false);
         snackBarView = view.findViewById(R.id.word_list_coordinator_layout);
-        if (selectedLevel.equals("fav")){
+        if (selectedLevel.equals(FAV)){
             setFavouriteWordList();
         } else {
             setLevelWordList();
         }
-        LinearLayoutManager wordListLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager wordListLayoutManager = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false);
         wordListRecyclerView = view.findViewById(R.id.word_list_recyclerview);
         wordListRecyclerView.setLayoutManager(wordListLayoutManager);
 //        wordListRecyclerView.setHasFixedSize(false);
@@ -103,13 +108,13 @@ public class WordListFragment extends Fragment {
                 .get(AddFavouriteViewModel.class);
         if (!mWordFavouriteStatus) {
             mFavViewModel.setFavouriteStatus(1, mWordID);
-            setSnackBar("added");
+            setSnackBar(ADDED);
         } else {
             mFavViewModel.setFavouriteStatus(0, mWordID);
-            if (selectedLevel.equals("fav")){
-                setSnackBar("addedback");
+            if (selectedLevel.equals(FAV)){
+                setSnackBar(ADDED_BACK);
             } else {
-                setSnackBar("removed");
+                setSnackBar(REMOVED);
             }
         }
     }
@@ -168,22 +173,26 @@ public class WordListFragment extends Fragment {
     public void setSnackBar(String condition){
         Snackbar snackbar;
         switch (condition){
-            case "added":
-                snackbar = Snackbar.make(snackBarView, R.string.added_to_favourites, Snackbar.LENGTH_LONG);
+            case ADDED:
+                snackbar = Snackbar.make(snackBarView, R.string.added_to_favourites,
+                        Snackbar.LENGTH_LONG);
                 SnackbarShaper.configSnackbar(getContext(),snackbar); snackbar.show();
                 break;
-            case "removed":
-                snackbar = Snackbar.make(snackBarView, R.string.removed_from_favourites,Snackbar.LENGTH_LONG);
+            case REMOVED:
+                snackbar = Snackbar.make(snackBarView, R.string.removed_from_favourites,
+                        Snackbar.LENGTH_LONG);
                 SnackbarShaper.configSnackbar(getContext(),snackbar); snackbar.show();
                         snackbar.show();
                 break;
-            case "addedback":
-               snackbar = Snackbar.make(snackBarView, R.string.removed_from_favourites, Snackbar.LENGTH_LONG)
+            case ADDED_BACK:
+               snackbar = Snackbar.make(snackBarView, R.string.removed_from_favourites,
+                        Snackbar.LENGTH_LONG)
                         .setAction("UNDO", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 mFavViewModel.setFavouriteStatus(1, mWordID);
-                                Snackbar snackbar = Snackbar.make(view, R.string.added_to_favourites_again,
+                                Snackbar snackbar = Snackbar.make(view,
+                                        R.string.added_to_favourites_again,
                                         Snackbar.LENGTH_LONG);
                                         SnackbarShaper.configSnackbar(getContext(),snackbar);
                                         snackbar.show();

@@ -9,6 +9,11 @@ import android.widget.FrameLayout;
 import com.example.android.worde.MenuClick;
 import com.example.android.worde.R;
 
+import static com.example.android.worde.Config.A1;
+import static com.example.android.worde.Config.A2;
+import static com.example.android.worde.Config.B1;
+import static com.example.android.worde.Config.FAV;
+
 public class MainActivity extends DrawerActivity implements View.OnClickListener{
     CardView a1LevelButton;
     CardView a2LevelButton;
@@ -24,13 +29,11 @@ public class MainActivity extends DrawerActivity implements View.OnClickListener
         getLayoutInflater().inflate(R.layout.activity_main, frameLayout);
         menuClick = new MenuClick(getApplicationContext());
         Toolbar toolbar = findViewById(R.id.main_activity_toolbar);
-        //toolbar.setNavigationIcon(R.mipmap.ic_launcher);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.wordelogosmalltransparent);
-       // getSupportActionBar().setLogo(R.drawable.ic_launcher_background);
-        //getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.wordelogosmalltransparent);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         a1LevelButton = findViewById(R.id.level_a1_cardview);
         a2LevelButton = findViewById(R.id.level_a2_cardview);
         b1LevelButton = findViewById(R.id.level_b1_cardview);
@@ -44,16 +47,16 @@ public class MainActivity extends DrawerActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.level_a1_cardview:
-                menuClick.launchWordListActivity("a1");
+                menuClick.launchWordListActivity(A1);
                 break;
             case R.id.level_a2_cardview:
-                menuClick.launchWordListActivity("a2");
+                menuClick.launchWordListActivity(A2);
                 break;
             case R.id.level_b1_cardview:
-                menuClick.launchWordListActivity("b1");
+                menuClick.launchWordListActivity(B1);
                 break;
             case R.id.favourite_words_cardview:
-                menuClick.launchWordListActivity("fav");
+                menuClick.launchWordListActivity(FAV);
                 break;
             default:
                 break;
