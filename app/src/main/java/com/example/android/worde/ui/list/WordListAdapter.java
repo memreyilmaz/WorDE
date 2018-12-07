@@ -85,13 +85,15 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
             }
             void bindTo(Word word) {
                 mWord = word;
-                mWordName.setText(word.getWordName());
-                if (word.getWordArtikel().equals("")){
+
+                if (word.getWordArtikel() != null){
+                    mArtikel.setText(word.getWordArtikel());
+                }else {
                     mArtikel.setVisibility(View.GONE);
                     mWordName.setGravity(Gravity.CENTER_VERTICAL);
-                }else {
-                    mArtikel.setText(word.getWordArtikel());
                 }
+                mWordName.setText(word.getWordName());
+
                 if (!word.getWordFavourite()){
                     mAddFavourite.setImageResource(R.drawable.ic_favorite_border);
                 }else{

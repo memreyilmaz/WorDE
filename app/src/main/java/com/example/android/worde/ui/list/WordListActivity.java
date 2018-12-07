@@ -7,15 +7,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.example.android.worde.AssignTitle;
 import com.example.android.worde.OnFragmentInteractionListener;
 import com.example.android.worde.R;
 import com.example.android.worde.ui.DrawerActivity;
 import com.example.android.worde.ui.detail.WordDetailFragment;
 
-import static com.example.android.worde.Config.A1;
-import static com.example.android.worde.Config.A2;
-import static com.example.android.worde.Config.B1;
-import static com.example.android.worde.Config.FAV;
 import static com.example.android.worde.Config.FRAGMENT_DETAIL;
 import static com.example.android.worde.Config.FRAGMENT_LIST;
 import static com.example.android.worde.Config.SELECTED_LEVEL;
@@ -31,6 +28,7 @@ public class WordListActivity extends DrawerActivity implements OnFragmentIntera
     String titleLevel;
     Bundle selectedLevelBundle;
     FragmentManager fragmentManager = getSupportFragmentManager();
+    AssignTitle assignTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +37,8 @@ public class WordListActivity extends DrawerActivity implements OnFragmentIntera
         frameLayout = findViewById(R.id.content_frame);
         getLayoutInflater().inflate(R.layout.activity_word_list, frameLayout);
         selectedLevel = getIntent().getStringExtra(SELECTED_LEVEL);
-        setTitle(assignTitle());
+        assignTitle = new AssignTitle(getApplicationContext());
+        setTitle(assignTitle.assignTitle(selectedLevel));
 
         snackBar = findViewById(R.id.app_bar_main);
         //TODO TEST IN TABLET !!!! NOT TESTED ON TABLET YET
@@ -64,6 +63,11 @@ public class WordListActivity extends DrawerActivity implements OnFragmentIntera
         }
         if (mTabletLayout){
             setWordDetailFragment();
+
+
+           /* Bundle selectedLevelBundle = new Bundle();
+            selectedLevelBundle.putString(SELECTED_LEVEL, selectedLevel);
+            wordDetailFragment.setArguments(selectedLevelBundle);*/
         }
         setToolbar();
     }
@@ -81,7 +85,7 @@ public class WordListActivity extends DrawerActivity implements OnFragmentIntera
     public void setWordListFragment(){
         wordListFragment = new WordListFragment();
         selectedLevelBundle = new Bundle();
-        selectedLevelBundle.putString("key", selectedLevel);
+        selectedLevelBundle.putString(SELECTED_LEVEL, selectedLevel);
         wordListFragment.setArguments(selectedLevelBundle);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.list_container, wordListFragment, FRAGMENT_LIST).commit();
@@ -93,11 +97,11 @@ public class WordListActivity extends DrawerActivity implements OnFragmentIntera
                 .commit();
     }
     @Override
-    public void changeFragment(int selectedWordId) {
+    public void showWordDetails(int selectedWordId) {
         wordDetailFragment= new WordDetailFragment();
-        Bundle args = new Bundle();
-        args.putInt(SELECTED_WORD, selectedWordId);
-        wordDetailFragment.setArguments(args);
+        Bundle selectedWordBundle = new Bundle();
+        selectedWordBundle.putInt(SELECTED_WORD, selectedWordId);
+        wordDetailFragment.setArguments(selectedWordBundle);
         if (!mTabletLayout) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.list_container, wordDetailFragment,FRAGMENT_DETAIL)
@@ -105,25 +109,8 @@ public class WordListActivity extends DrawerActivity implements OnFragmentIntera
                     .commit();
         }else {
            wordDetailFragment = (WordDetailFragment) fragmentManager.findFragmentByTag(FRAGMENT_DETAIL);
-            wordDetailFragment.setWordForTablet(selectedWordId);
+           wordDetailFragment.setWordForTablet(selectedWordId);
         }
-    }
-    public String assignTitle(){
-        switch (selectedLevel){
-            case A1:
-                titleLevel = getString(R.string.a1);
-                break;
-            case A2:
-                titleLevel = getString(R.string.a2);
-                break;
-            case B1:
-                titleLevel = getString(R.string.b1);
-                break;
-            case FAV:
-                titleLevel = getString(R.string.user_favourites);
-                break;
-        }
-        return titleLevel;
     }
     @Override
     public void onBackPressed() {

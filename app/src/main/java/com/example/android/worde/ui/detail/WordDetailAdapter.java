@@ -100,7 +100,11 @@ public class WordDetailAdapter extends RecyclerView.Adapter<WordDetailAdapter.Wo
         }
         void bindTo(Word word) {
             mWord = word;
-            mArtikel.setText(word.getWordArtikel());
+            if (word.getWordArtikel() == null){
+                mArtikel.setVisibility(View.GONE);
+            } else {
+                mArtikel.setText(word.getWordArtikel());
+            }
             mWordName.setText(word.getWordName());
             mExample.setText(word.getWordExample());
             if (!word.getWordFavourite()){

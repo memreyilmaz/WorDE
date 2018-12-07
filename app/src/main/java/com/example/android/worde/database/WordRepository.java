@@ -25,6 +25,11 @@ public class WordRepository {
          mWordDao.addOrRemoveFavourite(favourite, id);
         // new updateWordAsyncTask(mWordDao).execute(favourite,id);
     }
+
+    public int getFirstWordOfSelectedLevel(String level){
+        Word firstWordOfLevel = mWordDao.getFirstWordOnSelectedLevelForTablet(level);
+        return firstWordOfLevel.getWordId();
+    }
    /* private static class updateWordAsyncTask extends AsyncTask<Void, Void, Void> {
         private WordDao mAsyncTaskDao;
         //private int favourite;

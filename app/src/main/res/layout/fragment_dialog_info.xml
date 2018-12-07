@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="@dimen/card_view_padding"
+        android:linksClickable="true"
         android:text="@string/brandenburg_gate_license_note" />
 
     <TextView

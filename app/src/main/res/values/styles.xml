@@ -66,4 +66,10 @@
     <style name="StyledScrollerTextAppearance">
         <item name="android:textColor">@android:color/white</item>
     </style>
+
+    <style name="ThemeOverlay.MySwitchCompat" parent="">
+        <item name="colorControlActivated">@color/wordBlue</item>
+        <item name="colorSwitchThumbNormal">#f1f1f1</item>
+        <item name="android:colorForeground">#42221f1f</item>
+    </style>
 </resources>

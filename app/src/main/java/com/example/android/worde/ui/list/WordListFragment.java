@@ -30,12 +30,12 @@ import static com.example.android.worde.Config.ADDED;
 import static com.example.android.worde.Config.ADDED_BACK;
 import static com.example.android.worde.Config.FAV;
 import static com.example.android.worde.Config.REMOVED;
+import static com.example.android.worde.Config.SELECTED_LEVEL;
 
 public class WordListFragment extends Fragment {
     // getActivity().getClass().getSimpleName(); //TODO
     RecyclerView wordListRecyclerView;
     WordListAdapter mAdapter;
-    private static final String TAG = WordListFragment.class.getSimpleName();
     //int selectedWordId;
     String selectedLevel;
     AddFavouriteViewModel mFavViewModel;
@@ -43,22 +43,21 @@ public class WordListFragment extends Fragment {
     boolean mWordFavouriteStatus;
     WordRepository mRepository;
     int mWordID;
+    Word mSelectedWord;
     View snackBarView;
     private OnFragmentInteractionListener mListener;
-    //DataPassListener mCallback;
-    List<Word> words;
     LevelViewModel mLevelViewModel;
-    /*public interface DataPassListener{
-        public void passData(int selectedWordId);
-    }*/
+    LinearLayoutManager wordListLayoutManager;
 
     public WordListFragment() {
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle bundle = getArguments();
-        selectedLevel = bundle.getString("key");
+        Bundle levelbundle = getArguments();
+        if (levelbundle != null){
+            selectedLevel = levelbundle.getString(SELECTED_LEVEL);
+        }
         mRepository = new WordRepository(getActivity().getApplication());
         WordLevelViewModelFactory factory = new WordLevelViewModelFactory(mRepository, selectedLevel);
         mLevelViewModel = ViewModelProviders.of(this, factory).get(LevelViewModel.class);
@@ -75,7 +74,7 @@ public class WordListFragment extends Fragment {
         } else {
             setLevelWordList();
         }
-        LinearLayoutManager wordListLayoutManager = new LinearLayoutManager(getContext(),
+        wordListLayoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false);
         wordListRecyclerView = view.findViewById(R.id.word_list_recyclerview);
         wordListRecyclerView.setLayoutManager(wordListLayoutManager);
@@ -98,9 +97,8 @@ public class WordListFragment extends Fragment {
         });
     }
     public void addToFavourites(int position){
-        Word word = mAdapter.getWordAtPosition(position);
-        mWordID = word.getWordId();
-        mWordFavouriteStatus = word.getWordFavourite();
+        mWordID = getSelectedWordID(position);
+        mWordFavouriteStatus = getSelectedWordFavouriteStatus(position);
         int mWordFavourite = mWordFavouriteStatus ? 1 : 0;
         AddFavouriteViewModelFactory factory =
                 new AddFavouriteViewModelFactory(mRepository,mWordFavourite, mWordID);
@@ -130,34 +128,26 @@ public class WordListFragment extends Fragment {
             }
         });
     }
-   @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            mListener = (OnFragmentInteractionListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
     public void setAdapterClickListener(){
         mAdapter.setOnItemClickListener(new WordListAdapter.ClickListener()  {
             @Override
             public void onItemClick(View v, int position) {
-                Word word = mAdapter.getWordAtPosition(position);
-                int selectedWordId = word.getWordId();
-                mListener.changeFragment(selectedWordId);
+                int wordId = getSelectedWordID(position);
+                mListener.showWordDetails(wordId);
             }
             @Override
             public void onFavouriteClick(View v, int position) {
                 addToFavourites(position);
             }
         });
+    }
+    public int getSelectedWordID(int position){
+        mSelectedWord = mAdapter.getWordAtPosition(position);
+        return mSelectedWord.getWordId();
+    }
+    public boolean getSelectedWordFavouriteStatus(int position){
+        mSelectedWord = mAdapter.getWordAtPosition(position);
+        return mSelectedWord.getWordFavourite();
     }
     public void setSnackBar(String condition){
         Snackbar snackbar;
@@ -188,8 +178,23 @@ public class WordListFragment extends Fragment {
                             }
                         });
                         SnackbarShaper.configSnackbar(getContext(),snackbar);
-                       snackbar.show();
+                        snackbar.show();
                 break;
         }
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mListener = (OnFragmentInteractionListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 }

@@ -19,9 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.example.android.worde.OnFragmentInteractionListener;
 import com.example.android.worde.R;
 import com.example.android.worde.SnackbarShaper;
 import com.example.android.worde.database.Word;
@@ -44,25 +42,29 @@ public class WordDetailFragment extends Fragment {
     String mWordArtikel;
     String mWordName;
     String mWordExample;
+    String selectedLevel;
     Word mCurrentWord;
     AddFavouriteViewModel mFavViewModel;
     ImageView mFavouriteImageView;
     View snackBarView;
     DetailViewModel mViewModel;
-    private OnFragmentInteractionListener mListener;
     Snackbar snackbar;
+
+    String currentLevel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mRepository = new WordRepository(getActivity().getApplication());
         Bundle args = getArguments();
         if (args != null) {
             selectedWord = args.getInt(SELECTED_WORD);
+         //   selectedLevel = args.getString(SELECTED_LEVEL);
         } else {
-            selectedWord = 1;
-            }
-        //selectedWord = getActivity().getIntent().getIntExtra(SELECTED_WORD, 0);
-        mRepository = new WordRepository(getActivity().getApplication());
+            selectedWord = mRepository.getFirstWordOfSelectedLevel("a2");
+        }
+
         DetailViewModelFactory factory = new DetailViewModelFactory(mRepository);
         mViewModel = ViewModelProviders.of(this, factory).get(DetailViewModel.class);
         mViewModel.setCurrentWordId(selectedWord);
@@ -87,13 +89,23 @@ public class WordDetailFragment extends Fragment {
         wordDetailCardView.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             @Override
             public void onSwipeLeft() {
+               // currentLevel = mCurrentWord.getWordLevel();
                 loadNextWord();
             }
             @Override
             public void onSwipeRight() {
+             //   currentLevel = mCurrentWord.getWordLevel();
                 loadPreviousWord();
             }
+
         });
+     /*   String newLevel = mCurrentWord.getWordLevel();
+        if (!currentLevel.equals(newLevel)){
+            // getActivity().ass();
+            AssignTitle at = new AssignTitle(getContext());
+            String st = at.assignTitle(newLevel);
+            getActivity().setTitle(st);
+        }*/
         return view;
     }
     @Override
@@ -106,7 +118,6 @@ public class WordDetailFragment extends Fragment {
         selectedWord = wordidfromlistfragment;
         mViewModel.setCurrentWordId(selectedWord);
         loadSelectedWord();
-
     }
     public void loadSelectedWord(){
         mViewModel.mSelectedWord.observe(this, new Observer<Word>() {
@@ -166,7 +177,6 @@ public class WordDetailFragment extends Fragment {
         }
         mViewModel.setCurrentWordId(selectedWord);
         loadSelectedWord();
-        Toast.makeText(getContext(), "Right", Toast.LENGTH_SHORT).show();
     }
     public void loadPreviousWord(){
         if (mWordID == 1){
@@ -176,7 +186,6 @@ public class WordDetailFragment extends Fragment {
         }
         mViewModel.setCurrentWordId(selectedWord);
         loadSelectedWord();
-        Toast.makeText(getContext(), "Right", Toast.LENGTH_SHORT).show();
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -219,20 +228,4 @@ public class WordDetailFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
-   /*
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            mListener = (OnFragmentInteractionListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }*/
 }
