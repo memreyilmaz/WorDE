@@ -7,4 +7,6 @@
         <attr name="tintcolor" format="color" />
         <attr name="buttoncolor" format="color" />
         <attr name="wordtextcolor" format="color" />
+        <attr name="infoDialogDividerColor" format="color" />
+
     </declare-styleable></resources>

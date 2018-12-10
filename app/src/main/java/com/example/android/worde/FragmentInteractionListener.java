@@ -1,5 +1,5 @@
 package com.example.android.worde;
 
-public interface OnFragmentInteractionListener {
+public interface FragmentInteractionListener {
     void showWordDetails(int selectedWordId);
 }

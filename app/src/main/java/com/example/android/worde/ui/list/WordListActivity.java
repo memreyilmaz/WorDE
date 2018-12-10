@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.example.android.worde.AssignTitle;
-import com.example.android.worde.OnFragmentInteractionListener;
+import com.example.android.worde.FragmentInteractionListener;
 import com.example.android.worde.R;
 import com.example.android.worde.ui.DrawerActivity;
 import com.example.android.worde.ui.detail.WordDetailFragment;
@@ -18,7 +18,7 @@ import static com.example.android.worde.Config.FRAGMENT_LIST;
 import static com.example.android.worde.Config.SELECTED_LEVEL;
 import static com.example.android.worde.Config.SELECTED_WORD;
 
-public class WordListActivity extends DrawerActivity implements OnFragmentInteractionListener {
+public class WordListActivity extends DrawerActivity implements FragmentInteractionListener {
     FrameLayout frameLayout;
     View snackBar;
     boolean mTabletLayout;
@@ -61,6 +61,9 @@ public class WordListActivity extends DrawerActivity implements OnFragmentIntera
                 wordDetailFragment = (WordDetailFragment) fragmentManager.findFragmentByTag(FRAGMENT_DETAIL);
             }
         }
+
+
+        
         if (mTabletLayout){
             setWordDetailFragment();
 
@@ -109,7 +112,9 @@ public class WordListActivity extends DrawerActivity implements OnFragmentIntera
                     .commit();
         }else {
            wordDetailFragment = (WordDetailFragment) fragmentManager.findFragmentByTag(FRAGMENT_DETAIL);
-           wordDetailFragment.setWordForTablet(selectedWordId);
+           if (wordDetailFragment != null){
+               wordDetailFragment.setWordForTabletLayout(selectedWordId);
+           }
         }
     }
     @Override

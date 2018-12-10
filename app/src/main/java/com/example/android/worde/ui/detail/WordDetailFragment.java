@@ -36,14 +36,14 @@ public class WordDetailFragment extends Fragment {
     WordDetailAdapter mAdapter;
     int selectedWord;
     WordRepository mRepository;
-    int mWordID;
     boolean mWordFavouriteStatus;
+    Word mCurrentWord;
+    int mWordID;
     String mWordLevel;
     String mWordArtikel;
     String mWordName;
     String mWordExample;
     String selectedLevel;
-    Word mCurrentWord;
     AddFavouriteViewModel mFavViewModel;
     ImageView mFavouriteImageView;
     View snackBarView;
@@ -84,6 +84,7 @@ public class WordDetailFragment extends Fragment {
         LinearLayoutManager wordDetailLayoutManager = new LinearLayoutManager(getContext());
         wordDetailCardView = view.findViewById(R.id.word_detail_recyclerview);
         wordDetailCardView.setLayoutManager(wordDetailLayoutManager);
+
         //wordDetailCardView.setHasFixedSize(false);
         //wordDetailCardView.setAdapter(mAdapter);
         wordDetailCardView.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
@@ -113,12 +114,13 @@ public class WordDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
     }
-
-    public void setWordForTablet(int wordidfromlistfragment){
-        selectedWord = wordidfromlistfragment;
+    //Method for passing chosen word id from list fragment to detail fragment and setting ui on two pane layout
+    public void setWordForTabletLayout(int selectedWordIdOnListFragment){
+        selectedWord = selectedWordIdOnListFragment;
         mViewModel.setCurrentWordId(selectedWord);
         loadSelectedWord();
     }
+    //Method for loading selected word on list fragment and passsing it to adapter
     public void loadSelectedWord(){
         mViewModel.mSelectedWord.observe(this, new Observer<Word>() {
             @Override
@@ -136,6 +138,7 @@ public class WordDetailFragment extends Fragment {
             }
         });
     }
+    //Method for getting current word details for using it on fragment
     public void getWordDetails(){
         mCurrentWord = mAdapter.getWord();
 
@@ -146,6 +149,7 @@ public class WordDetailFragment extends Fragment {
         mWordExample = mCurrentWord.getWordExample();
         mWordFavouriteStatus = mCurrentWord.getWordFavourite();
     }
+    //Method for adding or removing current word to/from favourites
     public void addToFavourites(){
         mFavouriteImageView = getView().findViewById(R.id.add_to_favourites_image_view_card_view);
         int mWordFavourite = mWordFavouriteStatus ? 1 : 0;
@@ -168,6 +172,7 @@ public class WordDetailFragment extends Fragment {
             snackbar.show();
         }
     }
+    //Method for loading next word and setting ui when cardview swiped left
     public void loadNextWord(){
         //TODO find last id no.
         if (mWordID == 500000000){
@@ -178,6 +183,7 @@ public class WordDetailFragment extends Fragment {
         mViewModel.setCurrentWordId(selectedWord);
         loadSelectedWord();
     }
+    //Method for loading previous word and setting ui when cardview swiped right
     public void loadPreviousWord(){
         if (mWordID == 1){
             selectedWord = mWordID;
@@ -195,6 +201,7 @@ public class WordDetailFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            //Intent for searching current word on Google
             case R.id.action_bar_search_icon:
                 String wordToSearch;
                 if (mWordName.contains("\n")) {
@@ -208,6 +215,7 @@ public class WordDetailFragment extends Fragment {
                 searchIntent.putExtra(SearchManager.QUERY, wordToSearch);
                 startActivity(searchIntent);
                 return true;
+            //Intent for sharing current word
             case R.id.action_bar_share_icon:
                 StringBuilder shareStringBuilder = new StringBuilder();
                 shareStringBuilder.append(getResources().getString(R.string.share_word_headline)).append("\n").append("\n")

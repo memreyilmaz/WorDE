@@ -14,7 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.worde.OnFragmentInteractionListener;
+import com.example.android.worde.FragmentInteractionListener;
 import com.example.android.worde.R;
 import com.example.android.worde.SnackbarShaper;
 import com.example.android.worde.database.Word;
@@ -45,7 +45,7 @@ public class WordListFragment extends Fragment {
     int mWordID;
     Word mSelectedWord;
     View snackBarView;
-    private OnFragmentInteractionListener mListener;
+    private FragmentInteractionListener mListener;
     LevelViewModel mLevelViewModel;
     LinearLayoutManager wordListLayoutManager;
 
@@ -186,10 +186,10 @@ public class WordListFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mListener = (OnFragmentInteractionListener) context;
+            mListener = (FragmentInteractionListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement FragmentInteractionListener");
         }
     }
     @Override

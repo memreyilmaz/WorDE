@@ -1,36 +1,118 @@
-<LinearLayout
+<android.support.v4.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:background="?attr/backgroundcolor"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <ImageView
+        android:paddingTop="@dimen/card_view_padding"
+        android:paddingStart="@dimen/card_view_padding"
+        android:src="@drawable/wordelogosmalltransparent"
+        android:layout_height="48dp"
+        android:layout_width="48dp"
+        android:contentDescription="@string/app_name" />
+    <TextView
+        style="@style/InfoDialogTextViewHeadlineStyle"
+        android:paddingTop="@dimen/card_view_padding"
+        android:textSize="24sp"
+        android:text="@string/app_name" />
+    </LinearLayout>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="@dimen/card_view_padding"
+        style="@style/InfoDialogTextViewStyle"
+        android:paddingTop="@dimen/card_view_padding"
         android:text="@string/info_dialog" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginStart="@dimen/card_view_padding"
+        android:layout_marginEnd="@dimen/card_view_padding"
+        android:background="?attr/infoDialogDividerColor"
+        android:padding="@dimen/card_view_padding" />
+    <TextView
+        style="@style/InfoDialogTextViewHeadlineStyle"
+        android:text="@string/used_libraries_license_note_title" />
+    <TextView
+        android:id="@+id/assetsqlite_library_license_note_textview"
+        style="@style/InfoDialogTextViewStyle"
+        android:paddingTop="@dimen/word_text_line_spacing"
+        android:text="@string/AssetSQLiteOpenHelper_library_gate_license_note" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginStart="@dimen/card_view_padding"
+        android:layout_marginEnd="@dimen/card_view_padding"
+        android:background="?attr/infoDialogDividerColor"
+        android:padding="@dimen/card_view_padding" />
+    <TextView
+        style="@style/InfoDialogTextViewHeadlineStyle"
+        android:text="@string/ampelmann_license_note_title" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="@dimen/card_view_padding"
+        android:id="@+id/ampelmann_image_textview"
+        style="@style/InfoDialogTextViewStyle"
+        android:paddingTop="@dimen/word_text_line_spacing"
         android:text="@string/ampelmann_license_note" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginStart="@dimen/card_view_padding"
+        android:layout_marginEnd="@dimen/card_view_padding"
+        android:background="?attr/infoDialogDividerColor"
+        android:padding="@dimen/card_view_padding" />
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="@dimen/card_view_padding"
-        android:linksClickable="true"
+        style="@style/InfoDialogTextViewHeadlineStyle"
+        android:text="@string/brandenburg_gate_license_note_title" />
+
+    <TextView
+        android:id="@+id/brandenburger_gate_image_textview"
+        style="@style/InfoDialogTextViewStyle"
+        android:paddingTop="@dimen/word_text_line_spacing"
         android:text="@string/brandenburg_gate_license_note" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginStart="@dimen/card_view_padding"
+        android:layout_marginEnd="@dimen/card_view_padding"
+        android:background="?attr/infoDialogDividerColor"
+        android:padding="@dimen/card_view_padding" />
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="@dimen/card_view_padding"
+        style="@style/InfoDialogTextViewHeadlineStyle"
+        android:text="@string/walk_of_ideas_license_note_title" />
+
+    <TextView
+        android:id="@+id/walk_of_ideas_image_textview"
+        style="@style/InfoDialogTextViewStyle"
+        android:paddingTop="@dimen/word_text_line_spacing"
         android:text="@string/walk_of_ideas_license_note" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginStart="@dimen/card_view_padding"
+        android:layout_marginEnd="@dimen/card_view_padding"
+        android:background="?attr/infoDialogDividerColor"
+        android:padding="@dimen/card_view_padding" />
+
+    <TextView
+        style="@style/InfoDialogTextViewHeadlineStyle"
+        android:text="@string/lieblings_lebkuchenherz_license_note_title" />
+
+    <TextView
+        android:id="@+id/lebkuchenherz_image_textview"
+        style="@style/InfoDialogTextViewStyle"
+        android:paddingTop="@dimen/word_text_line_spacing"
+        android:text="@string/lieblings_lebkuchenherz_license_note" />
 </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

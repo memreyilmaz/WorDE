@@ -24,7 +24,7 @@ public interface WordDao {
     //Word[] getRandomWordForWidget();
 
     //Query for selected level words to show in WordListFragment
-    @Query("SELECT * FROM wordlist WHERE level = :level")
+    @Query("SELECT * FROM wordlist WHERE level = :level ORDER BY _id ASC")
     LiveData<List<Word>> getWordsByLevels(String level);
 
     //Query for selected levels first word to show in WordListFragment For Tablet Two Pane Layout on First Launch

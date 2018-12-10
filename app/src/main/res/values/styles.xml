@@ -12,6 +12,8 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="wordtextcolor">@color/wordtextcolor</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
+        <item name="infoDialogDividerColor">@color/wordDarkestBlue</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -63,6 +65,22 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/wordtextcolor</item>
     </style>
+
+    <style name="InfoDialogTextViewStyle" parent="GeneralTextViewStyle">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:paddingStart">@dimen/card_view_padding</item>
+        <item name="android:paddingEnd">@dimen/card_view_padding</item>
+        <item name="android:paddingBottom">@dimen/card_view_padding</item>
+    </style>
+
+    <style name="InfoDialogTextViewHeadlineStyle" parent="GeneralTextViewStyle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingBottom">@dimen/padding_0</item>
+        <item name="android:paddingStart">@dimen/card_view_padding</item>
+        <item name="android:paddingEnd">@dimen/card_view_padding</item>
+        <item name="android:paddingTop">@dimen/card_view_padding_bottom</item>
+    </style>
+
     <style name="StyledScrollerTextAppearance">
         <item name="android:textColor">@android:color/white</item>
     </style>
