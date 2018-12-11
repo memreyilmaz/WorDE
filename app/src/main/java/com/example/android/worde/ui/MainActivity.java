@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 
 import com.example.android.worde.MenuClick;
 import com.example.android.worde.R;
+import com.example.android.worde.ui.notification.ReminderUtilities;
 
 import static com.example.android.worde.Config.A1;
 import static com.example.android.worde.Config.A2;
@@ -42,7 +43,13 @@ public class MainActivity extends DrawerActivity implements View.OnClickListener
         a2LevelButton.setOnClickListener(this::onClick);
         b1LevelButton.setOnClickListener(this::onClick);
         favouriteWordsButton.setOnClickListener(this::onClick);
-   }
+
+        setComeBackNotification();
+    }
+
+    private void setComeBackNotification() {
+        ReminderUtilities.setNotificationPlanner(this);
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

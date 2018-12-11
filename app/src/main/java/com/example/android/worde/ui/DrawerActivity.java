@@ -83,6 +83,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView
             }
         });
     }
+
     public void showInfoDialog() {
         DialogFragment infoFragment = new InfoDialogFragment();
         infoFragment.show(getSupportFragmentManager(), INFO);
