@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
 
-public class ComeBackReminderFirebaseJobService extends JobService {
+public class NotificationFirebaseJobService extends JobService {
 
     private AsyncTask mBackgroundTask;
 
@@ -16,7 +16,7 @@ public class ComeBackReminderFirebaseJobService extends JobService {
         mBackgroundTask = new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] params) {
-                Context context = ComeBackReminderFirebaseJobService.this;
+                Context context = NotificationFirebaseJobService.this;
                 ReminderTasks.executeTask(context);
              //   NotificationUtilities.remindUserToComeBack(context);
                 return null;

@@ -28,7 +28,7 @@ public class ReminderUtilities {
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(driver);
 
         Job constraintReminderJob = dispatcher.newJobBuilder()
-                .setService(ComeBackReminderFirebaseJobService.class)
+                .setService(NotificationFirebaseJobService.class)
                 .setTag(REMINDER_JOB_TAG)
                 .setLifetime(Lifetime.FOREVER)
                 .setRecurring(true)

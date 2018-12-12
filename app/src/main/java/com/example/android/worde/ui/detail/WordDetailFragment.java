@@ -24,6 +24,7 @@ import com.example.android.worde.R;
 import com.example.android.worde.SnackbarShaper;
 import com.example.android.worde.database.Word;
 import com.example.android.worde.database.WordRepository;
+import com.example.android.worde.ui.Analytics;
 import com.example.android.worde.ui.OnSwipeTouchListener;
 import com.example.android.worde.ui.favourite.AddFavouriteViewModel;
 import com.example.android.worde.ui.favourite.AddFavouriteViewModelFactory;
@@ -214,6 +215,8 @@ public class WordDetailFragment extends Fragment {
                 Intent searchIntent = new Intent(Intent.ACTION_WEB_SEARCH);
                 searchIntent.putExtra(SearchManager.QUERY, wordToSearch);
                 startActivity(searchIntent);
+
+                Analytics.logSearchEvent(getContext());
                 return true;
             //Intent for sharing current word
             case R.id.action_bar_share_icon:
@@ -231,6 +234,8 @@ public class WordDetailFragment extends Fragment {
                 shareIntent.setType("text/plain");
 
                 startActivity(Intent.createChooser(shareIntent,getResources().getText(R.string.share_with)));
+
+                Analytics.logShareEvent(getContext());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

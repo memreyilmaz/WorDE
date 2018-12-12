@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "84041517655",
+    "firebase_url": "https://wordeand.firebaseio.com",
+    "project_id": "wordeand",
+    "storage_bucket": "wordeand.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:84041517655:android:88b1801650fa77e5",
+        "android_client_info": {
+          "package_name": "com.example.android.worde"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "84041517655-q0pd8uns1ad7pbgajbhk8pk14os29nk1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgYFB16uZs0aTy55X1XWmhbjrV4UpWvJI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

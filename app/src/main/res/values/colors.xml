@@ -21,4 +21,6 @@
     <color name="nightPrimaryDark">#10171D</color>
     <color name="nightPrimary">#1C2939</color>
     <color name="nightBackground">#10171D</color>
+
+    <color name="pressedBackground">#E6EAF1</color>
 </resources>

@@ -45,6 +45,7 @@ public class MainActivity extends DrawerActivity implements View.OnClickListener
         favouriteWordsButton.setOnClickListener(this::onClick);
 
         setComeBackNotification();
+
     }
 
     private void setComeBackNotification() {

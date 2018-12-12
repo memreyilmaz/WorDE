@@ -47,7 +47,7 @@
         </activity>
 
         <service
-            android:name=".ui.notification.ComeBackReminderFirebaseJobService"
+            android:name=".ui.notification.NotificationFirebaseJobService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
