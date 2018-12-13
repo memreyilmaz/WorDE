@@ -26,7 +26,7 @@
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/word_list_item_selector</item>
+        <item name="android:stateListAnimator">@animator/card_press</item>
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 

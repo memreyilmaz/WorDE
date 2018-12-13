@@ -31,7 +31,6 @@ public abstract class WordDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                              WordDatabase.class, "word_database")
                              .addMigrations(MIGRATION_1_2)
-                            .allowMainThreadQueries() //TODO remove after moving add to favourites func to asynctask
                              .openHelperFactory(new AssetSQLiteOpenHelperFactory())
                              .build();
                 }

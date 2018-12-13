@@ -33,7 +33,7 @@ import static com.example.android.worde.Config.REMOVED;
 import static com.example.android.worde.Config.SELECTED_LEVEL;
 
 public class WordListFragment extends Fragment {
-    // getActivity().getClass().getSimpleName(); //TODO
+    // getActivity().getClass().getSimpleName();
     RecyclerView wordListRecyclerView;
     WordListAdapter mAdapter;
     //int selectedWordId;

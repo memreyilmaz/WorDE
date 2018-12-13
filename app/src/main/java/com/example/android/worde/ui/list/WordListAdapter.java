@@ -68,7 +68,6 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
                     @Override
                     public void onClick(View view) {
                         clickListener.onFavouriteClick(view, getAdapterPosition());
-                        //TODO IMPLELEMENT CHANGE HEART ICON
                         notifyDataSetChanged();
                     }
                 });

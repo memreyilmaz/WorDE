@@ -29,7 +29,13 @@ public interface WordDao {
 
     //Query for selected levels first word to show in WordListFragment For Tablet Two Pane Layout on First Launch
     @Query("SELECT * FROM wordlist WHERE level = :level ORDER BY _id ASC LIMIT 1")
-    Word getFirstWordOnSelectedLevelForTablet(String level);
+    LiveData<Word> getFirstWordOnSelectedLevelForTablet(String level);
+
+    @Query("SELECT * FROM wordlist ORDER BY _id DESC LIMIT 1")
+    LiveData<Word> getLastWordOnDb();
+
+    @Query("SELECT * FROM wordlist ORDER BY _id ASC LIMIT 1")
+    LiveData<Word> getFirstWordOnDb();
 
     //Query for favourite words to show in WordListFragment
     @Query("SELECT * FROM wordlist WHERE favourite = 1 ORDER BY _id ASC")
@@ -45,4 +51,5 @@ public interface WordDao {
     //Query for selected word to update its favourite status
     @Query("UPDATE wordlist SET favourite = :favourite WHERE _id = :id")
     void addOrRemoveFavourite(int favourite, int id);
+
 }

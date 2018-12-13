@@ -29,4 +29,18 @@ public class DetailViewModel extends ViewModel {
     public void setCurrentWordId(int wordId){
         currentWordIdLiveData.postValue(wordId);
     }
+
+   /* public LiveData<Word> getLastWord(){
+        LiveData<Word> lastWord = mRepository.getLastWordOfDb();
+        //int lastWordId = lastWord.getWordId();
+        //return lastWordId;
+        return lastWord;
+    }
+
+    public LiveData<Word> getFirstWord(){
+        LiveData<Word> firstWord = mRepository.getFirstWordOfDb();
+        //int firstWordId = firstWord.getWordId();
+        //return firstWordId;
+        return firstWord;
+    }*/
 }

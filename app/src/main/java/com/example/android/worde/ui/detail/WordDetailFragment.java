@@ -63,14 +63,18 @@ public class WordDetailFragment extends Fragment {
             selectedWord = args.getInt(SELECTED_WORD);
          //   selectedLevel = args.getString(SELECTED_LEVEL);
         } else {
-            selectedWord = mRepository.getFirstWordOfSelectedLevel("a2");
+//           LiveData<Word> firstWord = mRepository.getFirstWordOfSelectedLevel("a2");
+  //          selectedWord = firstWord.getValue().getWordId();
         }
 
         DetailViewModelFactory factory = new DetailViewModelFactory(mRepository);
         mViewModel = ViewModelProviders.of(this, factory).get(DetailViewModel.class);
         mViewModel.setCurrentWordId(selectedWord);
-      //  getActivity().setTitle(mWordLevel.toUpperCase());  TODO
-
+        //  getActivity().setTitle(mWordLevel.toUpperCase());
+       // LiveData<Word> firstWord = mViewModel.getFirstWord();
+       // int firstWordId = firstWord.getValue().getWordId();
+   //     LiveData<Word> lastWord = mViewModel.getLastWord();
+   //     int lastWordId = lastWord.getValue().getWordId();
         setRetainInstance(true);
     }
     @SuppressLint("ClickableViewAccessibility")
@@ -175,8 +179,10 @@ public class WordDetailFragment extends Fragment {
     }
     //Method for loading next word and setting ui when cardview swiped left
     public void loadNextWord(){
-        //TODO find last id no.
-        if (mWordID == 500000000){
+      //  LiveData<Word> lastWord = mViewModel.getLastWord();
+      //  int lastWordId = lastWord.getValue().getWordId();
+
+        if (mWordID == 500000 ){
             selectedWord = mWordID;
         }else {
             selectedWord = (mWordID + 1);
@@ -186,6 +192,8 @@ public class WordDetailFragment extends Fragment {
     }
     //Method for loading previous word and setting ui when cardview swiped right
     public void loadPreviousWord(){
+        //LiveData<Word> firstWord = mViewModel.getFirstWord();
+        //int firstWordId = firstWord.getValue().getWordId();
         if (mWordID == 1){
             selectedWord = mWordID;
         }else {
@@ -220,9 +228,17 @@ public class WordDetailFragment extends Fragment {
                 return true;
             //Intent for sharing current word
             case R.id.action_bar_share_icon:
+                String wordArtikelForShare;
+                if (mWordArtikel == null) {
+                  wordArtikelForShare = "";
+                } else {
+                  StringBuilder artikelBuilder = new StringBuilder();
+                  artikelBuilder.append(mWordArtikel).append(" ");
+                  wordArtikelForShare = artikelBuilder.toString();
+                }
                 StringBuilder shareStringBuilder = new StringBuilder();
                 shareStringBuilder.append(getResources().getString(R.string.share_word_headline)).append("\n").append("\n")
-                        .append(mWordArtikel).append(" ")
+                        .append(wordArtikelForShare)
                         .append(mWordName).append("\n")
                         .append(mWordExample);
 

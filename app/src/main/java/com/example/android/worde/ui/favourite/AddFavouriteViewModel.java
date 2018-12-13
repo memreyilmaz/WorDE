@@ -14,12 +14,11 @@ public class AddFavouriteViewModel extends ViewModel {
         mRepository = repository;
         mFavourite = favourite;
         mId = id;
-       mRepository.setFavouriteStatus(favourite, id);
+        mRepository.setFavouriteStatus(favourite, id);
     }
 
     public void setFavouriteStatus(int favourite, int id) {
         mRepository.setFavouriteStatus(favourite, id);
-
     }
 
 }
