@@ -58,7 +58,9 @@ public class WordListFragment extends Fragment {
         if (levelbundle != null){
             selectedLevel = levelbundle.getString(SELECTED_LEVEL);
         }
-        mRepository = new WordRepository(getActivity().getApplication());
+        //mRepository = new WordRepository(getActivity().getApplication());
+        mRepository =  WordRepository.getInstance(getActivity().getApplication());
+
         WordLevelViewModelFactory factory = new WordLevelViewModelFactory(mRepository, selectedLevel);
         mLevelViewModel = ViewModelProviders.of(this, factory).get(LevelViewModel.class);
         setRetainInstance(true);

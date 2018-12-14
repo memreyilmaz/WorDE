@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import com.example.android.worde.R;
 import com.example.android.worde.SnackbarShaper;
 import com.example.android.worde.database.Word;
+import com.example.android.worde.database.WordDatabase;
 import com.example.android.worde.database.WordRepository;
 import com.example.android.worde.ui.Analytics;
 import com.example.android.worde.ui.OnSwipeTouchListener;
@@ -50,14 +51,17 @@ public class WordDetailFragment extends Fragment {
     View snackBarView;
     DetailViewModel mViewModel;
     Snackbar snackbar;
-
+    WordDatabase mDb;
+    int lastWordId;
+    int firstWordId;
     String currentLevel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mRepository = new WordRepository(getActivity().getApplication());
+        mRepository =  WordRepository.getInstance(getActivity().getApplication());
+
         Bundle args = getArguments();
         if (args != null) {
             selectedWord = args.getInt(SELECTED_WORD);
@@ -66,15 +70,12 @@ public class WordDetailFragment extends Fragment {
 //           LiveData<Word> firstWord = mRepository.getFirstWordOfSelectedLevel("a2");
   //          selectedWord = firstWord.getValue().getWordId();
         }
-
+       // mDb = WordDatabase.getInstance(getContext());
         DetailViewModelFactory factory = new DetailViewModelFactory(mRepository);
         mViewModel = ViewModelProviders.of(this, factory).get(DetailViewModel.class);
         mViewModel.setCurrentWordId(selectedWord);
         //  getActivity().setTitle(mWordLevel.toUpperCase());
-       // LiveData<Word> firstWord = mViewModel.getFirstWord();
-       // int firstWordId = firstWord.getValue().getWordId();
-   //     LiveData<Word> lastWord = mViewModel.getLastWord();
-   //     int lastWordId = lastWord.getValue().getWordId();
+
         setRetainInstance(true);
     }
     @SuppressLint("ClickableViewAccessibility")
@@ -95,15 +96,18 @@ public class WordDetailFragment extends Fragment {
         wordDetailCardView.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             @Override
             public void onSwipeLeft() {
-               // currentLevel = mCurrentWord.getWordLevel();
-                loadNextWord();
+                int lastId = getLastWordIdOnDb();
+                if (mWordID != lastId){
+                    loadNextWord();
+                }
             }
             @Override
             public void onSwipeRight() {
-             //   currentLevel = mCurrentWord.getWordLevel();
-                loadPreviousWord();
+                int firsId = getFirstWordIdOnDb();
+                if (mWordID != firsId){
+                    loadPreviousWord();
+                }
             }
-
         });
      /*   String newLevel = mCurrentWord.getWordLevel();
         if (!currentLevel.equals(newLevel)){
@@ -177,28 +181,31 @@ public class WordDetailFragment extends Fragment {
             snackbar.show();
         }
     }
+
+    public int getFirstWordIdOnDb(){
+        Word firstWord = mRepository.getFirstWordOnDb();
+        firstWordId = firstWord.getWordId();
+        return firstWordId;
+    }
+       public int getLastWordIdOnDb(){
+       Word lastWord = mRepository.getLastWordOnDb();
+       lastWordId = lastWord.getWordId();
+       return lastWordId;
+    }
     //Method for loading next word and setting ui when cardview swiped left
     public void loadNextWord(){
-      //  LiveData<Word> lastWord = mViewModel.getLastWord();
-      //  int lastWordId = lastWord.getValue().getWordId();
-
-        if (mWordID == 500000 ){
-            selectedWord = mWordID;
-        }else {
+        //getLastWordIdOnDb();
+     //   if (mWordID == lastWordId){
+      //      selectedWord = mWordID;
+       // }else {
             selectedWord = (mWordID + 1);
-        }
+       // }
         mViewModel.setCurrentWordId(selectedWord);
         loadSelectedWord();
     }
     //Method for loading previous word and setting ui when cardview swiped right
     public void loadPreviousWord(){
-        //LiveData<Word> firstWord = mViewModel.getFirstWord();
-        //int firstWordId = firstWord.getValue().getWordId();
-        if (mWordID == 1){
-            selectedWord = mWordID;
-        }else {
-            selectedWord = (mWordID - 1);
-        }
+        selectedWord = (mWordID - 1);
         mViewModel.setCurrentWordId(selectedWord);
         loadSelectedWord();
     }

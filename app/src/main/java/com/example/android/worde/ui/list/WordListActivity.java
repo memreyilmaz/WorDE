@@ -39,7 +39,6 @@ public class WordListActivity extends DrawerActivity implements FragmentInteract
         selectedLevel = getIntent().getStringExtra(SELECTED_LEVEL);
         assignTitle = new AssignTitle(getApplicationContext());
         setTitle(assignTitle.assignTitle(selectedLevel));
-
         snackBar = findViewById(R.id.app_bar_main);
         //TODO TEST IN TABLET !!!! NOT TESTED ON TABLET YET
         if (findViewById(R.id.word_list_activity_land) != null){

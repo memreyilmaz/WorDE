@@ -5,13 +5,30 @@ import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class WordRepository {
-        private WordDao mWordDao;
+    private WordDao mWordDao;
+    private final ExecutorService mIoExecutor;
+    private static volatile WordRepository sInstance = null;
 
-    public WordRepository(Application application) {
-        WordDatabase db = WordDatabase.getInstance(application);
-        mWordDao = db.wordDao();
+    public static WordRepository getInstance(Application application) {
+        if (sInstance == null) {
+            synchronized (WordRepository.class) {
+                if (sInstance == null) {
+                    WordDatabase db = WordDatabase.getInstance(application);
+                    sInstance = new WordRepository(db.wordDao(),
+                            Executors.newSingleThreadExecutor());
+                }
+            }
+        }
+        return sInstance;
+    }
+    public WordRepository(WordDao dao, ExecutorService executor) {
+        mIoExecutor = executor;
+        mWordDao = dao;
     }
     public LiveData<Word> getWordById(int id){
         return mWordDao.getWordById(id);
@@ -27,32 +44,15 @@ public class WordRepository {
        // new insertAsyncTask(mWordDao).execute(favourite, id);
     }
 
-   /* public LiveData<Word> getFirstWordOfSelectedLevel(String level){
-        LiveData<Word> firstWordOfLevel = mWordDao.getFirstWordOnSelectedLevelForTablet(level);
-        return firstWordOfLevel;
-    }*/
-
-   /* public LiveData<Word> getFirstWordOfDb(){
-        LiveData<Word> firstWordOfDb = mWordDao.getFirstWordOnDb();
-        return firstWordOfDb;
-    }*/
-
-    /*public LiveData<Word> getLastWordOfDb(){
-       // new getFirstAsyncTask(mWordDao).execute();
-        //new getFirstAsyncTask(mWordDao).execute();
-        LiveData<Word> lastWordOfDb = mWordDao.getLastWordOnDb();
-        return lastWordOfDb;
-    }*/
-
-   private void updateWordAsyncTask(int favourite, int id) {
+    private void updateWordAsyncTask(int favourite, int id) {
 
         new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                mWordDao.addOrRemoveFavourite(favourite, id);
-                return null;
-            }
-        }.execute();
+           @Override
+           protected Void doInBackground(Void... voids) {
+               mWordDao.addOrRemoveFavourite(favourite, id);
+               return null;
+           }
+       }.execute();
     }
 
     /*private static class insertAsyncTask extends AsyncTask<Integer, Void, Void> {
@@ -70,27 +70,32 @@ public class WordRepository {
         }
     }*/
 
-        /*private class getFirstAsyncTask extends AsyncTask<Void, Void, Word> {
 
-        private WordDao mAsyncTaskDao;
-        Word lastWord;
-
-
-            getFirstAsyncTask(WordDao dao) {
-            mAsyncTaskDao = dao;
-        }
-
-        @Override
-        protected Word doInBackground(Void... voids) {
-            mAsyncTaskDao.getFirstWordOnDb();
+    public Word getFirstWordOnDb() {
+        try {
+            return mIoExecutor.submit(mWordDao::getFirstWordOnDb).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
             return null;
         }
+    }
 
-            @Override
-            protected void onPostExecute(Word word) {
-                //super.onPostExecute(word);
-                word = lastWordOfDb;
-            }
 
-        }*/
+    public Word getLastWordOnDb() {
+        try {
+            return mIoExecutor.submit(mWordDao::getLastWordOnDb).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Word getFirstWordOfLevel(String level) {
+        try {
+            return (Word) mIoExecutor.submit((Runnable) mWordDao.getFirstWordOnSelectedLevelForTablet(level)).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

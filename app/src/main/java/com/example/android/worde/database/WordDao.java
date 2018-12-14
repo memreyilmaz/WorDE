@@ -29,13 +29,13 @@ public interface WordDao {
 
     //Query for selected levels first word to show in WordListFragment For Tablet Two Pane Layout on First Launch
     @Query("SELECT * FROM wordlist WHERE level = :level ORDER BY _id ASC LIMIT 1")
-    LiveData<Word> getFirstWordOnSelectedLevelForTablet(String level);
+    Word getFirstWordOnSelectedLevelForTablet(String level);
 
     @Query("SELECT * FROM wordlist ORDER BY _id DESC LIMIT 1")
-    LiveData<Word> getLastWordOnDb();
+    Word getLastWordOnDb();
 
     @Query("SELECT * FROM wordlist ORDER BY _id ASC LIMIT 1")
-    LiveData<Word> getFirstWordOnDb();
+    Word getFirstWordOnDb();
 
     //Query for favourite words to show in WordListFragment
     @Query("SELECT * FROM wordlist WHERE favourite = 1 ORDER BY _id ASC")
