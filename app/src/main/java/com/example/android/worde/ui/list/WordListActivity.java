@@ -60,8 +60,6 @@ public class WordListActivity extends DrawerActivity implements FragmentInteract
                 wordDetailFragment = (WordDetailFragment) fragmentManager.findFragmentByTag(FRAGMENT_DETAIL);
             }
         }
-
-
         
         if (mTabletLayout){
             setWordDetailFragment();
@@ -95,7 +93,7 @@ public class WordListActivity extends DrawerActivity implements FragmentInteract
     public void setWordDetailFragment(){
         wordDetailFragment = new WordDetailFragment();
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.detail_container, wordDetailFragment, FRAGMENT_DETAIL )
+                .add(R.id.detail_container, wordDetailFragment, FRAGMENT_DETAIL)
                 .commit();
     }
     @Override

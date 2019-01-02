@@ -67,8 +67,10 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
                 mAddFavourite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        clickListener.onFavouriteClick(view, getAdapterPosition());
-                        notifyDataSetChanged();
+                        int favouritedWordPosition = getAdapterPosition();
+                        clickListener.onFavouriteClick(view, favouritedWordPosition);
+                        //notifyDataSetChanged();
+                        notifyItemChanged(favouritedWordPosition);
                     }
                 });
                 itemView.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +79,6 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
                         clickListener.onItemClick(view, getAdapterPosition());
                     }
                 });
-
             }
             public Word getWord() {
                 return mWord;

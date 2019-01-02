@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.android.worde">
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:allowBackup="true"
@@ -32,7 +35,7 @@
                 android:value=".ui.MainActivity" />
         </activity>
 
-        <receiver android:name=".WordOfTheDayWidget">
+        <receiver android:name=".widget.WordWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -53,6 +56,13 @@
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
             </intent-filter>
         </service>
+        <service android:name=".widget.WidgetWordService" />
+
+        <service android:name=".widget.WidgetRemoteViewsService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+        <service android:name=".widget.WordService" />
+
+
     </application>
 
 </manifest>

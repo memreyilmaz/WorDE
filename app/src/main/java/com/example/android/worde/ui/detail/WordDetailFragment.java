@@ -20,10 +20,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.android.worde.AssignTitle;
 import com.example.android.worde.R;
 import com.example.android.worde.SnackbarShaper;
 import com.example.android.worde.database.Word;
-import com.example.android.worde.database.WordDatabase;
 import com.example.android.worde.database.WordRepository;
 import com.example.android.worde.ui.Analytics;
 import com.example.android.worde.ui.OnSwipeTouchListener;
@@ -51,10 +51,11 @@ public class WordDetailFragment extends Fragment {
     View snackBarView;
     DetailViewModel mViewModel;
     Snackbar snackbar;
-    WordDatabase mDb;
-    int lastWordId;
-    int firstWordId;
+    int lastWordOfDbId;
+    int firstWordOfDbId;
     String currentLevel;
+    String wordLevel;
+    String newLevel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,7 +71,6 @@ public class WordDetailFragment extends Fragment {
 //           LiveData<Word> firstWord = mRepository.getFirstWordOfSelectedLevel("a2");
   //          selectedWord = firstWord.getValue().getWordId();
         }
-       // mDb = WordDatabase.getInstance(getContext());
         DetailViewModelFactory factory = new DetailViewModelFactory(mRepository);
         mViewModel = ViewModelProviders.of(this, factory).get(DetailViewModel.class);
         mViewModel.setCurrentWordId(selectedWord);
@@ -93,20 +93,21 @@ public class WordDetailFragment extends Fragment {
 
         //wordDetailCardView.setHasFixedSize(false);
         //wordDetailCardView.setAdapter(mAdapter);
+        getFirstWordIdOnDb();
+        getLastWordIdOnDb();
+
         wordDetailCardView.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             @Override
             public void onSwipeLeft() {
-                int lastId = getLastWordIdOnDb();
-                if (mWordID != lastId){
+             //   setLEvel();
                     loadNextWord();
-                }
+             //       setTitle();
             }
             @Override
             public void onSwipeRight() {
-                int firsId = getFirstWordIdOnDb();
-                if (mWordID != firsId){
+            //    setLEvel();
                     loadPreviousWord();
-                }
+            //    setTitle();
             }
         });
      /*   String newLevel = mCurrentWord.getWordLevel();
@@ -117,6 +118,16 @@ public class WordDetailFragment extends Fragment {
             getActivity().setTitle(st);
         }*/
         return view;
+    }
+    public void setLEvel(){
+        wordLevel = mCurrentWord.getWordLevel();
+    }
+    public void setTitle(){
+        //String newLevel = mCurrentWord.getWordLevel();
+        if (!newLevel.equals(wordLevel)){
+            AssignTitle at = new AssignTitle(getContext());
+            getActivity().setTitle(at.assignTitle(newLevel));
+        }
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -181,31 +192,27 @@ public class WordDetailFragment extends Fragment {
             snackbar.show();
         }
     }
-
-    public int getFirstWordIdOnDb(){
+    public void getFirstWordIdOnDb(){
         Word firstWord = mRepository.getFirstWordOnDb();
-        firstWordId = firstWord.getWordId();
-        return firstWordId;
+        firstWordOfDbId = firstWord.getWordId();
     }
-       public int getLastWordIdOnDb(){
+    public void getLastWordIdOnDb(){
        Word lastWord = mRepository.getLastWordOnDb();
-       lastWordId = lastWord.getWordId();
-       return lastWordId;
+       lastWordOfDbId = lastWord.getWordId();
     }
     //Method for loading next word and setting ui when cardview swiped left
     public void loadNextWord(){
-        //getLastWordIdOnDb();
-     //   if (mWordID == lastWordId){
-      //      selectedWord = mWordID;
-       // }else {
+        if (mWordID != lastWordOfDbId){
             selectedWord = (mWordID + 1);
-       // }
+       }
         mViewModel.setCurrentWordId(selectedWord);
         loadSelectedWord();
     }
     //Method for loading previous word and setting ui when cardview swiped right
     public void loadPreviousWord(){
-        selectedWord = (mWordID - 1);
+        if (mWordID != firstWordOfDbId){
+            selectedWord = (mWordID - 1);
+        }
         mViewModel.setCurrentWordId(selectedWord);
         loadSelectedWord();
     }

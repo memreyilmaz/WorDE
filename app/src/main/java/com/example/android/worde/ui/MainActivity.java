@@ -1,5 +1,6 @@
 package com.example.android.worde.ui;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +15,8 @@ import static com.example.android.worde.Config.A1;
 import static com.example.android.worde.Config.A2;
 import static com.example.android.worde.Config.B1;
 import static com.example.android.worde.Config.FAV;
+import static com.example.android.worde.Config.LAST_TIME_LAUNCH;
+import static com.example.android.worde.Config.LAUNCH_TIME;
 
 public class MainActivity extends DrawerActivity implements View.OnClickListener{
     CardView a1LevelButton;
@@ -43,9 +46,15 @@ public class MainActivity extends DrawerActivity implements View.OnClickListener
         a2LevelButton.setOnClickListener(this::onClick);
         b1LevelButton.setOnClickListener(this::onClick);
         favouriteWordsButton.setOnClickListener(this::onClick);
-
+        saveLaunchTimeForNotification();
         setComeBackNotification();
+    }
 
+    private void saveLaunchTimeForNotification() {
+        SharedPreferences mSharedPreferences = getSharedPreferences(LAUNCH_TIME, MODE_PRIVATE);
+        SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+        mEditor.putLong(LAST_TIME_LAUNCH, System.currentTimeMillis());
+        mEditor.apply();
     }
 
     private void setComeBackNotification() {

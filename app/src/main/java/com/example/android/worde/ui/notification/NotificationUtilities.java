@@ -26,7 +26,7 @@ public class NotificationUtilities {
             NotificationChannel mChannel = new NotificationChannel(
                     COME_BACK_REMINDER_NOTIFICATION_CHANNEL_ID,
                     context.getString(R.string.main_notification_channel_name),
-                    NotificationManager.IMPORTANCE_DEFAULT);
+                    NotificationManager.IMPORTANCE_LOW);
                     notificationManager.createNotificationChannel(mChannel);
         }
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context,COME_BACK_REMINDER_NOTIFICATION_CHANNEL_ID)
@@ -43,7 +43,7 @@ public class NotificationUtilities {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            notificationBuilder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+            notificationBuilder.setPriority(NotificationCompat.PRIORITY_LOW);
         }
 
         notificationManager.notify(COME_BACK_REMINDER_NOTIFICATION_ID, notificationBuilder.build());

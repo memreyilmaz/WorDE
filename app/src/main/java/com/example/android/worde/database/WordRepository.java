@@ -98,4 +98,13 @@ public class WordRepository {
             return null;
         }
     }
+
+    public Word getRandomWordForWidget() {
+        try {
+            return mIoExecutor.submit(mWordDao::getRandomWordForWidget).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

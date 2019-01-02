@@ -103,7 +103,7 @@ public class WordListFragment extends Fragment {
         mWordFavouriteStatus = getSelectedWordFavouriteStatus(position);
         int mWordFavourite = mWordFavouriteStatus ? 1 : 0;
         AddFavouriteViewModelFactory factory =
-                new AddFavouriteViewModelFactory(mRepository,mWordFavourite, mWordID);
+                new AddFavouriteViewModelFactory(mRepository, mWordFavourite, mWordID);
         mFavViewModel = ViewModelProviders.of(this,factory)
                 .get(AddFavouriteViewModel.class);
         if (!mWordFavouriteStatus) {

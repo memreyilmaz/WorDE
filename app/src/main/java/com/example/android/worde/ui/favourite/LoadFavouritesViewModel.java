@@ -16,7 +16,6 @@ public class LoadFavouritesViewModel extends AndroidViewModel {
 
     public LoadFavouritesViewModel(Application application) {
         super(application);
-        //mRepository = new WordRepository(application);
         mRepository = WordRepository.getInstance(getApplication());
         mFavouriteWords = mRepository.getFavouriteWords();
     }

@@ -20,8 +20,8 @@ public interface WordDao {
     LiveData<List<Word>> getAllWords();
 
     //Query for a random word to show in the widget
-    //@Query("SELECT * FROM wordlist LIMIT 1")
-    //Word[] getRandomWordForWidget();
+    @Query("SELECT * FROM wordlist ORDER BY RANDOM() LIMIT 1")
+    Word getRandomWordForWidget();
 
     //Query for selected level words to show in WordListFragment
     @Query("SELECT * FROM wordlist WHERE level = :level ORDER BY _id ASC")

@@ -30,4 +30,6 @@ public final class Config {
     public static final String REMOVED = "word_removed_from_favourites";
     public static final String ADDED_BACK = "word_added_back_to_favourites";
 
+    public static final String LAUNCH_TIME = "lAUNCH_TIME_PREFS";
+    public static final String LAST_TIME_LAUNCH = "time_last_launch";
 }
