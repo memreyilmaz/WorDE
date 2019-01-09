@@ -1,9 +1,8 @@
-package com.example.android.worde;
+package com.example.android.worde.ui;
 
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.android.worde.ui.Analytics;
 import com.example.android.worde.ui.list.WordListActivity;
 
 import static com.example.android.worde.Config.SELECTED_LEVEL;

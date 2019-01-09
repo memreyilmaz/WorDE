@@ -2,6 +2,7 @@ package com.example.android.worde.widget;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -15,16 +16,13 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-      //  int appWidgetId = intent.getIntExtra(
-        //        AppWidgetManager.EXTRA_APPWIDGET_ID,
-          //      AppWidgetManager.INVALID_APPWIDGET_ID);
         return new RecipeRemoteViewsFactory(this.getApplicationContext());
     }
 }
 
 class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     private Context mContext;
-    ArrayList<Word> words = new ArrayList<Word>();
+    static ArrayList<Word> words = new ArrayList<Word>();
     static Word mWord;
 
     public RecipeRemoteViewsFactory(Context context){
@@ -34,17 +32,22 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory 
     @Override
     public int getCount() {
         return words == null ? 0: words.size();
-        //return 1;
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
+        String widgetWordArtikel = null;
         Word mWidgetWord = words.get(position);
         RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widget_item);
-        String widgetWordArtikel = mWidgetWord.getWordArtikel();
+        if (!(mWidgetWord.getWordArtikel() == null || mWidgetWord.getWordArtikel().equals(""))){
+            widgetWordArtikel = mWidgetWord.getWordArtikel();
+        }
         String widgetWordName = mWidgetWord.getWordName();
         String widgetWordExample = mWidgetWord.getWordExample();
-        views.setTextViewText(R.id.appwidget_word_artikel_text, widgetWordArtikel);
+        if (widgetWordArtikel != null){
+            views.setViewVisibility(R.id.appwidget_word_artikel_text, View.VISIBLE);
+            views.setTextViewText(R.id.appwidget_word_artikel_text, widgetWordArtikel);
+        }
         views.setTextViewText(R.id.appwidget_word_name_text, widgetWordName);
         views.setTextViewText(R.id.appwidget_word_example_text, widgetWordExample);
         return views;
@@ -56,7 +59,7 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory 
 
     @Override
     public void onDataSetChanged() {
-     getW(mContext);
+         getWordForWidget(mContext);
     }
 
     @Override
@@ -86,8 +89,8 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory 
     }
 
 
-    public void getW(Context context) {
-
+    public void getWordForWidget(Context context) {
+        words.clear();
         WordDatabase mDb = WordDatabase.getInstance(context);
         WidgetExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override

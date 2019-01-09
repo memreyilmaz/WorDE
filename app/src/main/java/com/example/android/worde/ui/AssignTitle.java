@@ -1,6 +1,8 @@
-package com.example.android.worde;
+package com.example.android.worde.ui;
 
 import android.content.Context;
+
+import com.example.android.worde.R;
 
 import static com.example.android.worde.Config.A1;
 import static com.example.android.worde.Config.A2;

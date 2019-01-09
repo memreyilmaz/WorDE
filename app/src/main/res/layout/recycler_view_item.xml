@@ -5,6 +5,7 @@
     style="@style/CardViewStyle"
     android:stateListAnimator="@animator/card_press"
     app:cardBackgroundColor="@color/cardBackgroundColor"
+    android:background="@drawable/recycler_view_item_selector"
     android:layout_width="match_parent"
     android:layout_height="110dp"
     android:layout_marginStart="8dp"

@@ -1,4 +1,4 @@
-package com.example.android.worde;
+package com.example.android.worde.ui;
 
 import android.content.Context;
 import android.content.SharedPreferences;

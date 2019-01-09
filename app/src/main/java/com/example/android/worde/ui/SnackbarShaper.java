@@ -1,10 +1,12 @@
-package com.example.android.worde;
+package com.example.android.worde.ui;
 
 import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.view.ViewGroup;
+
+import com.example.android.worde.R;
 
 public class SnackbarShaper {
 

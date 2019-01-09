@@ -41,11 +41,8 @@ public class WordRepository {
     }
     public void setFavouriteStatus(int favourite, int id){
         updateWordAsyncTask(favourite, id);
-       // new insertAsyncTask(mWordDao).execute(favourite, id);
     }
-
     private void updateWordAsyncTask(int favourite, int id) {
-
         new AsyncTask<Void, Void, Void>() {
            @Override
            protected Void doInBackground(Void... voids) {
@@ -54,23 +51,6 @@ public class WordRepository {
            }
        }.execute();
     }
-
-    /*private static class insertAsyncTask extends AsyncTask<Integer, Void, Void> {
-
-        private WordDao mAsyncTaskDao;
-
-        insertAsyncTask(WordDao dao) {
-            mAsyncTaskDao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(Integer... ıntegers) {
-            mAsyncTaskDao.addOrRemoveFavourite(ıntegers[0], ıntegers[1]);
-            return null;
-        }
-    }*/
-
-
     public Word getFirstWordOnDb() {
         try {
             return mIoExecutor.submit(mWordDao::getFirstWordOnDb).get();
@@ -79,8 +59,6 @@ public class WordRepository {
             return null;
         }
     }
-
-
     public Word getLastWordOnDb() {
         try {
             return mIoExecutor.submit(mWordDao::getLastWordOnDb).get();
@@ -89,19 +67,33 @@ public class WordRepository {
             return null;
         }
     }
-
     public Word getFirstWordOfLevel(String level) {
         try {
-            return (Word) mIoExecutor.submit((Runnable) mWordDao.getFirstWordOnSelectedLevelForTablet(level)).get();
+            return mIoExecutor.submit(() -> mWordDao.getFirstWordOnSelectedLevel(level)).get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
             return null;
         }
     }
-
+    public Word getLastWordOfLevel(String level) {
+        try {
+            return mIoExecutor.submit(() -> mWordDao.getLastWordOnSelectedLevel(level)).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     public Word getRandomWordForWidget() {
         try {
             return mIoExecutor.submit(mWordDao::getRandomWordForWidget).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public Word getFirstWordOfFavouritesList() {
+        try {
+            return mIoExecutor.submit(mWordDao::getFirstFavouriteWordOnDb).get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
             return null;

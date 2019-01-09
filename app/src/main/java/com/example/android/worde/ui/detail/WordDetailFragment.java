@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,9 +21,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.android.worde.AssignTitle;
 import com.example.android.worde.R;
-import com.example.android.worde.SnackbarShaper;
+import com.example.android.worde.ui.SnackbarShaper;
+import com.example.android.worde.WordItemSwipeListener;
 import com.example.android.worde.database.Word;
 import com.example.android.worde.database.WordRepository;
 import com.example.android.worde.ui.Analytics;
@@ -30,6 +31,8 @@ import com.example.android.worde.ui.OnSwipeTouchListener;
 import com.example.android.worde.ui.favourite.AddFavouriteViewModel;
 import com.example.android.worde.ui.favourite.AddFavouriteViewModelFactory;
 
+import static com.example.android.worde.Config.FAV;
+import static com.example.android.worde.Config.SELECTED_LEVEL;
 import static com.example.android.worde.Config.SELECTED_WORD;
 
 public class WordDetailFragment extends Fragment {
@@ -53,31 +56,45 @@ public class WordDetailFragment extends Fragment {
     Snackbar snackbar;
     int lastWordOfDbId;
     int firstWordOfDbId;
+    int firstWordOfLevelId;
+    int lastWordOfLevelId;
+    int lastWordOfFavouritesId;
+    Word firstWordOfLevel;
+    Word firstWordOfFavouritesList;
+    boolean twoPane;
     String currentLevel;
     String wordLevel;
     String newLevel;
+    private WordItemSwipeListener mListener;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        twoPane = getResources().getBoolean(R.bool.isTwoPane);
 
         mRepository =  WordRepository.getInstance(getActivity().getApplication());
 
         Bundle args = getArguments();
         if (args != null) {
             selectedWord = args.getInt(SELECTED_WORD);
-         //   selectedLevel = args.getString(SELECTED_LEVEL);
-        } else {
-//           LiveData<Word> firstWord = mRepository.getFirstWordOfSelectedLevel("a2");
-  //          selectedWord = firstWord.getValue().getWordId();
+            selectedLevel = args.getString(SELECTED_LEVEL);
+            if (selectedWord == 0) {
+                if (selectedLevel.equals(FAV)){
+                    getFirstWordOnFavouritesList();
+                    selectedWord = firstWordOfFavouritesList.getWordId();
+                } else {
+                    getFirstWordOnSelectedLevel(selectedLevel);
+                    selectedWord = firstWordOfLevel.getWordId();
+                }
+            }
         }
         DetailViewModelFactory factory = new DetailViewModelFactory(mRepository);
         mViewModel = ViewModelProviders.of(this, factory).get(DetailViewModel.class);
         mViewModel.setCurrentWordId(selectedWord);
-        //  getActivity().setTitle(mWordLevel.toUpperCase());
-
-        setRetainInstance(true);
     }
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,53 +103,49 @@ public class WordDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_word_detail, container, false);
         snackBarView = view.findViewById(R.id.word_detail_fragment);
         loadSelectedWord();
-        //mAdapter = new WordDetailAdapter(mCurrentWord);
         LinearLayoutManager wordDetailLayoutManager = new LinearLayoutManager(getContext());
         wordDetailCardView = view.findViewById(R.id.word_detail_recyclerview);
         wordDetailCardView.setLayoutManager(wordDetailLayoutManager);
-
-        //wordDetailCardView.setHasFixedSize(false);
+        mAdapter = new WordDetailAdapter(mCurrentWord);
         //wordDetailCardView.setAdapter(mAdapter);
-        getFirstWordIdOnDb();
-        getLastWordIdOnDb();
+        //wordDetailCardView.setHasFixedSize(false);
+        if (!selectedLevel.equals(FAV)){
+            getFirstWordOnSelectedLevel(selectedLevel);
+            getLastWordOnSelectedLevel(selectedLevel);
+            getFirstWordIdOnDb();
+            getLastWordIdOnDb();
+        }
 
         wordDetailCardView.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             @Override
             public void onSwipeLeft() {
-             //   setLEvel();
                     loadNextWord();
-             //       setTitle();
+                if (twoPane && loadNextWord()){
+                    mListener.scrollToNextItem();
+                }
             }
             @Override
             public void onSwipeRight() {
-            //    setLEvel();
                     loadPreviousWord();
-            //    setTitle();
+                if (twoPane && loadPreviousWord()){
+                    mListener.scrollToPreviousItem();
+                }
             }
         });
-     /*   String newLevel = mCurrentWord.getWordLevel();
-        if (!currentLevel.equals(newLevel)){
-            // getActivity().ass();
-            AssignTitle at = new AssignTitle(getContext());
-            String st = at.assignTitle(newLevel);
-            getActivity().setTitle(st);
-        }*/
         return view;
-    }
-    public void setLEvel(){
-        wordLevel = mCurrentWord.getWordLevel();
-    }
-    public void setTitle(){
-        //String newLevel = mCurrentWord.getWordLevel();
-        if (!newLevel.equals(wordLevel)){
-            AssignTitle at = new AssignTitle(getContext());
-            getActivity().setTitle(at.assignTitle(newLevel));
-        }
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
+    }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            selectedWord = savedInstanceState.getInt(SELECTED_WORD);
+        }
     }
     //Method for passing chosen word id from list fragment to detail fragment and setting ui on two pane layout
     public void setWordForTabletLayout(int selectedWordIdOnListFragment){
@@ -145,9 +158,8 @@ public class WordDetailFragment extends Fragment {
         mViewModel.mSelectedWord.observe(this, new Observer<Word>() {
             @Override
             public void onChanged(@Nullable Word word) {
-                mAdapter = new WordDetailAdapter(word);
-                wordDetailCardView.setAdapter(mAdapter);
                 mAdapter.setWord(word);
+                wordDetailCardView.setAdapter(mAdapter);
                 getWordDetails();
                 mAdapter.setOnItemClickListener(new WordDetailAdapter.ClickListener()  {
                     @Override
@@ -192,34 +204,60 @@ public class WordDetailFragment extends Fragment {
             snackbar.show();
         }
     }
+    //Method for loading getting first word of current level to use in loadPreviousWord method
+    public void getFirstWordOnSelectedLevel(String level){
+        selectedLevel = level;
+        firstWordOfLevel = mRepository.getFirstWordOfLevel(level);
+        firstWordOfLevelId = firstWordOfLevel.getWordId();
+    }
+    //Method for loading getting last word of current level to use in loadNextWord method
+    public void getLastWordOnSelectedLevel(String level){
+        selectedLevel = level;
+        Word lastWordOfLevel = mRepository.getLastWordOfLevel(level);
+        lastWordOfLevelId = lastWordOfLevel.getWordId();
+    }
+    //Method for loading getting first word of db to use in loadPreviousWord method
     public void getFirstWordIdOnDb(){
         Word firstWord = mRepository.getFirstWordOnDb();
         firstWordOfDbId = firstWord.getWordId();
     }
+    //Method for loading getting last word of db to use in loadNextWord method
     public void getLastWordIdOnDb(){
        Word lastWord = mRepository.getLastWordOnDb();
        lastWordOfDbId = lastWord.getWordId();
     }
-    //Method for loading next word and setting ui when cardview swiped left
-    public void loadNextWord(){
-        if (mWordID != lastWordOfDbId){
+    //Method for loading getting first word of favourites list on db to use on two pane layout
+    private void getFirstWordOnFavouritesList() {
+        firstWordOfFavouritesList = mRepository.getFirstWordOfFavouritesList();
+        lastWordOfFavouritesId = firstWordOfFavouritesList.getWordId();
+    }
+    //Method for loading getting first word of favourites list on db to use in two pane layout
+    //Method for loading scrollToNextItem word and setting ui when cardview swiped left
+    public boolean loadNextWord(){
+        if (mWordID != lastWordOfDbId && mWordID != lastWordOfLevelId){
             selectedWord = (mWordID + 1);
-       }
-        mViewModel.setCurrentWordId(selectedWord);
-        loadSelectedWord();
+            mViewModel.setCurrentWordId(selectedWord);
+            loadSelectedWord();
+            return true;
+        }
+        return false;
     }
     //Method for loading previous word and setting ui when cardview swiped right
-    public void loadPreviousWord(){
-        if (mWordID != firstWordOfDbId){
+    public boolean loadPreviousWord(){
+        if (mWordID != firstWordOfDbId && mWordID != firstWordOfLevelId){
             selectedWord = (mWordID - 1);
+            mViewModel.setCurrentWordId(selectedWord);
+            loadSelectedWord();
+            return true;
+        }else {
+            return false;
         }
-        mViewModel.setCurrentWordId(selectedWord);
-        loadSelectedWord();
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.activity_detail_actions, menu);
         super.onCreateOptionsMenu(menu,inflater);
+        menu.clear();
+        inflater.inflate(R.menu.activity_detail_actions, menu);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -270,5 +308,26 @@ public class WordDetailFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(SELECTED_WORD, selectedWord);
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mListener = (WordItemSwipeListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement WordItemSwipeListener");
+        }
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 }

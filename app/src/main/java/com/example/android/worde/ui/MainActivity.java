@@ -7,7 +7,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.example.android.worde.MenuClick;
 import com.example.android.worde.R;
 import com.example.android.worde.ui.notification.ReminderUtilities;
 

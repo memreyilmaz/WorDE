@@ -15,8 +15,6 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 
-import com.example.android.worde.MenuClick;
-import com.example.android.worde.NightModePreferences;
 import com.example.android.worde.R;
 
 import static com.example.android.worde.Config.A1;

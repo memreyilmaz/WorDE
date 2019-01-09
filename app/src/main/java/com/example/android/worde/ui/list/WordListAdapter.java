@@ -19,10 +19,8 @@ import java.util.List;
 public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordViewHolder>
         implements SectionTitleProvider {
 
-       private List<Word> mWords;
-       private static ClickListener clickListener;
-    private ImageView mAddFavourite;
-
+    private List<Word> mWords;
+    private static ClickListener clickListener;
     public WordListAdapter() {
         //mWords = words;
     }
@@ -33,11 +31,25 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
                     .inflate(R.layout.recycler_view_item, parent, false);
             return new WordViewHolder(itemView);
     }
+
     @Override
         public void onBindViewHolder(@NonNull WordViewHolder holder, int position) {
         Word word = mWords.get(position);
-        if(word != null) {
-            holder.bindTo(word);
+
+        if (word.getWordArtikel() != null){
+            holder.mArtikel.setText(word.getWordArtikel());
+            holder.mArtikel.setVisibility(View.VISIBLE);
+            holder.mArtikel.setGravity(Gravity.BOTTOM);
+            holder.mWordName.setGravity(Gravity.TOP);
+        }else {
+            holder.mArtikel.setVisibility(View.GONE);
+            holder.mWordName.setGravity(Gravity.CENTER_VERTICAL);
+        }
+        holder.mWordName.setText(word.getWordName());
+        if (!word.getWordFavourite()){
+            holder.mAddFavourite.setImageResource(R.drawable.ic_favorite_border);
+        }else{
+            holder.mAddFavourite.setImageResource(R.drawable.ic_favorite);
         }
     }
     @Override
@@ -57,9 +69,9 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
 
             private TextView mArtikel;
             private TextView mWordName;
-            private Word mWord;
+            private ImageView mAddFavourite;
 
-            WordViewHolder(View itemView) {
+        public WordViewHolder(View itemView) {
                 super(itemView);
                 mArtikel = itemView.findViewById(R.id.artikel_text_view);
                 mWordName = itemView.findViewById(R.id.word_text_view);
@@ -69,7 +81,6 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
                     public void onClick(View view) {
                         int favouritedWordPosition = getAdapterPosition();
                         clickListener.onFavouriteClick(view, favouritedWordPosition);
-                        //notifyDataSetChanged();
                         notifyItemChanged(favouritedWordPosition);
                     }
                 });
@@ -77,28 +88,9 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
                     @Override
                     public void onClick(View view) {
                         clickListener.onItemClick(view, getAdapterPosition());
+                       // itemView.setSelected(true);
                     }
                 });
-            }
-            public Word getWord() {
-                return mWord;
-            }
-            void bindTo(Word word) {
-                mWord = word;
-
-                if (word.getWordArtikel() != null){
-                    mArtikel.setText(word.getWordArtikel());
-                }else {
-                    mArtikel.setVisibility(View.GONE);
-                    mWordName.setGravity(Gravity.CENTER_VERTICAL);
-                }
-                mWordName.setText(word.getWordName());
-
-                if (!word.getWordFavourite()){
-                    mAddFavourite.setImageResource(R.drawable.ic_favorite_border);
-                }else{
-                    mAddFavourite.setImageResource(R.drawable.ic_favorite);
-                }
             }
     }
     public void setOnItemClickListener(ClickListener clickListener) {

@@ -27,15 +27,28 @@ public interface WordDao {
     @Query("SELECT * FROM wordlist WHERE level = :level ORDER BY _id ASC")
     LiveData<List<Word>> getWordsByLevels(String level);
 
-    //Query for selected levels first word to show in WordListFragment For Tablet Two Pane Layout on First Launch
+    /**
+     *  Query for selected levels first word to show in WordListFragment For Tablet Two Pane Layout
+     *  on First Launch and to use in loadPreviousWord method in WordDetailFragment
+     */
     @Query("SELECT * FROM wordlist WHERE level = :level ORDER BY _id ASC LIMIT 1")
-    Word getFirstWordOnSelectedLevelForTablet(String level);
+    Word getFirstWordOnSelectedLevel(String level);
+
+    /**
+     * Query for selected levels last word to use in loadNextWord method in WordDetailFragment
+     */
+    @Query("SELECT * FROM wordlist WHERE level = :level ORDER BY _id DESC LIMIT 1")
+    Word getLastWordOnSelectedLevel(String level);
 
     @Query("SELECT * FROM wordlist ORDER BY _id DESC LIMIT 1")
     Word getLastWordOnDb();
 
     @Query("SELECT * FROM wordlist ORDER BY _id ASC LIMIT 1")
     Word getFirstWordOnDb();
+
+    //Query for first favourite word to show in WordDetailFragment in two panelayout
+    @Query("SELECT * FROM wordlist WHERE favourite = 1 ORDER BY _id ASC LIMIT 1")
+    Word getFirstFavouriteWordOnDb();
 
     //Query for favourite words to show in WordListFragment
     @Query("SELECT * FROM wordlist WHERE favourite = 1 ORDER BY _id ASC")

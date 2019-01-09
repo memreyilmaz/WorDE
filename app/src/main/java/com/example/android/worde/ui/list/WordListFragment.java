@@ -5,6 +5,8 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -13,12 +15,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.example.android.worde.FragmentInteractionListener;
 import com.example.android.worde.R;
-import com.example.android.worde.SnackbarShaper;
+import com.example.android.worde.WordListItemOnClickListener;
 import com.example.android.worde.database.Word;
 import com.example.android.worde.database.WordRepository;
+import com.example.android.worde.ui.SnackbarShaper;
 import com.example.android.worde.ui.favourite.AddFavouriteViewModel;
 import com.example.android.worde.ui.favourite.AddFavouriteViewModelFactory;
 import com.example.android.worde.ui.favourite.LoadFavouritesViewModel;
@@ -29,14 +32,13 @@ import java.util.List;
 import static com.example.android.worde.Config.ADDED;
 import static com.example.android.worde.Config.ADDED_BACK;
 import static com.example.android.worde.Config.FAV;
+import static com.example.android.worde.Config.RECYCLERVIEW_POSITION;
 import static com.example.android.worde.Config.REMOVED;
 import static com.example.android.worde.Config.SELECTED_LEVEL;
 
 public class WordListFragment extends Fragment {
-    // getActivity().getClass().getSimpleName();
     RecyclerView wordListRecyclerView;
     WordListAdapter mAdapter;
-    //int selectedWordId;
     String selectedLevel;
     AddFavouriteViewModel mFavViewModel;
     LoadFavouritesViewModel mViewModel;
@@ -45,9 +47,10 @@ public class WordListFragment extends Fragment {
     int mWordID;
     Word mSelectedWord;
     View snackBarView;
-    private FragmentInteractionListener mListener;
+    private WordListItemOnClickListener mListener;
     LevelViewModel mLevelViewModel;
     LinearLayoutManager wordListLayoutManager;
+    TextView mEmptyListTextView;
 
     public WordListFragment() {
     }
@@ -58,12 +61,11 @@ public class WordListFragment extends Fragment {
         if (levelbundle != null){
             selectedLevel = levelbundle.getString(SELECTED_LEVEL);
         }
-        //mRepository = new WordRepository(getActivity().getApplication());
         mRepository =  WordRepository.getInstance(getActivity().getApplication());
 
         WordLevelViewModelFactory factory = new WordLevelViewModelFactory(mRepository, selectedLevel);
         mLevelViewModel = ViewModelProviders.of(this, factory).get(LevelViewModel.class);
-        setRetainInstance(true);
+        mAdapter = new WordListAdapter();
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,6 +73,7 @@ public class WordListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_word_list, container, false);
         snackBarView = view.findViewById(R.id.word_list_coordinator_layout);
+        mEmptyListTextView = view.findViewById(R.id.word_list_fragment_empty_view);
         if (selectedLevel.equals(FAV)){
             setFavouriteWordList();
         } else {
@@ -80,6 +83,8 @@ public class WordListFragment extends Fragment {
                 LinearLayoutManager.VERTICAL, false);
         wordListRecyclerView = view.findViewById(R.id.word_list_recyclerview);
         wordListRecyclerView.setLayoutManager(wordListLayoutManager);
+        wordListRecyclerView.setAdapter(mAdapter);
+
 //        wordListRecyclerView.setHasFixedSize(false);
 
         FastScroller fastScroller = (FastScroller) view.findViewById(R.id.fastscroll);
@@ -91,8 +96,6 @@ public class WordListFragment extends Fragment {
         mLevelViewModel.getWordsByLevels().observe(this, new Observer<List<Word>>() {
             @Override
             public void onChanged(@Nullable List<Word> words) {
-                mAdapter = new WordListAdapter();
-                wordListRecyclerView.setAdapter(mAdapter);
                 mAdapter.setWords(words);
                 setAdapterClickListener();
             }
@@ -123,10 +126,13 @@ public class WordListFragment extends Fragment {
         mViewModel.getFavouriteWords().observe(this, new Observer<List<Word>>() {
             @Override
             public void onChanged(@Nullable List<Word> words) {
-                mAdapter = new WordListAdapter();
-                wordListRecyclerView.setAdapter(mAdapter);
                 mAdapter.setWords(words);
                 setAdapterClickListener();
+                if (words.isEmpty()){
+                    mEmptyListTextView.setVisibility(View.VISIBLE);
+                } else {
+                    mEmptyListTextView.setVisibility(View.GONE);
+                }
             }
         });
     }
@@ -136,6 +142,7 @@ public class WordListFragment extends Fragment {
             public void onItemClick(View v, int position) {
                 int wordId = getSelectedWordID(position);
                 mListener.showWordDetails(wordId);
+              //  wordListRecyclerView.setSelected(true);
             }
             @Override
             public void onFavouriteClick(View v, int position) {
@@ -188,15 +195,83 @@ public class WordListFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mListener = (FragmentInteractionListener) context;
+            mListener = (WordListItemOnClickListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement FragmentInteractionListener");
+                    + " must implement WordListItemOnClickListener");
         }
     }
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+    public void scrollToPrevious() {
+        if (hasPreviousItem()){
+            scrollToPreviousItem();
+        }
+    }
+    public void scrollToNext() {
+        if (hasNextItem()){
+            scrollToNextItem();
+        }
+    }
+    public boolean hasPreviousItem() {
+        return getFirstItemForPrevious() > 0;
+    }
+
+    public boolean hasNextItem() {
+        return wordListRecyclerView.getAdapter() != null &&
+                getLastItemForNext() < (wordListRecyclerView.getAdapter().getItemCount()- 1);
+    }
+
+    public void scrollToPreviousItem() {
+        int position = getFirstItemForPrevious();
+        if (position > 0)
+            setCurrentItem(position -1);
+    }
+
+    public void scrollToNextItem() {
+        RecyclerView.Adapter adapter = wordListRecyclerView.getAdapter();
+        if (adapter == null)
+            return;
+
+        int position = getLastItemForNext();
+        int count = adapter.getItemCount();
+        if (position < (count -1))
+            setCurrentItem(position + 1);
+    }
+
+    private int getFirstItemForPrevious(){
+        return ((LinearLayoutManager)wordListRecyclerView.getLayoutManager())
+                .findFirstVisibleItemPosition();
+    }
+
+    private int getLastItemForNext(){
+        return ((LinearLayoutManager)wordListRecyclerView.getLayoutManager())
+                .findLastVisibleItemPosition();
+    }
+
+    private void setCurrentItem(int position){
+        //wordListRecyclerView.smoothScrollToPosition(position);
+        wordListRecyclerView.scrollToPosition(position);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(SELECTED_LEVEL, selectedLevel);
+        outState.putParcelable(RECYCLERVIEW_POSITION, wordListRecyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            selectedLevel = savedInstanceState.getString(SELECTED_LEVEL);
+            Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable(RECYCLERVIEW_POSITION);
+            wordListRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+        }
     }
 }

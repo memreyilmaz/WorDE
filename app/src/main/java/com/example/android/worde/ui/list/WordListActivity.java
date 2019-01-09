@@ -1,15 +1,18 @@
 package com.example.android.worde.ui.list;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.example.android.worde.AssignTitle;
-import com.example.android.worde.FragmentInteractionListener;
 import com.example.android.worde.R;
+import com.example.android.worde.WordItemSwipeListener;
+import com.example.android.worde.WordListItemOnClickListener;
+import com.example.android.worde.ui.AssignTitle;
 import com.example.android.worde.ui.DrawerActivity;
 import com.example.android.worde.ui.detail.WordDetailFragment;
 
@@ -18,14 +21,13 @@ import static com.example.android.worde.Config.FRAGMENT_LIST;
 import static com.example.android.worde.Config.SELECTED_LEVEL;
 import static com.example.android.worde.Config.SELECTED_WORD;
 
-public class WordListActivity extends DrawerActivity implements FragmentInteractionListener {
+public class WordListActivity extends DrawerActivity implements WordListItemOnClickListener, WordItemSwipeListener {
     FrameLayout frameLayout;
     View snackBar;
-    boolean mTabletLayout;
+    boolean mTwoPaneLayout;
     WordListFragment wordListFragment;
     WordDetailFragment wordDetailFragment;
     String selectedLevel;
-    String titleLevel;
     Bundle selectedLevelBundle;
     FragmentManager fragmentManager = getSupportFragmentManager();
     AssignTitle assignTitle;
@@ -40,36 +42,44 @@ public class WordListActivity extends DrawerActivity implements FragmentInteract
         assignTitle = new AssignTitle(getApplicationContext());
         setTitle(assignTitle.assignTitle(selectedLevel));
         snackBar = findViewById(R.id.app_bar_main);
-        //TODO TEST IN TABLET !!!! NOT TESTED ON TABLET YET
-        if (findViewById(R.id.word_list_activity_land) != null){
-            mTabletLayout = true;
-        }else {
-            mTabletLayout = false;
-        }
+
+        hideNightModeMenuItem();
+
+        mTwoPaneLayout = getResources().getBoolean(R.bool.isTwoPane);
 
         if (savedInstanceState == null) {
             setWordListFragment();
+            if (mTwoPaneLayout){
+                setWordDetailFragment();
+            }
+
         } else {
             if (fragmentManager.findFragmentByTag(FRAGMENT_LIST) != null){
                 wordListFragment = (WordListFragment) fragmentManager.findFragmentByTag(FRAGMENT_LIST);
-                if (mTabletLayout) {
-                    wordDetailFragment = (WordDetailFragment) fragmentManager.findFragmentByTag(FRAGMENT_DETAIL);
-                }
-            }else if (fragmentManager.findFragmentByTag(FRAGMENT_DETAIL) != null){//todo null gosteriyor her kosulda neden?
-                //TODO DUZELDIKTEN SONRA NIGHT MODE ICIN DE KONTROL EDILMELI
+            }
+            if (fragmentManager.findFragmentByTag(FRAGMENT_DETAIL) != null){
                 wordDetailFragment = (WordDetailFragment) fragmentManager.findFragmentByTag(FRAGMENT_DETAIL);
+                if (mTwoPaneLayout) {
+                    fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    fragmentManager.beginTransaction().remove(wordDetailFragment).commit();
+                    fragmentManager.executePendingTransactions();
+                    fragmentManager.beginTransaction().replace(R.id.detail_container, wordDetailFragment, FRAGMENT_DETAIL).commit();
+                } else {
+                   fragmentManager.beginTransaction().remove(wordDetailFragment).commit();
+                }
+            }else {
+                if (mTwoPaneLayout) {
+                    setWordDetailFragment();
+                }
             }
         }
-        
-        if (mTabletLayout){
-            setWordDetailFragment();
-
-
-           /* Bundle selectedLevelBundle = new Bundle();
-            selectedLevelBundle.putString(SELECTED_LEVEL, selectedLevel);
-            wordDetailFragment.setArguments(selectedLevelBundle);*/
-        }
         setToolbar();
+    }
+    // Method for hiding Night Mode item in navigation drawer
+    private void hideNightModeMenuItem() {
+        NavigationView navigationView = findViewById(R.id.nav_view_base);
+        Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.nav_night_mode).setVisible(false);
     }
     public void setToolbar(){
         Toolbar toolbar = findViewById(R.id.list_activity_toolbar);
@@ -77,7 +87,7 @@ public class WordListActivity extends DrawerActivity implements FragmentInteract
         if(getSupportActionBar() != null){
             //getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            if (mTabletLayout) {
+            if (mTwoPaneLayout) {
                 getSupportActionBar().setHomeAsUpIndicator(R.drawable.wordelogosmalltransparent);
             }
         }
@@ -92,6 +102,9 @@ public class WordListActivity extends DrawerActivity implements FragmentInteract
     }
     public void setWordDetailFragment(){
         wordDetailFragment = new WordDetailFragment();
+        selectedLevelBundle = new Bundle();
+        selectedLevelBundle.putString(SELECTED_LEVEL, selectedLevel);
+        wordDetailFragment.setArguments(selectedLevelBundle);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.detail_container, wordDetailFragment, FRAGMENT_DETAIL)
                 .commit();
@@ -101,8 +114,9 @@ public class WordListActivity extends DrawerActivity implements FragmentInteract
         wordDetailFragment= new WordDetailFragment();
         Bundle selectedWordBundle = new Bundle();
         selectedWordBundle.putInt(SELECTED_WORD, selectedWordId);
+        selectedWordBundle.putString(SELECTED_LEVEL, selectedLevel);
         wordDetailFragment.setArguments(selectedWordBundle);
-        if (!mTabletLayout) {
+        if (!mTwoPaneLayout) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.list_container, wordDetailFragment,FRAGMENT_DETAIL)
                     .addToBackStack(null)
@@ -115,6 +129,17 @@ public class WordListActivity extends DrawerActivity implements FragmentInteract
         }
     }
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (!mTwoPaneLayout) {
+            switch (item.getItemId()) {
+                case android.R.id.home:
+                   onBackPressed();
+                   return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
     public void onBackPressed() {
         int count = getSupportFragmentManager().getBackStackEntryCount();
 
@@ -125,14 +150,11 @@ public class WordListActivity extends DrawerActivity implements FragmentInteract
         }
     }
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (!mTabletLayout) {
-            switch (item.getItemId()) {
-                case android.R.id.home:
-                   onBackPressed();
-                   return true;
-            }
-        }
-        return super.onOptionsItemSelected(item);
+    public void scrollToNextItem() {
+        wordListFragment.scrollToNext();
+    }
+    @Override
+    public void scrollToPreviousItem() {
+        wordListFragment.scrollToPrevious();
     }
 }

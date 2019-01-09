@@ -32,4 +32,7 @@ public final class Config {
 
     public static final String LAUNCH_TIME = "lAUNCH_TIME_PREFS";
     public static final String LAST_TIME_LAUNCH = "time_last_launch";
+
+    public static final String RECYCLERVIEW_POSITION = "recyclerview_position";
+
 }

@@ -1,6 +1,5 @@
 package com.example.android.worde.ui.detail;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,38 +15,18 @@ import com.example.android.worde.database.Word;
 public class WordDetailAdapter extends RecyclerView.Adapter<WordDetailAdapter.WordDetailViewHolder> {
     private Word mWord;
     private static ClickListener clickListener;
-    private static SwipeListener swipeListener;
-    Context mContext;
     public WordDetailAdapter(Word word) {
-       // mContext = context;
-        mWord = word; }
+        mWord = word;
+    }
 
     @NonNull
     @Override
     public WordDetailViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.word_detail_card_view, parent, false);
-       /* itemView.setOnTouchListener(new OnSwipeTouchListener(mContext) {
-
-            @Override
-            public void onSwipeRight() {
-                super.onSwipeRight();
-                Toast.makeText(mContext, "Right", Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void onSwipeLeft() {
-                super.onSwipeLeft();
-                Toast.makeText(mContext, "Right", Toast.LENGTH_SHORT).show();
-
-            }
-        });*/
 
         return new WordDetailViewHolder(itemView);
     }
-
-
     @Override
     public void onBindViewHolder(@NonNull WordDetailViewHolder holder, int position) {
         Word word = mWord;
@@ -57,7 +36,6 @@ public class WordDetailAdapter extends RecyclerView.Adapter<WordDetailAdapter.Wo
     public int getItemCount() {
         return 1;
     }
-
     public class WordDetailViewHolder extends RecyclerView.ViewHolder {
         private TextView mArtikel;
         private TextView mWordName;
@@ -77,23 +55,6 @@ public class WordDetailAdapter extends RecyclerView.Adapter<WordDetailAdapter.Wo
                     clickListener.onFavouriteClick(view);
                 }
             });
-
-            /*itemView.setOnTouchListener(new OnSwipeTouchListener(mContext) {
-                @Override
-                public void onSwipeRight() {
-                  //  Toast.makeText(mContext, "Right", Toast.LENGTH_SHORT).show();
-                    swipeListener.onRightSwipe(itemView);
-                  //  notifyDataSetChanged();
-                }
-
-                @Override
-                public void onSwipeLeft() {
-                    //Toast.makeText(mContext, "Left", Toast.LENGTH_SHORT).show();
-                    swipeListener.onLeftSwipe(itemView);
-                  //  notifyDataSetChanged();
-                }
-            });*/
-           // itemView.setOnTouchListener(new OnSwipeTouchListener(mContext));
         }
         public Word getWord() {
             return mWord;
@@ -126,12 +87,5 @@ public class WordDetailAdapter extends RecyclerView.Adapter<WordDetailAdapter.Wo
     }
     public interface ClickListener {
         void onFavouriteClick(View v);
-    }
-    public void setOnItemSwipeListener(WordDetailAdapter.SwipeListener swipeListener){
-        WordDetailAdapter.swipeListener = swipeListener;
-    }
-    public interface SwipeListener{
-        void onLeftSwipe(View view);
-        void onRightSwipe(View view);
     }
 }

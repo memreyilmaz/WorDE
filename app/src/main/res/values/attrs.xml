@@ -9,4 +9,5 @@
         <attr name="wordtextcolor" format="color" />
         <attr name="infoDialogDividerColor" format="color" />
 
-    </declare-styleable></resources>
+    </declare-styleable>
+</resources>
