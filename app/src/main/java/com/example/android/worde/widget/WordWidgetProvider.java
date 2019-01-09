@@ -36,6 +36,7 @@ public class WordWidgetProvider extends AppWidgetProvider {
         views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
+
     @Override
     public void onEnabled(Context context) {
     }

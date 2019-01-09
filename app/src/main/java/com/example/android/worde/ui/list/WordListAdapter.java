@@ -21,6 +21,7 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
 
     private List<Word> mWords;
     private static ClickListener clickListener;
+    private int selectedPos = 0;
     public WordListAdapter() {
         //mWords = words;
     }
@@ -51,6 +52,8 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
         }else{
             holder.mAddFavourite.setImageResource(R.drawable.ic_favorite);
         }
+        holder.itemView.setSelected(selectedPos == position);
+
     }
     @Override
     public int getItemCount() {
@@ -89,6 +92,9 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
                     public void onClick(View view) {
                         clickListener.onItemClick(view, getAdapterPosition());
                        // itemView.setSelected(true);
+                        notifyItemChanged(selectedPos);
+                        selectedPos = getAdapterPosition();
+                        notifyItemChanged(selectedPos);
                     }
                 });
             }

@@ -2,6 +2,7 @@ package com.example.android.worde.widget;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -23,7 +24,6 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
 class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     private Context mContext;
     static ArrayList<Word> words = new ArrayList<Word>();
-    static Word mWord;
 
     public RecipeRemoteViewsFactory(Context context){
         mContext = context;
@@ -36,6 +36,11 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory 
 
     @Override
     public RemoteViews getViewAt(int position) {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         String widgetWordArtikel = null;
         Word mWidgetWord = words.get(position);
         RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widget_item);
@@ -60,6 +65,7 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory 
     @Override
     public void onDataSetChanged() {
          getWordForWidget(mContext);
+
     }
 
     @Override
@@ -88,16 +94,25 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory 
         return true;
     }
 
-
-    public void getWordForWidget(Context context) {
+    private void getWordForWidget(Context context) {
         words.clear();
-        WordDatabase mDb = WordDatabase.getInstance(context);
-        WidgetExecutors.getInstance().diskIO().execute(new Runnable() {
+        new AsyncTask<Context, Void, Word>(){
             @Override
-            public void run() {
-                mWord =  mDb.wordDao().getRandomWordForWidget();
-                words.add(mWord);
+            protected Word doInBackground(Context... context) {
+
+                Word word= null;
+                WordDatabase database = WordDatabase.getInstance(context[0]);
+                word = database.wordDao().getRandomWordForWidget();
+                return word;
             }
-        });
+            @Override
+            protected void onPostExecute(Word word) {
+                super.onPostExecute(word);
+
+                if(word != null){
+                    words.add(word);
+                }
+            }
+        }.execute(context);
     }
 }
