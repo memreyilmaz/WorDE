@@ -22,10 +22,8 @@ public class WordWidgetProvider extends AppWidgetProvider {
             updateWidget(context, appWidgetManager, appWidgetId);
         }
     }
-    static void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-        loadWordForWidget(context, appWidgetManager, appWidgetId);
-    }
-    private static void loadWordForWidget(final Context context, final AppWidgetManager appWidgetManager, final int appWidgetId) {
+
+    private static void updateWidget(final Context context, final AppWidgetManager appWidgetManager, final int appWidgetId) {
         Intent detailLaunchIntent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, detailLaunchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 

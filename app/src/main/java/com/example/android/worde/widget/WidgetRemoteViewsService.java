@@ -36,11 +36,6 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory 
 
     @Override
     public RemoteViews getViewAt(int position) {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         String widgetWordArtikel = null;
         Word mWidgetWord = words.get(position);
         RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widget_item);
