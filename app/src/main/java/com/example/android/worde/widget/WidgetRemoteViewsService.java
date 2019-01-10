@@ -1,5 +1,8 @@
 package com.example.android.worde.widget;
 
+import android.annotation.SuppressLint;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -33,7 +36,6 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory 
     public int getCount() {
         return words == null ? 0: words.size();
     }
-
     @Override
     public RemoteViews getViewAt(int position) {
         String widgetWordArtikel = null;
@@ -52,23 +54,20 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory 
         views.setTextViewText(R.id.appwidget_word_example_text, widgetWordExample);
         return views;
     }
-
     @Override
     public void onCreate() {
+        if (words.size() != 0){
+            words.clear();
+        }
+        getWordForWidget(mContext);
     }
-
     @Override
     public void onDataSetChanged() {
-         getWordForWidget(mContext);
-
     }
-
     @Override
     public void onDestroy() {
-        if (words != null) {
-            words = null;}
+         words.clear();
     }
-
     @Override
     public RemoteViews getLoadingView() {
         return null;
@@ -89,24 +88,26 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory 
         return true;
     }
 
+    @SuppressLint("StaticFieldLeak")
     private void getWordForWidget(Context context) {
-        words.clear();
         new AsyncTask<Context, Void, Word>(){
             @Override
             protected Word doInBackground(Context... context) {
-
                 Word word= null;
                 WordDatabase database = WordDatabase.getInstance(context[0]);
                 word = database.wordDao().getRandomWordForWidget();
+                if(word != null){
+                    words.add(word);
+                }
                 return word;
             }
             @Override
             protected void onPostExecute(Word word) {
                 super.onPostExecute(word);
-
-                if(word != null){
-                    words.add(word);
-                }
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+                ComponentName thisWidget = new ComponentName(context, WordWidgetProvider.class);
+                int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+                appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.word_list_view_for_widget);
             }
         }.execute(context);
     }

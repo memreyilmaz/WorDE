@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:id="@+id/widget_layout"
+    android:id="@+id/widget_item_layout"
     android:padding="@dimen/widget_margin">
 
     <TextView
@@ -32,7 +32,6 @@
         android:layout_margin="8dp"
         android:contentDescription="@string/word_example"
         tools:text="@string/word_example"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textSize="24sp"/>
 
 </LinearLayout>
