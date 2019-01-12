@@ -22,24 +22,27 @@
     <string name="added_to_favourites">Word Added To Your Favourite Words List</string>
     <string name="added_to_favourites_again">Word Added To Your Favourite Words List Back</string>
     <string name="removed_from_favourites">Word Removed From Your Favourite Words List</string>
+    <string name="word_level">level</string>
     <string name="word_artikel">artikel</string>
     <string name="word">word</string>
     <string name="word_example">sample_sentence</string>
     <string name="brandenburg_gate_license_note_title">Brandenburger Gate Image License Note:</string>
-    <string name="brandenburg_gate_license_note">Thomas Wolf, [<a href="http://www.foto-tw.de"> www.foto-tw.com </a>], [<a href="https://commons.wikimedia.org/wiki/File:Brandenburger_Tor_abends.jpg "> Brandenburg Gate Evening </a>], edit by M.Emre YILMAZ, [<a href="https://creativecommons.org/licenses/by-sa/3.0/" rel=" license ">CC BY-SA 3.0</a>]</string>
+    <string name="brandenburg_gate_license_note">Thomas Wolf, [<a href="http://www.foto-tw.de"> www.foto-tw.com </a>], [<a href="https://commons.wikimedia.org/wiki/File:Brandenburger_Tor_abends.jpg "> Brandenburg Gate Evening </a>], edited from Original, [<a href="https://creativecommons.org/licenses/by-sa/3.0/" rel=" license ">CC BY-SA 3.0</a>]</string>
     <string name="walk_of_ideas_license_note_title">Walk Of Ideas Image License Note:</string>
     <string name="walk_of_ideas_license_note">"Walk of Ideas - German Authors" by [<a href="https://www.flickr.com/photos/venana/">venana</a>], used under [<a href="https://creativecommons.org/licenses/by/2.0/">CC BY</a>] edited from original</string>
     <string name="ampelmann_license_note_title">Ampelmann Image License Note:</string>
-    <string name="ampelmann_license_note">Ampelmann.svg: German Democratic Republic / Karl Peglau (original design); Matthew Gates (SVG version)derivative work: MichaelFrey (Ampelmann.svg) [Public domain], [<a href="https://commons.wikimedia.org/wiki/File:Ampelmann_Gr%C3%BCn.svg">via Wikimedia Commons</a>]</string>
+    <string name="ampelmann_license_note"><a href="https://commons.wikimedia.org/wiki/File:Ampelmann_Gr%C3%BCn.svg">Ampelmann.svg:</a> German Democratic Republic / Karl Peglau (original design); Matthew Gates (SVG version)derivative work: MichaelFrey (Ampelmann.svg) [<a href="https://en.wikipedia.org/wiki/Public_domain">Public domain</a>], [<a href="https://commons.wikimedia.org/wiki/File:Ampelmann_Gr%C3%BCn.svg">via Wikimedia Commons</a>]</string>
     <string name="lieblings_lebkuchenherz_license_note_title">Lebkuchenherz Image License Note:</string>
     <string name="lieblings_lebkuchenherz_license_note">Lebkuchenherz- Liebling by [<a href="https://www.werbeherz.eu/Lebkuchenherz-Liebling">www.werbeherz.eu</a>] edited from original</string>
     <string name="used_libraries_license_note_title">Used Libraries:</string>
-    <string name="AssetSQLiteOpenHelper_library_gate_license_note"><a href="https://github.com/daolq3012/AssetSQLiteOpenHelper#assetsqliteopenhelper">AssetSQLiteOpenHelper</a> [<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>] </string>
+    <string name="AssetSQLiteOpenHelper_library_license_note"><a href="https://github.com/daolq3012/AssetSQLiteOpenHelper#assetsqliteopenhelper">AssetSQLiteOpenHelper</a> [<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>] </string>
+    <string name="Recycler_Bubble_library_license_note"><a href="https://github.com/FutureMind/recycler-fast-scroll">Recycler Bubble</a>\nCopyright 2015 Future Mind \n[<a href="http://www.apache.org/licenses/LICENSE-2.0">Licensed under the Apache License, Version 2.0</a>] </string>
     <string name="widget_headline">Wort des Tages</string>
     <string name="main_notification_channel_name">Reminder</string>
+    <string name="worde_info">Worde Info</string>
 
-    <string name="charging_reminder_notification_title">Device Charging - Where\'s that water?</string>
-    <string name="charging_reminder_notification_body">There\'s never a better time to drink water than when you know your phone is charging. Drink up!</string>
+    <string name="reminder_notification_title">Hallo!</string>
+    <string name="reminder_notification_body">Click and learn some new WorDE</string>
     <string name="empty_favourites_list">You haven\'t added any words to \n your Favourites Word List yet.</string>
 
 </resources>

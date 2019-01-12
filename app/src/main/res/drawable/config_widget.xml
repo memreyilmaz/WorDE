@@ -4,4 +4,5 @@
     <solid
         android:color="@color/wordLightBlue"/>
     <corners android:radius="3dp" />
+    <stroke android:width="2dp" android:color="@color/wordDarkestBlue" />
 </shape>

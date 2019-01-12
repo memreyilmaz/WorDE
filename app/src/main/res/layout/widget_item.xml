@@ -1,37 +1,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widget_item_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:id="@+id/widget_item_layout"
     android:padding="@dimen/widget_margin">
 
-    <TextView
-        android:id="@+id/appwidget_word_artikel_text"
-        style="@style/GeneralTextViewStyle"
-        android:layout_margin="8dp"
-        android:paddingTop="12dp"
-        android:contentDescription="@string/word_artikel"
-        tools:text="@string/word_artikel"
-        android:textSize="24sp"
-        android:visibility="gone"
-        android:textStyle="italic" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/appwidget_word_artikel_text"
+            style="@style/WidgetTextViewStyle"
+            android:contentDescription="@string/word_artikel"
+            android:textStyle="italic"
+            android:visibility="gone"
+            tools:text="@string/word_artikel" />
+
+        <TextView
+            android:id="@+id/appwidget_word_level_text"
+            style="@style/WidgetTextViewStyle"
+            android:layout_alignParentEnd="true"
+            android:textStyle="bold"
+            android:contentDescription="@string/word_level"
+            tools:text="@string/word_level" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/appwidget_word_name_text"
-        style="@style/GeneralTextViewStyle"
-        android:layout_margin="8dp"
+        style="@style/WidgetTextViewStyle"
         android:contentDescription="@string/word"
-        tools:text="@string/word"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:text="@string/word" />
 
     <TextView
         android:id="@+id/appwidget_word_example_text"
-        style="@style/GeneralTextViewStyle"
-        android:layout_margin="8dp"
+        style="@style/WidgetTextViewStyle"
         android:contentDescription="@string/word_example"
-        tools:text="@string/word_example"
-        android:textSize="24sp"/>
+        tools:text="@string/word_example" />
 
 </LinearLayout>

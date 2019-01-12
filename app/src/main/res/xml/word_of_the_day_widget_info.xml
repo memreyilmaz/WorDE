@@ -5,7 +5,8 @@
     android:minHeight="110dp"
     android:minResizeHeight="110dp"
     android:minResizeWidth="180dp"
-    android:previewImage="@drawable/wordelogosmalltransparent"
+    android:previewImage="@drawable/widget2x2"
+
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="150000"
     android:widgetCategory="home_screen">

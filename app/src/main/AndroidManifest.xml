@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.android.worde">
+    package="com.WorDE.android.app">
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.WorDE.android.app.ui.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme">
@@ -27,15 +27,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.list.WordListActivity"
+            android:name="com.WorDE.android.app.ui.list.WordListActivity"
             android:theme="@style/AppTheme"
-            android:parentActivityName=".ui.MainActivity" >
+            android:parentActivityName="com.WorDE.android.app.ui.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainActivity" />
+                android:value="com.WorDE.android.app.ui.MainActivity" />
         </activity>
 
-        <receiver android:name=".widget.WordWidgetProvider">
+        <receiver android:name=".ui.widget.WordWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -45,18 +45,18 @@
                 android:resource="@xml/word_of_the_day_widget_info" />
         </receiver>
 
-        <activity android:name=".ui.DrawerActivity"
+        <activity android:name="com.WorDE.android.app.ui.DrawerActivity"
             android:theme="@style/AppTheme">
         </activity>
 
         <service
-            android:name=".ui.notification.NotificationFirebaseJobService"
+            android:name="com.WorDE.android.app.ui.notification.NotificationFirebaseJobService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
             </intent-filter>
         </service>
-        <service android:name=".widget.WidgetRemoteViewsService"
+        <service android:name=".ui.widget.WidgetRemoteViewsService"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 

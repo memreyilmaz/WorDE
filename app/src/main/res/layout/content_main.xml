@@ -29,7 +29,7 @@
             android:layout_gravity="bottom"
             android:adjustViewBounds="true"
             android:contentDescription="@string/a1"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:src="@drawable/ampelmann"
             android:visibility="visible" />
 
@@ -63,9 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:contentDescription="@string/a2"
-            android:scaleType="fitCenter"
-            android:scaleX="1.5"
-            android:scaleY="1.5"
+            android:scaleType="centerInside"
             android:src="@drawable/brandenburgertor" />
 
         <TextView
@@ -84,9 +82,9 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        android:nextFocusUp="@id/level_a1_cardview"
         android:contentDescription="@string/b1"
         android:nextFocusLeft="@id/favourite_words_cardview"
+        android:nextFocusUp="@id/level_a1_cardview"
         app:cardBackgroundColor="@color/cardBackgroundColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/favourite_words_cardview"
@@ -118,10 +116,10 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:nextFocusUp="@id/level_a2_cardview"
-        android:nextFocusRight="@id/level_b1_cardview"
-        app:cardBackgroundColor="@color/cardBackgroundColor"
         android:contentDescription="@string/user_favourites"
+        android:nextFocusRight="@id/level_b1_cardview"
+        android:nextFocusUp="@id/level_a2_cardview"
+        app:cardBackgroundColor="@color/cardBackgroundColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/level_b1_cardview"
@@ -130,7 +128,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center"
             android:adjustViewBounds="true"
             android:contentDescription="@string/user_favourites"
             android:scaleType="fitXY"

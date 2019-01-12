@@ -9,6 +9,10 @@
     <dimen name="card_view_padding_bottom">8dp</dimen>
     <dimen name="padding_0">0dp</dimen>
 
-    <dimen name="widget_margin">8dp</dimen>
     <bool name="isTwoPane">false</bool>
+
+    <dimen name="widget_text_view_margin_start_end">16dp</dimen>
+    <dimen name="widget_text_view_margin_top_bottom">4dp</dimen>
+
+    <dimen name="widget_margin">8dp</dimen>
 </resources>
