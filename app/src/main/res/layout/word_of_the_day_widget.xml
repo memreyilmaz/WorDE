@@ -38,4 +38,32 @@
         android:layout_centerVertical="true"
         android:clickable="true"
         android:focusable="true" />
+
+    <TextView
+        android:id="@+id/widget_id"
+        style="@style/GeneralTextViewStyle"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:contentDescription="@string/widget_headline"
+        android:layout_below="@id/word_list_view_for_widget"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/last_update_time"
+        style="@style/GeneralTextViewStyle"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:contentDescription="@string/widget_headline"
+        android:layout_below="@id/widget_id"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tap_to_update"
+        style="@style/GeneralTextViewStyle"
+        android:layout_gravity="center"
+        android:layout_below="@id/last_update_time"
+        android:layout_margin="8dp"
+        android:contentDescription="@string/widget_headline"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 </RelativeLayout>

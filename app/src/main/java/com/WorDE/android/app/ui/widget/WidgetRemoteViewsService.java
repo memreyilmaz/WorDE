@@ -2,7 +2,6 @@ package com.WorDE.android.app.ui.widget;
 
 import android.annotation.SuppressLint;
 import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -20,7 +19,7 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return new RecipeRemoteViewsFactory(this.getApplicationContext());
+        return new RecipeRemoteViewsFactory(this.getApplicationContext(), intent);
     }
 }
 
@@ -28,14 +27,41 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory 
     private Context mContext;
     static ArrayList<Word> words = new ArrayList<Word>();
 
-    public RecipeRemoteViewsFactory(Context context){
+    public RecipeRemoteViewsFactory(Context context, Intent intent){
         mContext = context;
+        int mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+                AppWidgetManager.INVALID_APPWIDGET_ID);
     }
 
+    @Override
+    public void onCreate() {
+    }
+    @Override
+    public void onDataSetChanged() {
+        getWordForWidget(mContext);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public int getCount() {
         return words == null ? 0: words.size();
     }
+    @Override
+    public int getViewTypeCount() {
+        return 1;
+    }
+    @Override
+    public boolean hasStableIds() {
+        return true;
+    }
+    @Override
+    public RemoteViews getLoadingView() {
+        return null;
+    }
+
     @Override
     public RemoteViews getViewAt(int position) {
 
@@ -61,29 +87,6 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory 
         views.setOnClickFillInIntent(R.id.widget_item_layout, fillInIntent);
         return views;
     }
-    @Override
-    public void onCreate() {
-        if (words.size() != 0){
-            words.clear();
-        }
-        getWordForWidget(mContext);
-    }
-    @Override
-    public void onDataSetChanged() {
-    }
-    @Override
-    public void onDestroy() {
-         words.clear();
-    }
-    @Override
-    public RemoteViews getLoadingView() {
-        return null;
-    }
-
-    @Override
-    public int getViewTypeCount() {
-        return 1;
-    }
 
     @Override
     public long getItemId(int position) {
@@ -91,12 +94,14 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory 
     }
 
     @Override
-    public boolean hasStableIds() {
-        return true;
+    public void onDestroy() {
+        words.clear();
     }
 
     @SuppressLint("StaticFieldLeak")
     private void getWordForWidget(Context context) {
+        words.clear();
+
         new AsyncTask<Context, Void, Word>(){
             @Override
             protected Word doInBackground(Context... context) {
@@ -111,10 +116,10 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory 
             @Override
             protected void onPostExecute(Word word) {
                 super.onPostExecute(word);
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-                ComponentName thisWidget = new ComponentName(context, WordWidgetProvider.class);
-                int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
-                appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.word_list_view_for_widget);
+             //   AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+             //   ComponentName thisWidget = new ComponentName(context, WordWidgetProvider.class);
+             //   int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+             //   appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.word_list_view_for_widget);
             }
         }.execute(context);
     }
