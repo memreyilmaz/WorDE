@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">WorDE</string>
-
+    <string name="app_logo">Application Logo</string>
     <string name="a1">Niveau A1</string>
     <string name="a2">Niveau A2</string>
     <string name="b1">Niveau B1</string>
@@ -39,7 +39,6 @@
     <string name="Recycler_Bubble_library_license_note"><a href="https://github.com/FutureMind/recycler-fast-scroll">Recycler Bubble</a>\nCopyright 2015 Future Mind \n[<a href="http://www.apache.org/licenses/LICENSE-2.0">Licensed under the Apache License, Version 2.0</a>] </string>
     <string name="widget_headline">Wort des Tages</string>
     <string name="main_notification_channel_name">Reminder</string>
-    <string name="worde_info">Worde Info</string>
 
     <string name="reminder_notification_title">Hallo!</string>
     <string name="reminder_notification_body">Click and learn some new WorDE</string>

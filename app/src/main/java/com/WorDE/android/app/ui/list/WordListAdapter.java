@@ -22,7 +22,6 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
     private List<Word> mWords;
     private static ClickListener clickListener;
     public WordListAdapter() {
-        //mWords = words;
     }
     @NonNull
     @Override
@@ -88,7 +87,6 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
                     @Override
                     public void onClick(View view) {
                         clickListener.onItemClick(view, getAdapterPosition());
-                       // itemView.setSelected(true);
                     }
                 });
             }
@@ -110,5 +108,3 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
         return getWordPosition(position).substring(0, 1).toUpperCase();
     }
 }
-
-

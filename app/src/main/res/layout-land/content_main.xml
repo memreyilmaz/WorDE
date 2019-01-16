@@ -44,9 +44,7 @@
             android:layout_gravity="bottom"
             android:adjustViewBounds="true"
             android:contentDescription="@string/a2"
-            android:scaleType="fitCenter"
-            android:scaleX="1.5"
-            android:scaleY="1.5"
+            android:scaleType="centerInside"
             android:src="@drawable/brandenburgertor" />
 
         <TextView

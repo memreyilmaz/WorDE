@@ -62,10 +62,8 @@ public class WordDetailFragment extends Fragment {
     Word firstWordOfLevel;
     Word firstWordOfFavouritesList;
     boolean twoPane;
-    String currentLevel;
-    String wordLevel;
-    String newLevel;
     private WordItemSwipeListener mListener;
+    boolean hasPreviousOrNext;
 
 
     @Override
@@ -107,8 +105,8 @@ public class WordDetailFragment extends Fragment {
         wordDetailCardView = view.findViewById(R.id.word_detail_recyclerview);
         wordDetailCardView.setLayoutManager(wordDetailLayoutManager);
         mAdapter = new WordDetailAdapter(mCurrentWord);
-        //wordDetailCardView.setAdapter(mAdapter);
-        //wordDetailCardView.setHasFixedSize(false);
+        wordDetailCardView.setAdapter(mAdapter);
+        wordDetailCardView.setHasFixedSize(true);
         if (!selectedLevel.equals(FAV)){
             getFirstWordOnSelectedLevel(selectedLevel);
             getLastWordOnSelectedLevel(selectedLevel);
@@ -116,19 +114,29 @@ public class WordDetailFragment extends Fragment {
             getLastWordIdOnDb();
         }
 
+        mAdapter.setOnItemClickListener(new WordDetailAdapter.ClickListener()  {
+            @Override
+            public void onFavouriteClick(View v) {
+                    addToFavourites();
+                }
+            });
+
         wordDetailCardView.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             @Override
             public void onSwipeLeft() {
                     loadNextWord();
-                if (twoPane && loadNextWord()){
+
+                if (twoPane && hasPreviousOrNext){
                     mListener.scrollToNextItem();
+                    hasPreviousOrNext = false;
                 }
             }
             @Override
             public void onSwipeRight() {
                     loadPreviousWord();
-                if (twoPane && loadPreviousWord()){
+                if (twoPane && hasPreviousOrNext){
                     mListener.scrollToPreviousItem();
+                    hasPreviousOrNext = false;
                 }
             }
         });
@@ -159,21 +167,13 @@ public class WordDetailFragment extends Fragment {
             @Override
             public void onChanged(@Nullable Word word) {
                 mAdapter.setWord(word);
-                wordDetailCardView.setAdapter(mAdapter);
-                getWordDetails();
-                mAdapter.setOnItemClickListener(new WordDetailAdapter.ClickListener()  {
-                    @Override
-                    public void onFavouriteClick(View v) {
-                        addToFavourites();
-                    }
-                });
+                getWordDetails(word);
             }
         });
     }
     //Method for getting current word details for using it on fragment
-    public void getWordDetails(){
-        mCurrentWord = mAdapter.getWord();
-
+    public void getWordDetails(Word word){
+        mCurrentWord = word;
         mWordID = mCurrentWord.getWordId();
         mWordLevel = mCurrentWord.getWordLevel();
         mWordArtikel = mCurrentWord.getWordArtikel();
@@ -231,26 +231,52 @@ public class WordDetailFragment extends Fragment {
         firstWordOfFavouritesList = mRepository.getFirstWordOfFavouritesList();
         lastWordOfFavouritesId = firstWordOfFavouritesList.getWordId();
     }
-    //Method for loading getting first word of favourites list on db to use in two pane layout
-    //Method for loading scrollToNextItem word and setting ui when cardview swiped left
-    public boolean loadNextWord(){
-        if (mWordID != lastWordOfDbId && mWordID != lastWordOfLevelId){
-            selectedWord = (mWordID + 1);
-            mViewModel.setCurrentWordId(selectedWord);
-            loadSelectedWord();
-            return true;
-        }
-        return false;
-    }
-    //Method for loading previous word and setting ui when cardview swiped right
-    public boolean loadPreviousWord(){
-        if (mWordID != firstWordOfDbId && mWordID != firstWordOfLevelId){
-            selectedWord = (mWordID - 1);
-            mViewModel.setCurrentWordId(selectedWord);
-            loadSelectedWord();
-            return true;
+    //Main Method for loading previous word when cardview swiped left
+    public void loadNextWord(){
+        if (!selectedLevel.equals(FAV)){
+            if (mWordID != lastWordOfDbId && mWordID != lastWordOfLevelId){
+                selectedWord = (mWordID + 1);
+                mViewModel.setCurrentWordId(selectedWord);
+                loadSelectedWord();
+                hasPreviousOrNext = true;
+            }
         }else {
-            return false;
+            getNextFavouriteWord(mWordID);
+        }
+    }
+    //Main Method for loading previous word when cardview swiped right
+    public void loadPreviousWord(){
+        if (!selectedLevel.equals(FAV)){
+            if (mWordID != firstWordOfDbId && mWordID != firstWordOfLevelId) {
+                selectedWord = (mWordID - 1);
+                mViewModel.setCurrentWordId(selectedWord);
+                loadSelectedWord();
+                hasPreviousOrNext = true;
+            }
+        }else {
+            getPreviousFavouriteWord(mWordID);
+        }
+    }
+    //Method for loading next favourite word when cardview swiped right
+    public void getNextFavouriteWord(int id){
+        Word nextFravouriteWord = mRepository.getNextWordOfFavouritesList(id);
+        if (nextFravouriteWord != null) {
+            mAdapter.setWord(nextFravouriteWord);
+            getWordDetails(nextFravouriteWord);
+            hasPreviousOrNext = true;
+        }else {
+            hasPreviousOrNext = false;
+        }
+    }
+    //Method for loading previous favourite word when cardview swiped right
+    public void getPreviousFavouriteWord(int id){
+        Word previousFravouriteWord = mRepository.getPreviousWordOfFavouritesList(id);
+        if (previousFravouriteWord != null){
+            mAdapter.setWord(previousFravouriteWord);
+            getWordDetails(previousFravouriteWord);
+            hasPreviousOrNext = true;
+        }else {
+            hasPreviousOrNext = false;
         }
     }
     @Override

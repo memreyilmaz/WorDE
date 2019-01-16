@@ -34,4 +34,8 @@ public final class Config {
     public static final String LAST_TIME_LAUNCH = "time_last_launch";
 
     public static final String RECYCLERVIEW_POSITION = "recyclerview_position";
+
+    public static final int COME_BACK_REMINDER_NOTIFICATION_ID = 2109;
+    public static final int COME_BACK_REMINDER_PENDING_INTENT_ID = 2015;
+    public static final String COME_BACK_REMINDER_NOTIFICATION_CHANNEL_ID = "reminder_notification_channel";
 }

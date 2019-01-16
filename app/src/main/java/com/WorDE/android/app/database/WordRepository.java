@@ -91,4 +91,20 @@ public class WordRepository {
             return null;
         }
     }
+    public Word getNextWordOfFavouritesList(int id) {
+        try {
+            return mIoExecutor.submit(() -> mWordDao.getNextFavouriteWord(id)).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public Word getPreviousWordOfFavouritesList(int id) {
+        try {
+            return mIoExecutor.submit(() -> mWordDao.getPreviousFavouriteWord(id)).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

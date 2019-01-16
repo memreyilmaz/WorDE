@@ -30,11 +30,26 @@ public class WordDetailAdapter extends RecyclerView.Adapter<WordDetailAdapter.Wo
     @Override
     public void onBindViewHolder(@NonNull WordDetailViewHolder holder, int position) {
         Word word = mWord;
-        holder.bindTo(word);
+        if (word.getWordArtikel() == null){
+            holder.mArtikel.setVisibility(View.GONE);
+        } else {
+            holder.mArtikel.setVisibility(View.VISIBLE);
+            holder.mArtikel.setText(word.getWordArtikel());
+        }
+        holder.mWordName.setText(word.getWordName());
+        holder.mExample.setText(word.getWordExample());
+        if (!word.getWordFavourite()){
+            holder.mAddFavourite.setImageResource(R.drawable.ic_favorite_border);
+        }else{
+            holder.mAddFavourite.setImageResource(R.drawable.ic_favorite);
+        }
     }
     @Override
     public int getItemCount() {
-        return 1;
+        if (mWord != null){
+            return 1;
+        }
+        else return 0;
     }
     public class WordDetailViewHolder extends RecyclerView.ViewHolder {
         private TextView mArtikel;
@@ -55,24 +70,6 @@ public class WordDetailAdapter extends RecyclerView.Adapter<WordDetailAdapter.Wo
                     clickListener.onFavouriteClick(view);
                 }
             });
-        }
-        public Word getWord() {
-            return mWord;
-        }
-        void bindTo(Word word) {
-            mWord = word;
-            if (word.getWordArtikel() == null){
-                mArtikel.setVisibility(View.GONE);
-            } else {
-                mArtikel.setText(word.getWordArtikel());
-            }
-            mWordName.setText(word.getWordName());
-            mExample.setText(word.getWordExample());
-            if (!word.getWordFavourite()){
-                mAddFavourite.setImageResource(R.drawable.ic_favorite_border);
-            }else{
-                mAddFavourite.setImageResource(R.drawable.ic_favorite);
-            }
         }
     }
     public void setWord(Word word){

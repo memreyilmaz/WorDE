@@ -1,6 +1,5 @@
 package com.WorDE.android.app.ui;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -15,8 +14,6 @@ import static com.WorDE.android.app.Config.A1;
 import static com.WorDE.android.app.Config.A2;
 import static com.WorDE.android.app.Config.B1;
 import static com.WorDE.android.app.Config.FAV;
-import static com.WorDE.android.app.Config.LAST_TIME_LAUNCH;
-import static com.WorDE.android.app.Config.LAUNCH_TIME;
 
 public class MainActivity extends DrawerActivity implements View.OnClickListener{
     CardView a1LevelButton;
@@ -35,8 +32,8 @@ public class MainActivity extends DrawerActivity implements View.OnClickListener
         Toolbar toolbar = findViewById(R.id.main_activity_toolbar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar() != null) {
-           getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
-           getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         a1LevelButton = findViewById(R.id.level_a1_cardview);
         a2LevelButton = findViewById(R.id.level_a2_cardview);
@@ -46,15 +43,7 @@ public class MainActivity extends DrawerActivity implements View.OnClickListener
         a2LevelButton.setOnClickListener(this::onClick);
         b1LevelButton.setOnClickListener(this::onClick);
         favouriteWordsButton.setOnClickListener(this::onClick);
-        saveLaunchTimeForNotification();
         setComeBackNotification();
-    }
-
-    private void saveLaunchTimeForNotification() {
-        SharedPreferences mSharedPreferences = getSharedPreferences(LAUNCH_TIME, MODE_PRIVATE);
-        SharedPreferences.Editor mEditor = mSharedPreferences.edit();
-        mEditor.putLong(LAST_TIME_LAUNCH, System.currentTimeMillis());
-        mEditor.apply();
     }
 
     private void setComeBackNotification() {

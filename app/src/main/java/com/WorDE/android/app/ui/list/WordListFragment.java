@@ -85,7 +85,7 @@ public class WordListFragment extends Fragment {
         wordListRecyclerView.setLayoutManager(wordListLayoutManager);
         wordListRecyclerView.setAdapter(mAdapter);
 
-//        wordListRecyclerView.setHasFixedSize(false);
+        wordListRecyclerView.setHasFixedSize(true);
         FastScroller fastScroller = (FastScroller) view.findViewById(R.id.fastscroll);
         fastScroller.setRecyclerView(wordListRecyclerView);
 
@@ -219,8 +219,7 @@ public class WordListFragment extends Fragment {
     }
 
     public boolean hasNextItem() {
-        return wordListRecyclerView.getAdapter() != null &&
-                getLastItemForNext() < (wordListRecyclerView.getAdapter().getItemCount()- 1);
+        return wordListRecyclerView.getAdapter() != null && getLastItemForNext() < (wordListRecyclerView.getAdapter().getItemCount()- 1);
     }
 
     public void scrollToPreviousItem() {
@@ -242,16 +241,15 @@ public class WordListFragment extends Fragment {
 
     private int getFirstItemForPrevious(){
         return ((LinearLayoutManager)wordListRecyclerView.getLayoutManager())
-                .findFirstVisibleItemPosition();
+                .findFirstCompletelyVisibleItemPosition();
     }
 
     private int getLastItemForNext(){
         return ((LinearLayoutManager)wordListRecyclerView.getLayoutManager())
-                .findLastVisibleItemPosition();
+                .findLastCompletelyVisibleItemPosition();
     }
 
     private void setCurrentItem(int position){
-        //wordListRecyclerView.smoothScrollToPosition(position);
         wordListRecyclerView.scrollToPosition(position);
     }
 

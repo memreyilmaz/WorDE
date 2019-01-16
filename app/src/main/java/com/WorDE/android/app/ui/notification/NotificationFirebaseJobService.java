@@ -18,7 +18,6 @@ public class NotificationFirebaseJobService extends JobService {
             protected Object doInBackground(Object[] params) {
                 Context context = NotificationFirebaseJobService.this;
                 ReminderTasks.executeTask(context);
-             //   NotificationUtilities.remindUserToComeBack(context);
                 return null;
             }
 

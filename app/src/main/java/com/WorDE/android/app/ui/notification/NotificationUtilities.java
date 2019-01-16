@@ -57,12 +57,4 @@ public class NotificationUtilities {
                 startActivityIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
     }
-    /*private static Bitmap largeIcon(Context context) {
-        // COMPLETED (5) Get a Resources object from the context.
-        Resources res = context.getResources();
-        // COMPLETED (6) Create and return a bitmap using BitmapFactory.decodeResource, passing in the
-        // resources object and R.drawable.ic_local_drink_black_24px
-        Bitmap largeIcon = BitmapFactory.decodeResource(res, R.drawable.ic_local_drink_black_24px);
-        return largeIcon;
-    }*/
 }

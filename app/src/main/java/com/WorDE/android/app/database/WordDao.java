@@ -51,8 +51,20 @@ public interface WordDao {
     Word getFirstFavouriteWordOnDb();
 
     //Query for favourite words to show in WordListFragment
-    @Query("SELECT * FROM wordlist WHERE favourite = 1 ORDER BY name ASC")
+    @Query("SELECT * FROM wordlist WHERE favourite = 1 ORDER BY _id ASC")
     LiveData<List<Word>> getFavouriteWords();
+
+    /**
+     * Query for favourite lists previous word to use in loadNextWord method in WordDetailFragment
+     */
+    @Query("SELECT * FROM wordlist WHERE favourite = 1 AND _id > :id ORDER BY _id ASC LIMIT 1")
+    Word getNextFavouriteWord(int id);
+
+    /**
+     * Query for favourite lists previous word to use in loadNextWord method in WordDetailFragment
+     */
+    @Query("SELECT * FROM wordlist WHERE favourite = 1 AND _id < :id ORDER BY _id DESC LIMIT 1")
+    Word getPreviousFavouriteWord(int id);
 
     //Query for selected word to show in WordDetailFragment
     @Query("SELECT * FROM wordlist WHERE _id = :id")

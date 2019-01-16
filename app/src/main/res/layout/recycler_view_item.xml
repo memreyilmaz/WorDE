@@ -36,7 +36,9 @@
         <TextView
             android:id="@+id/word_text_view"
             style="@style/ListTextViewStyle"
+            android:maxLines="4"
             android:gravity="top"
+            android:ellipsize="end"
             tools:text="@string/word" />
     </LinearLayout>
 
