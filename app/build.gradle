@@ -5,10 +5,7 @@ apply plugin: 'com.google.gms.google-services'
 android {
     signingConfigs {
         config {
-            keyAlias 'key0'
-            keyPassword 'Capstone123!'
-            storeFile file("$rootDir/keystore.jks")
-            storePassword 'hazelsabanil'
+
         }
     }
     compileSdkVersion 28
