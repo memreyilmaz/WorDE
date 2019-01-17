@@ -22,7 +22,6 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
         return new RecipeRemoteViewsFactory(this.getApplicationContext(), intent);
     }
 }
-
 class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     private Context mContext;
     static ArrayList<Word> words = new ArrayList<Word>();
@@ -31,9 +30,7 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory 
         mContext = context;
         mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
-
     }
-
     @Override
     public void onCreate() {
     }
@@ -50,11 +47,6 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory 
     @Override
     public int getCount() {
         return words == null ? 0: words.size();
-
-      /*  if (words != null){
-            return 1;
-        }
-        else return 0;*/
     }
     @Override
     public int getViewTypeCount() {
@@ -123,11 +115,6 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory 
             @Override
             protected void onPostExecute(Word word) {
                 super.onPostExecute(word);
-               // onDataSetChanged();
-             //   AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-             //   ComponentName thisWidget = new ComponentName(context, WordWidgetProvider.class);
-             //   int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
-             //   appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.word_list_view_for_widget);
             }
         }.execute(context);
     }

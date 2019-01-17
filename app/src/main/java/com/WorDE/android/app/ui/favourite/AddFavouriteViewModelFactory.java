@@ -11,7 +11,6 @@ public class AddFavouriteViewModelFactory  extends ViewModelProvider.NewInstance
     private final int mId;
     private final int mFavourite;
 
-
     public AddFavouriteViewModelFactory(WordRepository repository, int favourite, int id) {
         this.mRepository = repository;
         this.mFavourite = favourite;

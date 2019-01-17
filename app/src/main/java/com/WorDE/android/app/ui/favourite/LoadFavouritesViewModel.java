@@ -22,5 +22,4 @@ public class LoadFavouritesViewModel extends AndroidViewModel {
     public LiveData<List<Word>> getFavouriteWords() {
         return mFavouriteWords;
     }
-
 }

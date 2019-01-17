@@ -12,11 +12,9 @@ public class Analytics {
         params.putString(FirebaseAnalytics.Param.LEVEL_NAME, selectedLevel);
         FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Param.LEVEL_NAME, params);
     }
-
     public static void logSearchEvent(Context context){
         FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.SEARCH,null);
     }
-
     public static void logShareEvent(Context context){
         FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.SHARE,null);
     }

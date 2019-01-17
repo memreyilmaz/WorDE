@@ -10,9 +10,6 @@ import android.widget.RemoteViews;
 import com.WorDE.android.app.R;
 import com.WorDE.android.app.ui.MainActivity;
 
-import java.text.DateFormat;
-import java.util.Date;
-
 public class WordWidgetProvider extends AppWidgetProvider {
 
    @Override
@@ -32,22 +29,6 @@ public class WordWidgetProvider extends AppWidgetProvider {
         views.setPendingIntentTemplate(R.id.word_list_view_for_widget, pendingIntentForListView);
         Intent remoteViewsIntent = new Intent(context, WidgetRemoteViewsService.class);
         remoteViewsIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-
-        String timeString =
-                DateFormat.getTimeInstance(DateFormat.SHORT).format(new Date());
-        views.setTextViewText(R.id.widget_id, String.valueOf(appWidgetId));
-        views.setTextViewText(R.id.last_update_time, timeString);
-        views.setTextViewText(R.id.tap_to_update, "tap to update");
-        Intent intentUpdate = new Intent(context, WordWidgetProvider.class);
-        intentUpdate.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-
-        int[] idArray = new int[]{appWidgetId};
-        intentUpdate.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, idArray);
-
-        PendingIntent pendingUpdate = PendingIntent.getBroadcast(
-                context, appWidgetId, intentUpdate,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-        views.setOnClickPendingIntent(R.id.tap_to_update, pendingUpdate);
 
         views.setRemoteAdapter(R.id.word_list_view_for_widget, remoteViewsIntent);
         views.setTextViewText(R.id.appwidget_word_headline, context.getString(R.string.widget_headline));

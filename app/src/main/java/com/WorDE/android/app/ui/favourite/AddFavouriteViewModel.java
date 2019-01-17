@@ -16,9 +16,7 @@ public class AddFavouriteViewModel extends ViewModel {
         mId = id;
         mRepository.setFavouriteStatus(favourite, id);
     }
-
     public void setFavouriteStatus(int favourite, int id) {
         mRepository.setFavouriteStatus(favourite, id);
     }
-
 }
