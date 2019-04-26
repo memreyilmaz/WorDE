@@ -11,7 +11,11 @@ Android Application on Java as Deutsch Vocabulary App on A1, A2 and B1 levels
 
 ● Implements Firebase Analytics for user engagement and Crashlytics for crash reporting
 
-![Main](PhoneA1List.png)
-![Detail](PhoneDetail.png)
-![Drawer](PhoneDrawer.png)
+![Main](PhoneA1Lists.png)
+![Detail](PhoneDetails.png)
+![Lieblings](PhoneLieblingss.png)
+
+![TabletMain](TabletA2ListPortraits.png)
+![TabletDetail](TabletA2Lists.png)
+![TabletMain](TabletMains.png)
 
