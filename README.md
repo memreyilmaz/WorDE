@@ -21,3 +21,6 @@ Android Application on Java as Deutsch Vocabulary App on A1, A2 and B1 levels
 ![TabletMain](TabletA2ListPortraits.png)
 ![TabletDetail](TabletA2Lists.png)
 
+
+Google Play and the Google Play logo are trademarks of Google LLC.
+
